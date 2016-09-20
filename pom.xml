@@ -96,6 +96,10 @@
             <artifactId>usertype.core</artifactId>
             <version>${jadira-usertype-core.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
 
         <!-- Databases - Uses HSQL by default -->
         <dependency>
