@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Michael Isvy
  */
 @RestController
-public class OwnerResource {
+public class OwnerResource extends AbstractResourceController {
 
     private final ClinicService clinicService;
 

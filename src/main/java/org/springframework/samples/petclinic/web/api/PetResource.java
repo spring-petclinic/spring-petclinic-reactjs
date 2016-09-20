@@ -40,7 +40,7 @@ import org.springframework.web.bind.support.SessionStatus;
  * @author Arjen Poutsma
  */
 @RestController
-public class PetResource {
+public class PetResource extends AbstractResourceController {
 
     private final ClinicService clinicService;
 
