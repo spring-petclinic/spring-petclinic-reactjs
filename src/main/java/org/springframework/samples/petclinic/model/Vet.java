@@ -32,6 +32,8 @@ import javax.xml.bind.annotation.XmlElement;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Simple JavaBean domain object representing a veterinarian.
  *
@@ -67,6 +69,7 @@ public class Vet extends Person {
         return Collections.unmodifiableList(sortedSpecs);
     }
 
+    @JsonIgnore
     public int getNrOfSpecialties() {
         return getSpecialtiesInternal().size();
     }

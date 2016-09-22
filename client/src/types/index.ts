@@ -4,6 +4,10 @@ interface IBaseEntity {
   id: number;
 };
 
+interface INamedEntity extends IBaseEntity {
+  name: string;
+}
+
 interface IPerson extends IBaseEntity {
   firstName: string;
   lastName: string;
@@ -14,12 +18,10 @@ export interface IVisit extends IBaseEntity {
   description: string;
 };
 
-export interface IPetType {
-  name: string;
+export interface IPetType extends INamedEntity {
 };
 
-export interface IPet extends IBaseEntity {
-  name: string;
+export interface IPet extends INamedEntity {
   birthDate: Date;
   type: IPetType;
   visits: IVisit[];
@@ -30,4 +32,11 @@ export interface IOwner extends IPerson {
   city: string;
   telephone: string;
   pets: IPet[];
+};
+
+export interface ISpecialty extends INamedEntity {
+};
+
+export interface IVet extends IPerson {
+  specialties: ISpecialty[];
 };

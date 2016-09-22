@@ -30,7 +30,7 @@ const Menu = ({name}: { name: string }) => (
                     <span>Find owners</span>
           </MenuItem>
 
-          <MenuItem active={name === 'vets'} url='/vets.html' title='veterinarians'>
+          <MenuItem active={name === 'vets'} url='/vets' title='veterinarians'>
             <span className='glyphicon glyphicon-th-list' aria-hidden='true'></span>&nbsp;
                     <span>Veterinarians</span>
           </MenuItem>

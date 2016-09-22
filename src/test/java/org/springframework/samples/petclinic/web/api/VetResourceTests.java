@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.samples.petclinic.web.VetResource;
 import org.springframework.test.web.servlet.ResultActions;
 
 /**

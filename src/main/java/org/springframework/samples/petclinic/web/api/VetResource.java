@@ -13,37 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.web;
+package org.springframework.samples.petclinic.web.api;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.ClinicService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Juergen Hoeller
- * @author Mark Fisher
- * @author Ken Krebs
- * @author Arjen Poutsma
  */
 @RestController
-public class VetResource {
+public class VetResource extends AbstractResourceController {
 
     private final ClinicService clinicService;
-
 
     @Autowired
     public VetResource(ClinicService clinicService) {
         this.clinicService = clinicService;
     }
     
-    @RequestMapping(value="/vets", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/vets")
     public Collection<Vet> showResourcesVetList() {
         return this.clinicService.findVets();
     }
