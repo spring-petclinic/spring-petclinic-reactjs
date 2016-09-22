@@ -2,6 +2,7 @@
   "globalDependencies": {
     "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "node": "registry:dt/node#6.0.0+20160921192128",
+    "react-router/history": "registry:dt/react-router/history#2.0.0+20160830150755",
     "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160829180742",
     "whatwg-streams": "registry:dt/whatwg-streams#0.0.0+20160829180742"
   },

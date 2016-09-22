@@ -40,77 +40,69 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OwnerResource extends AbstractResourceController {
 
-    private final ClinicService clinicService;
+	private final ClinicService clinicService;
 
+	@Autowired
+	public OwnerResource(ClinicService clinicService) {
+		this.clinicService = clinicService;
+	}
 
-    @Autowired
-    public OwnerResource(ClinicService clinicService) {
-        this.clinicService = clinicService;
-    }
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
 
-    @InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
-    }
-    
-    private Owner retrieveOwner(int ownerId) {
-        return this.clinicService.findOwnerById(ownerId);
-    }
+	private Owner retrieveOwner(int ownerId) {
+		return this.clinicService.findOwnerById(ownerId);
+	}
 
-    /**
-     * Create Owner
-     */
-    @RequestMapping(value = "/owner", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createOwner(@RequestBody Owner owner) {
-    	this.clinicService.saveOwner(owner);
-    	// TODO: need to handle failure
-    }
-    
-    /**
-     * Read single Owner
-     */
-    @RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.GET)
-    public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-        return retrieveOwner(ownerId);
-    }
-    
-    /**
-     * Read List of Owners
-     */
-    @RequestMapping(value = "/owner/list", method = RequestMethod.GET)
-    public Collection<Owner> findOwnerCollection(@RequestParam("lastName") String ownerLastName) {
+	/**
+	 * Create Owner
+	 */
+	@RequestMapping(value = "/owner", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void createOwner(@RequestBody Owner owner) {
+		this.clinicService.saveOwner(owner);
+		// TODO: need to handle failure
+	}
 
-    	if (ownerLastName == null) {
-    		ownerLastName = "";
-    	}
-    	
-        Collection<Owner> results = this.clinicService.findOwnerByLastName(ownerLastName);
-        if (results.isEmpty()) {
-            return null;
-        }
-        else {
-            return results;
-        }
-    }
-    
-    /**
-     * Update Owner
-     */
-    @RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.PUT)
-    public Owner updateOwner(@PathVariable("ownerId") int ownerId, @RequestBody Owner ownerRequest) {
-    	Owner ownerModel = retrieveOwner(ownerId);
-    	// This is done by hand for simplicity purpose. In a real life use-case we should consider using MapStruct.
-    	ownerModel.setFirstName(ownerRequest.getFirstName());
-    	ownerModel.setLastName(ownerRequest.getLastName());
-    	ownerModel.setCity(ownerRequest.getCity());
-    	ownerModel.setAddress(ownerRequest.getAddress());
-    	ownerModel.setTelephone(ownerRequest.getTelephone());
-        this.clinicService.saveOwner(ownerModel);
-        return ownerModel;
-        // TODO: need to handle failure
-    }
+	/**
+	 * Read single Owner
+	 */
+	@RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.GET)
+	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
+		return retrieveOwner(ownerId);
+	}
 
+	/**
+	 * Read List of Owners
+	 */
+	@RequestMapping(value = "/owner/list", method = RequestMethod.GET)
+	public Collection<Owner> findOwnerCollection(@RequestParam("lastName") String ownerLastName) {
 
+		if (ownerLastName == null) {
+			ownerLastName = "";
+		}
+
+		return this.clinicService.findOwnerByLastName(ownerLastName);
+	}
+
+	/**
+	 * Update Owner
+	 */
+	@RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.PUT)
+	public Owner updateOwner(@PathVariable("ownerId") int ownerId, @RequestBody Owner ownerRequest) {
+		Owner ownerModel = retrieveOwner(ownerId);
+		// This is done by hand for simplicity purpose. In a real life use-case we
+		// should consider using MapStruct.
+		ownerModel.setFirstName(ownerRequest.getFirstName());
+		ownerModel.setLastName(ownerRequest.getLastName());
+		ownerModel.setCity(ownerRequest.getCity());
+		ownerModel.setAddress(ownerRequest.getAddress());
+		ownerModel.setTelephone(ownerRequest.getTelephone());
+		this.clinicService.saveOwner(ownerModel);
+		return ownerModel;
+		// TODO: need to handle failure
+	}
 
 }

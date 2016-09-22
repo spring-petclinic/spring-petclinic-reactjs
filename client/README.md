@@ -8,6 +8,7 @@ Note: Spring Boot App must be running before starting the client
 2. `run.sh` 
 3. Open `http://localhost:4444`
 
+
 ## Static CSS generation
 
 I have taken the LESS files nearly unmodified from the original demo project (only the import of bootstrap differs due to different folder structure). 

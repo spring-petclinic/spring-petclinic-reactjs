@@ -25,7 +25,7 @@ const Menu = ({name}: { name: string }) => (
                     <span>Home</span>
           </MenuItem>
 
-          <MenuItem active={name === 'owners'} url='/owners/find.html' title='find owners'>
+          <MenuItem active={name.startsWith('owners')} url='/owners/list' title='find owners'>
             <span className='glyphicon glyphicon-search' aria-hidden='true'></span>&nbsp;
                     <span>Find owners</span>
           </MenuItem>
