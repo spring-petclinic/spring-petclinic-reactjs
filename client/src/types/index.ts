@@ -9,7 +9,7 @@ interface IPerson extends IBaseEntity {
   lastName: string;
 }
 
-export interface IVisit {
+export interface IVisit extends IBaseEntity {
   date: Date;
   description: string;
 };
@@ -18,8 +18,8 @@ export interface IPetType {
   name: string;
 };
 
-export interface IPet {
-  name: string,
+export interface IPet extends IBaseEntity {
+  name: string;
   birthDate: Date;
   type: IPetType;
   visits: IVisit[];
