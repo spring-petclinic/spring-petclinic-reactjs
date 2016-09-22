@@ -5,13 +5,8 @@ import { AppContainer } from 'react-hot-loader';
 
 import { browserHistory as history } from 'react-router';
 
-// styles
-// import './styles/less/petclinic.less';
-
 // The Application
 import Root from './Root';
-
-console.log('##################################################################################################');
 
 // Render Application
 const mountPoint = document.getElementById('mount');
