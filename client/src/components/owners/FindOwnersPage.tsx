@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IRouter, Link } from 'react-router';
 import { url } from '../../util';
 
-import { IOwner } from '../../types';
+import { IOwner, IRouterContext } from '../../types';
 
 interface IFindOwnersPageProps {
   location: HistoryModule.Location;
@@ -12,10 +12,6 @@ interface IFindOwnersPageProps {
 interface IFindOwnersPageState {
   owners?: IOwner[];
   filter?: string;
-}
-
-interface IRouterContext {
-  router: IRouter;
 }
 
 const getFilterFromLocation = (location) => {
@@ -166,7 +162,7 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
         <br />
         {this.renderOwners(owners)}
         <br />
-        <Link className='btn btn-default' to='/api/owners/new'> Add Owner</Link>
+        <Link className='btn btn-default' to='/owners/new'> Add Owner</Link>
       </span>
     );
   }

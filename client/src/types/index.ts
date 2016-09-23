@@ -1,4 +1,12 @@
-// --- Model ------------------------------------------
+import { IRouter } from 'react-router';
+
+// ------------------------------------ ROUTER ------------------------------------
+export interface IRouterContext {
+  router: IRouter;
+};
+
+
+// ------------------------------------ MODEL .------------------------------------
 
 interface IBaseEntity {
   id: number;
@@ -40,3 +48,4 @@ export interface ISpecialty extends INamedEntity {
 export interface IVet extends IPerson {
   specialties: ISpecialty[];
 };
+

@@ -17,10 +17,15 @@ package org.springframework.samples.petclinic.web.api;
 
 import java.util.Collection;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +44,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class OwnerResource extends AbstractResourceController {
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final ClinicService clinicService;
 
@@ -61,9 +68,17 @@ public class OwnerResource extends AbstractResourceController {
 	 */
 	@RequestMapping(value = "/owner", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void createOwner(@RequestBody Owner owner) {
+	public Owner createOwner(@RequestBody @Valid Owner owner, BindingResult bindingResult) {
+		logger.info("Owner: {}", owner);
+		logger.info("Result: {}", bindingResult);
+		
+		 if (bindingResult.hasErrors()) {
+       throw new InvalidRequestException("Invalid Owner", bindingResult);
+   }
+		
 		this.clinicService.saveOwner(owner);
-		// TODO: need to handle failure
+		
+		return owner;
 	}
 
 	/**
