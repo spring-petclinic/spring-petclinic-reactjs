@@ -26,19 +26,21 @@ const Input = ({object, error, name, label, onChange}: { object: any, error: IEr
     onChange(event.target.name, event.target.value);
   };
 
-  const renderErrorLabel = () => {
-    if (error && error.fieldErrors[name]) {
-      return <span>
+  const fieldError = error && error.fieldErrors[name];
+
+  const renderErrorLabel = () => (
+      fieldError ? (<span>
         <span className='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
         <span className='help-inline'>{error.fieldErrors[name].message}</span>
-      </span>;
-    }
+      </span>)
+      :
+      null
+  );
 
-    return null;
-  };
+  const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 
   return (
-    <div className='form-group'>
+    <div className={cssGroup}>
       <label className='col-sm-2 control-label'>{label}</label>
 
       <div className='col-sm-10'>
