@@ -49,3 +49,17 @@ export interface IVet extends IPerson {
   specialties: ISpecialty[];
 };
 
+// ------------------------------------ ERROR ------------------------------------
+export interface IFieldError {
+  field: string;
+  code: string;
+  message: string;
+}
+
+interface IFieldErrors {
+  [index: string]: IFieldError;
+};
+
+export interface IError {
+  fieldErrors: IFieldErrors;
+}

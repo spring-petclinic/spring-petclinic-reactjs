@@ -49,7 +49,7 @@ export default class OwnersPage extends React.Component<IOwnersPageProps, IOwner
         <tbody>
           <tr>
             <th>Name</th>
-            <td><b>{owner.firstName} {owner.lastName}'</b></td>
+            <td><b>{owner.firstName} {owner.lastName}</b></td>
           </tr>
           <tr>
             <th>Address</th>
