@@ -44,19 +44,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class OwnerResource extends AbstractResourceController {
-	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private final ClinicService clinicService;
+	private final Logger				logger	= LoggerFactory.getLogger(getClass());
+
+	private final ClinicService	clinicService;
 
 	@Autowired
 	public OwnerResource(ClinicService clinicService) {
 		this.clinicService = clinicService;
-	}
-
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
 	}
 
 	private Owner retrieveOwner(int ownerId) {
@@ -69,15 +64,12 @@ public class OwnerResource extends AbstractResourceController {
 	@RequestMapping(value = "/owner", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public Owner createOwner(@RequestBody @Valid Owner owner, BindingResult bindingResult) {
-		logger.info("Owner: {}", owner);
-		logger.info("Result: {}", bindingResult);
-		
-		 if (bindingResult.hasErrors()) {
-       throw new InvalidRequestException("Invalid Owner", bindingResult);
-   }
-		
+		if (bindingResult.hasErrors()) {
+			throw new InvalidRequestException("Invalid Owner", bindingResult);
+		}
+
 		this.clinicService.saveOwner(owner);
-		
+
 		return owner;
 	}
 
@@ -106,7 +98,12 @@ public class OwnerResource extends AbstractResourceController {
 	 * Update Owner
 	 */
 	@RequestMapping(value = "/owner/{ownerId}", method = RequestMethod.PUT)
-	public Owner updateOwner(@PathVariable("ownerId") int ownerId, @RequestBody Owner ownerRequest) {
+	public Owner updateOwner(@PathVariable("ownerId") int ownerId, @Valid @RequestBody Owner ownerRequest,
+			final BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			throw new InvalidRequestException("Invalid Owner", bindingResult);
+		}
+
 		Owner ownerModel = retrieveOwner(ownerId);
 		// This is done by hand for simplicity purpose. In a real life use-case we
 		// should consider using MapStruct.
@@ -117,7 +114,6 @@ public class OwnerResource extends AbstractResourceController {
 		ownerModel.setTelephone(ownerRequest.getTelephone());
 		this.clinicService.saveOwner(ownerModel);
 		return ownerModel;
-		// TODO: need to handle failure
 	}
 
 }

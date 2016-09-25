@@ -1,3 +1,4 @@
+import { IHttpMethod } from '../types';
 export const url = (path: string): string => `http://localhost:8080/${path}`;
 
 /**
@@ -6,10 +7,11 @@ export const url = (path: string): string => `http://localhost:8080/${path}`;
  * onSuccess: callback handler if request succeeded. Succeeded means it could technically be handled (i.e. valid json is returned)
  * regardless of the HTTP status code.
  */
-export const submitForm = (path: string, data: any, onSuccess: (status: number, response: any) => void) => {
+export const submitForm = (method: IHttpMethod, path: string, data: any, onSuccess: (status: number, response: any) => void) => {
   const requestUrl = url(path);
+
   const fetchParams = {
-    method: 'POST',
+    method: method,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -17,7 +19,7 @@ export const submitForm = (path: string, data: any, onSuccess: (status: number, 
     body: JSON.stringify(data)
   };
 
-  console.log('Submitting to ' + requestUrl);
+  console.log('Submitting to ' + method + ' ' + requestUrl);
   fetch(requestUrl, fetchParams)
     .then(response => response.json().then(result => onSuccess(response.status, result)));
 };

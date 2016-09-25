@@ -66,9 +66,9 @@ export default class OwnersPage extends React.Component<IOwnersPageProps, IOwner
         </tbody>
       </table>
 
-      <a href={url(`/owner/${owner.id}/edit`)} className='btn btn-default'>Edit Owner</a>
+      <a href={`/owners/${owner.id}/edit`} className='btn btn-default'>Edit Owner</a>
       &nbsp;
-      <a href={url(`/owner/${owner.id}/pets/new`)} className='btn btn-default'>Add New Pet</a>
+      <a href={`/owners/${owner.id}/pets/new`} className='btn btn-default'>Add New Pet</a>
 
       <br />
       <br />

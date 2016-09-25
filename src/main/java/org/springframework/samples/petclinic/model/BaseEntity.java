@@ -20,6 +20,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Simple JavaBean domain object with an id property. Used as a base class for objects needing this property.
  *
@@ -40,6 +42,7 @@ public class BaseEntity {
         this.id = id;
     }
 
+    @JsonProperty("isNew")
     public boolean isNew() {
         return this.id == null;
     }

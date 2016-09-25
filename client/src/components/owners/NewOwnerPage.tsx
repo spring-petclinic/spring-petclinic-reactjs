@@ -1,17 +1,11 @@
 import * as React from 'react';
+import OwnerEditor from './OwnerEditor';
 
-import { IRouter, Link } from 'react-router';
-import { url, submitForm } from '../../util';
-
-import { IError, IOwner, IRouterContext } from '../../types';
-
-interface INewOwnerPageState {
-  owner?: IOwner;
-  error?: IError;
-};
+import { IOwner } from '../../types';
 
 const newOwner = (): IOwner => ({
   id: null,
+  isNew: true,
   firstName: '',
   lastName: '',
   address: '',
@@ -20,98 +14,68 @@ const newOwner = (): IOwner => ({
   pets: []
 });
 
-const Input = ({object, error, name, label, onChange}: { object: any, error: IError, name: string, label: string, onChange: (name: string, value: string) => void }) => {
+export default () => <OwnerEditor initialOwner={newOwner()} />;
 
-  const handleOnChange = event => {
-    onChange(event.target.name, event.target.value);
-  };
+// export default class NewOwnerPage extends React.Component<void, INewOwnerPageState> {
 
-  const fieldError = error && error.fieldErrors[name];
+//   context: IRouterContext;
 
-  const renderErrorLabel = () => (
-      fieldError ? (<span>
-        <span className='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
-        <span className='help-inline'>{error.fieldErrors[name].message}</span>
-      </span>)
-      :
-      null
-  );
+//   static contextTypes = {
+//     router: React.PropTypes.object.isRequired
+//   };
 
-  const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
+//   constructor() {
+//     super();
+//     this.onInputChange = this.onInputChange.bind(this);
+//     this.onSubmit = this.onSubmit.bind(this);
 
-  return (
-    <div className={cssGroup}>
-      <label className='col-sm-2 control-label'>{label}</label>
+//     this.state = { owner: newOwner() };
+//   }
 
-      <div className='col-sm-10'>
-        <input type='text' name={name} className='form-control' value={object[name]} onChange={handleOnChange} />
-        <span className='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>
-        {renderErrorLabel()}
-      </div>
-    </div>
-  );
-};
+//   onSubmit(event) {
+//     event.preventDefault();
 
-export default class NewOwnerPage extends React.Component<void, INewOwnerPageState> {
+//     const { owner } = this.state;
 
-  context: IRouterContext;
+//     submitForm('/api/owner', owner, (status, response) => {
+//       if (status === 201) {
+//         const newOwner = response as IOwner;
+//         this.context.router.push({
+//           pathname: '/owners/' + newOwner.id
+//         });
+//       } else {
+//         console.log('ERROR?!...', response);
+//         this.setState({ error: response });
+//       }
+//     });
+//   }
 
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
+//   onInputChange(name: string, value: string) {
+//     const { owner } = this.state;
+//     const modifiedOwner = Object.assign({}, owner, { [name]: value });
+//     this.setState({ owner: modifiedOwner });
+//   }
 
-  constructor() {
-    super();
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-
-    this.state = { owner: newOwner() };
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
-
-    const { owner } = this.state;
-
-    submitForm('/api/owner', owner, (status, response) => {
-      if (status === 201) {
-        const newOwner = response as IOwner;
-        this.context.router.push({
-          pathname: '/owners/' + newOwner.id
-        });
-      } else {
-        console.log('ERROR?!...', response);
-        this.setState({ error: response });
-      }
-    });
-  }
-
-  onInputChange(name: string, value: string) {
-    const { owner } = this.state;
-    const modifiedOwner = Object.assign({}, owner, { [name]: value });
-    this.setState({ owner: modifiedOwner });
-  }
-
-  render() {
-    const { owner, error } = this.state;
-    return (
-      <span>
-        <h2>New Owner</h2>
-        <form className='form-horizontal' method='POST' action={url('/api/owner')}>
-          <div className='form-group has-feedback'>
-            <Input object={owner} error={error} label='First Name' name='firstName' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='Last Name' name='lastName' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='Address' name='address' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='City' name='city' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='Telephone' name='telephone' onChange={this.onInputChange} />
-          </div>
-          <div className='form-group'>
-            <div className='col-sm-offset-2 col-sm-10'>
-              <button className='btn btn-default' type='submit' onClick={this.onSubmit}>Add Owner</button>
-            </div>
-          </div>
-        </form>
-      </span>
-    );
-  }
-}
+//   render() {
+//     const { owner, error } = this.state;
+//     return (
+//       <span>
+//         <h2>New Owner</h2>
+//         <form className='form-horizontal' method='POST' action={url('/api/owner')}>
+//           <div className='form-group has-feedback'>
+//             <Input object={owner} error={error} label='First Name' name='firstName' onChange={this.onInputChange} />
+//             <Input object={owner} error={error} label='Last Name' name='lastName' onChange={this.onInputChange} />
+//             <Input object={owner} error={error} label='Address' name='address' onChange={this.onInputChange} />
+//             <Input object={owner} error={error} label='City' name='city' onChange={this.onInputChange} />
+//             <Input object={owner} error={error} label='Telephone' name='telephone' onChange={this.onInputChange} />
+//           </div>
+//           <div className='form-group'>
+//             <div className='col-sm-offset-2 col-sm-10'>
+//               <button className='btn btn-default' type='submit' onClick={this.onSubmit}>Add Owner</button>
+//             </div>
+//           </div>
+//         </form>
+//       </span>
+//     );
+//   }
+// }

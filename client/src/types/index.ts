@@ -5,11 +5,17 @@ export interface IRouterContext {
   router: IRouter;
 };
 
+// ------------------------------------ UTIL --------------------------------------
+export type IHttpMethod = 'POST' | 'PUT' | 'GET';
+
+// ------------------------------------ FORM --------------------------------------
+export type IOnChangeHandler = (name: string, value: string) => void;
 
 // ------------------------------------ MODEL .------------------------------------
 
 interface IBaseEntity {
   id: number;
+  isNew: boolean;
 };
 
 interface INamedEntity extends IBaseEntity {
@@ -36,6 +42,7 @@ export interface IPet extends INamedEntity {
 };
 
 export interface IOwner extends IPerson {
+
   address: string;
   city: string;
   telephone: string;
