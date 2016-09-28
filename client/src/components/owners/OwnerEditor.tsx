@@ -5,7 +5,9 @@ import { url, submitForm } from '../../util';
 
 import Input from '../form/Input';
 
-import { IError, IOwner, IRouterContext } from '../../types';
+import { Digits, NotEmpty } from '../form/Constraints';
+
+import { IInputChangeHandler, IFieldError, IError, IOwner, IRouterContext } from '../../types';
 
 interface IOwnerEditorProps {
   initialOwner?: IOwner;
@@ -53,10 +55,14 @@ export default class OwnerEditor extends React.Component<IOwnerEditorProps, IOwn
     });
   }
 
-  onInputChange(name: string, value: string) {
-    const { owner } = this.state;
+  onInputChange(name: string, value: string, fieldError: IFieldError) {
+    const { owner, error } = this.state;
     const modifiedOwner = Object.assign({}, owner, { [name]: value });
-    this.setState({ owner: modifiedOwner });
+    const newFieldErrors = error ? Object.assign({}, error.fieldErrors, {[name]: fieldError }) : {[name]: fieldError };
+    this.setState({
+      owner: modifiedOwner,
+      error: { fieldErrors: newFieldErrors }
+    });
   }
 
   render() {
@@ -66,11 +72,11 @@ export default class OwnerEditor extends React.Component<IOwnerEditorProps, IOwn
         <h2>New Owner</h2>
         <form className='form-horizontal' method='POST' action={url('/api/owner')}>
           <div className='form-group has-feedback'>
-            <Input object={owner} error={error} label='First Name' name='firstName' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='Last Name' name='lastName' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='Address' name='address' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='City' name='city' onChange={this.onInputChange} />
-            <Input object={owner} error={error} label='Telephone' name='telephone' onChange={this.onInputChange} />
+            <Input object={owner} error={error} constraint={NotEmpty} label='First Name' name='firstName' onChange={this.onInputChange} />
+            <Input object={owner} error={error} constraint={NotEmpty} label='Last Name' name='lastName' onChange={this.onInputChange} />
+            <Input object={owner} error={error} constraint={NotEmpty} label='Address' name='address' onChange={this.onInputChange} />
+            <Input object={owner} error={error} constraint={NotEmpty} label='City' name='city' onChange={this.onInputChange} />
+            <Input object={owner} error={error} constraint={Digits(10)} label='Telephone' name='telephone' onChange={this.onInputChange} />
           </div>
           <div className='form-group'>
             <div className='col-sm-offset-2 col-sm-10'>

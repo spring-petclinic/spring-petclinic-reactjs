@@ -15,89 +15,110 @@
  */
 package org.springframework.samples.petclinic.web.api;
 
-import java.util.Collection;
-import java.util.Map;
+import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.ClinicService;
-import org.springframework.samples.petclinic.web.PetValidator;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.support.SessionStatus;
 
 /**
- * @author Juergen Hoeller
- * @author Ken Krebs
- * @author Arjen Poutsma
+ * @author Nils Hartmann
  */
 @RestController
 public class PetResource extends AbstractResourceController {
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final ClinicService clinicService;
+	private final ClinicService clinicService;
 
+	@Autowired
+	public PetResource(ClinicService clinicService) {
+		this.clinicService = clinicService;
+	}
 
-    @Autowired
-    public PetResource(ClinicService clinicService) {
-        this.clinicService = clinicService;
-    }
+	@GetMapping("/pettypes")
+	Object getPetTypes() {
+		return clinicService.findPetTypes();
+	}
 
-    @ModelAttribute("types")
-    public Collection<PetType> populatePetTypes() {
-        return this.clinicService.findPetTypes();
-    }
+	@PostMapping("/owners/{ownerId}/pets")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void addNewPet(final @PathVariable("ownerId") int ownerId, final @Valid @RequestBody PetRequest petRequest,
+			final BindingResult bindingResult) {
+		
+		logger.info("PetRequest: {}", petRequest);
+		
+		if (bindingResult.hasErrors()) {
+			throw new InvalidRequestException("Submitted Pet invalid", bindingResult);
+		}
+		
+		Pet pet = new Pet();
+		Owner owner = this.clinicService.findOwnerById(ownerId);
+		if (owner == null) {
+			throw new BadRequestException("Owner with Id '" + ownerId + "' is unknown.");
+		}
+		owner.addPet(pet);
 
-    @InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
-    }
+		save(pet, petRequest);
+	}
 
-    @RequestMapping(value = "/owners/{ownerId}/pets/new", method = RequestMethod.GET)
-    public String initCreationForm(@PathVariable("ownerId") int ownerId, Map<String, Object> model) {
-        Owner owner = this.clinicService.findOwnerById(ownerId);
-        Pet pet = new Pet();
-        owner.addPet(pet);
-        model.put("pet", pet);
-        return "pets/createOrUpdatePetForm";
-    }
+//	@PutMapping("/owners/{ownerId}/pets/{petId}")
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	public void processUpdateForm(@RequestBody PetRequest petRequest) {
+//		save(clinicService.findPetById(petRequest.getId()), petRequest);
+//	}
 
-    @RequestMapping(value = "/owners/{ownerId}/pets/new", method = RequestMethod.POST)
-    public String processCreationForm(@ModelAttribute("pet") Pet pet, BindingResult result, SessionStatus status) {
-        new PetValidator().validate(pet, result);
-        if (result.hasErrors()) {
-            return "pets/createOrUpdatePetForm";
-        } else {
-            this.clinicService.savePet(pet);
-            status.setComplete();
-            return "redirect:/owner/{ownerId}";
-        }
-    }
+	private void save(Pet pet, PetRequest petRequest) {
 
-    @RequestMapping(value = "/owner/*/pet/{petId}", method = RequestMethod.GET)
-    public Pet findPet(@PathVariable("petId") int petId) {
-        Pet pet = this.clinicService.findPetById(petId);
-        return pet;
-    }
+		pet.setName(petRequest.getName());
+		pet.setBirthDate(petRequest.getBirthDate());
 
-    @RequestMapping(value = "/owners/{ownerId}/pets/{petId}/edit", method = {RequestMethod.PUT, RequestMethod.POST})
-    public String processUpdateForm(@ModelAttribute("pet") Pet pet, BindingResult result, SessionStatus status) {
-        // we're not using @Valid annotation here because it is easier to define such validation rule in Java
-        new PetValidator().validate(pet, result);
-        if (result.hasErrors()) {
-            return "pets/createOrUpdatePetForm";
-        } else {
-            this.clinicService.savePet(pet);
-            status.setComplete();
-            return "redirect:/owners/{ownerId}";
-        }
-    }
+		for (PetType petType : clinicService.findPetTypes()) {
+			if (petType.getId() == petRequest.getTypeId()) {
+				pet.setType(petType);
+				break;
+			}
+		}
+
+		clinicService.savePet(pet);
+	}
+
+//	@GetMapping("/owner/*/pet/{petId}")
+//	public PetDetails findPet(@PathVariable("petId") int petId) {
+//		Pet pet = this.clinicService.findPetById(petId);
+//		return new PetDetails(pet);
+//	}
+
+//	@Getter
+//	static class PetDetails {
+//
+//		long		id;
+//		String	name;
+//		String	owner;
+//		@DateTimeFormat(pattern = "yyyy-MM-dd")
+//		Date		birthDate;
+//		PetType	type;
+//
+//		PetDetails(Pet pet) {
+//			this.id = pet.getId();
+//			this.name = pet.getName();
+//			this.owner = pet.getOwner().getFirstName() + " " + pet.getOwner().getLastName();
+//			this.birthDate = pet.getBirthDate();
+//			this.type = pet.getType();
+//		}
+//
+//	}
 
 }

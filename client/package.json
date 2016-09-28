@@ -15,9 +15,12 @@
   "author": "Nils Hartmann",
   "license": "ISC",
   "dependencies": {
+    "@types/moment": "^2.13.0",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
+    "moment": "^2.15.1",
     "react": "^15.0.0",
+    "react-datepicker": "^0.29.0",
     "react-dom": "^15.0.0",
     "react-router": "^2.7.0",
     "redbox-react": "^1.2.3",

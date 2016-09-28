@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web.api;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ErrorResource {
     private String code;
     private String message;
+    private List<String> globalErrors;
     private Map<String, FieldErrorResource> fieldErrors;
 
     public ErrorResource() { }
@@ -39,5 +41,13 @@ public class ErrorResource {
         for (FieldErrorResource fieldErrorResource : fieldErrors) {
 					this.fieldErrors.put(fieldErrorResource.getField(), fieldErrorResource);
 				}
+    }
+    
+    public void addGlobalError(String message) {
+    	if (globalErrors == null) {
+    		globalErrors = new LinkedList<String>();
+    	}
+    	
+    	globalErrors.add(message);
     }
 }

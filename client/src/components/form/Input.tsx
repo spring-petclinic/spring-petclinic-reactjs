@@ -1,23 +1,45 @@
 import * as React from 'react';
 
-import { IError, IOnChangeHandler } from '../../types';
+import { IConstraint, IError, IInputChangeHandler } from '../../types';
 
-export default ({object, error, name, label, onChange}: { object: any, error: IError, name: string, label: string, onChange: IOnChangeHandler }) => {
+const NoConstraint: IConstraint = {
+  message: '',
+  validate: v => true
+};
+
+export default ({object, error, name, constraint = NoConstraint, label, onChange}: { object: any, error: IError, name: string, constraint?: IConstraint, label: string, onChange: IInputChangeHandler }) => {
 
   const handleOnChange = event => {
-    onChange(event.target.name, event.target.value);
+    const { name, value } = event.target;
+
+    // run validation (if any)
+    let error = null;
+    const fieldError = constraint.validate(value) === false ? { field: name, message: constraint.message } : null;
+
+    // invoke callback
+    onChange(name, value, fieldError);
   };
 
+  const value = object[name];
   const fieldError = error && error.fieldErrors[name];
 
-  const renderErrorLabel = () => (
-      fieldError ? (<span>
+  const valid = !fieldError && value;
+
+  const renderFeedback = () => {
+
+    if (valid) {
+      return <span className='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>;
+    }
+
+    if (fieldError) {
+      return (<span>
         <span className='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
         <span className='help-inline'>{error.fieldErrors[name].message}</span>
-      </span>)
-      :
-      null
-  );
+      </span>);
+    }
+
+    return null;
+  };
 
   const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 
@@ -26,9 +48,9 @@ export default ({object, error, name, label, onChange}: { object: any, error: IE
       <label className='col-sm-2 control-label'>{label}</label>
 
       <div className='col-sm-10'>
-        <input type='text' name={name} className='form-control' value={object[name]} onChange={handleOnChange} />
-        <span className='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>
-        {renderErrorLabel()}
+        <input type='text' name={name} className='form-control' value={value} onChange={handleOnChange} />
+
+        {renderFeedback()}
       </div>
     </div>
   );

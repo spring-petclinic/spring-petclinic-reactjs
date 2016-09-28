@@ -25,6 +25,10 @@ module.exports = {
   },
   module: {
     loaders: [
+       {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css')
+       },
       {
         test: /\.less$/,
         loader: 'style!css!less',

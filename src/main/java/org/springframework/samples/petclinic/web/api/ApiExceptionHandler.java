@@ -36,9 +36,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler  {
    * @author Willie Wheeler (@williewheeler)
    */
   @ExceptionHandler({ InvalidRequestException.class })
-  protected ResponseEntity<Object> handleInvalidRequest(RuntimeException e, WebRequest request) {
-  	logger.info("InvalidRequestException caught", e);
-      InvalidRequestException ire = (InvalidRequestException) e;
+  protected ResponseEntity<Object> handleInvalidRequest(InvalidRequestException ire, WebRequest request) {
+  	logger.info("InvalidRequestException caught", ire);
       List<FieldErrorResource> fieldErrorResources = new ArrayList<>();
 
       List<FieldError> fieldErrors = ire.getErrors().getFieldErrors();
@@ -57,6 +56,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler  {
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_JSON);
 
-      return handleExceptionInternal(e, error, headers, HttpStatus.UNPROCESSABLE_ENTITY, request);
+      return handleExceptionInternal(ire, error, headers, HttpStatus.UNPROCESSABLE_ENTITY, request);
+  }
+  
+  @ExceptionHandler( { BadRequestException.class } )
+  protected ResponseEntity<Object> handleBadRequest(BadRequestException bre, WebRequest request) {
+  	logger.info("BadRequestException caught", bre);
+  	
+  	ErrorResource error = new ErrorResource("BadRequest", bre.getMessage());
+  	error.addGlobalError(bre.getMessage());
+  	
+  	HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+
+    return handleExceptionInternal(bre, error, headers, HttpStatus.BAD_REQUEST, request);
   }
 }
