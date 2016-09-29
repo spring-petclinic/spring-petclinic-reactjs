@@ -5,6 +5,7 @@
 * Submitting a form should only be possible if no errors in form
 * Replace <a ... /> with <Link ... />
 * Table => Sortable Table (https://github.com/glittershark/reactable/blob/master/README.md)
+* REST calls not resulting in valid JSON (i.e. 500) must be handled correctly (or make sure on server side that we ALWAYS get json). Anyway those errors must be shown to the user not only on the console.
 
 # Differences from original spring boot example
 * Client-side validation

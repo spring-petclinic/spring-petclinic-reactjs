@@ -1,11 +1,13 @@
 /// <reference path="../../react-datepicker.d.ts" />
 
 import * as React from 'react';
-const ReactDatePicker = require('react-datepicker');
 
+const ReactDatePicker = require('react-datepicker');
 import * as moment from 'moment';
 
 import { IError, IInputChangeHandler } from '../../types';
+
+import FieldFeedbackPanel from './FieldFeedbackPanel';
 
 export default ({object, error, name, label, onChange}: { object: any, error: IError, name: string, label: string, onChange: IInputChangeHandler }) => {
 
@@ -16,15 +18,7 @@ export default ({object, error, name, label, onChange}: { object: any, error: IE
 
   const selectedValue = object[name] ? moment(object[name], 'YYYY/MM/DD') : null;
   const fieldError = error && error.fieldErrors[name];
-
-  const renderErrorLabel = () => (
-      fieldError ? (<span>
-        <span className='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
-        <span className='help-inline'>{error.fieldErrors[name].message}</span>
-      </span>)
-      :
-      null
-  );
+  const valid = !fieldError && selectedValue;
 
   const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 
@@ -35,7 +29,7 @@ export default ({object, error, name, label, onChange}: { object: any, error: IE
       <div className='col-sm-10'>
         <ReactDatePicker selected={selectedValue} onChange={handleOnChange} className='form-control' dateFormat='YYYY-MM-DD' />
         <span className='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>
-        {renderErrorLabel()}
+        <FieldFeedbackPanel valid={valid} fieldError={fieldError} />
       </div>
     </div>
   );

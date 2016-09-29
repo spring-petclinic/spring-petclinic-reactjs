@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import { IConstraint, IError, IInputChangeHandler } from '../../types';
 
+import FieldFeedbackPanel from './FieldFeedbackPanel';
+
 const NoConstraint: IConstraint = {
   message: '',
   validate: v => true
@@ -22,24 +24,7 @@ export default ({object, error, name, constraint = NoConstraint, label, onChange
 
   const value = object[name];
   const fieldError = error && error.fieldErrors[name];
-
   const valid = !fieldError && value;
-
-  const renderFeedback = () => {
-
-    if (valid) {
-      return <span className='glyphicon glyphicon-ok form-control-feedback' aria-hidden='true'></span>;
-    }
-
-    if (fieldError) {
-      return (<span>
-        <span className='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>
-        <span className='help-inline'>{error.fieldErrors[name].message}</span>
-      </span>);
-    }
-
-    return null;
-  };
 
   const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 
@@ -50,7 +35,7 @@ export default ({object, error, name, constraint = NoConstraint, label, onChange
       <div className='col-sm-10'>
         <input type='text' name={name} className='form-control' value={value} onChange={handleOnChange} />
 
-        {renderFeedback()}
+         <FieldFeedbackPanel valid={valid} fieldError={fieldError} />
       </div>
     </div>
   );
