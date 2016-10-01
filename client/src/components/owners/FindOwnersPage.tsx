@@ -88,7 +88,7 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
 
     fetch(requestUrl)
       .then(response => response.json())
-      .then(owners => { console.log('owners', owners); this.setState({ owners }); });
+      .then(owners => { this.setState({ owners }); });
   }
 
   renderOwners(owners: IOwner[]) {

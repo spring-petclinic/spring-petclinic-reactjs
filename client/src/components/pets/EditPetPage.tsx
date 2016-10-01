@@ -9,30 +9,32 @@ import PetEditor from './PetEditor';
 
 import createPetEditorModel from './createPetEditorModel';
 
-interface INewPetPageProps {
-  params: { ownerId: string };
+interface IEditPetPageProps {
+  params: {
+    ownerId: string,
+    petId: string
+  };
 }
 
-interface INewPetPageState {
+interface IEditPetPageState {
   pet?: IEditablePet;
   owner?: IOwner;
   pettypes?: ISelectOption[];
 };
 
-const NEW_PET: IEditablePet = {
-  id: null,
-  isNew: true,
-  name: '',
-  birthDate: null,
-  typeId: null
-};
-
-export default class NewPetPage extends React.Component<INewPetPageProps, INewPetPageState> {
+export default class EditPetPage extends React.Component<IEditPetPageProps, IEditPetPageState> {
 
   componentDidMount() {
-    createPetEditorModel(this.props.params.ownerId, Promise.resolve(NEW_PET))
+    const { params } = this.props;
+
+    const fetchUrl = url(`/api/owners/${params.ownerId}/pets/${params.petId}`);
+
+    const loadPetPromise = fetch(fetchUrl).then(response => response.json());
+
+    createPetEditorModel(this.props.params.ownerId, loadPetPromise)
       .then(model => this.setState(model));
   }
+
   render() {
     if (!this.state) {
       return <LoadingPanel />;

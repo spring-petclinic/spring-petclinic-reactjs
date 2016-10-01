@@ -29,6 +29,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,10 +39,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class PetResource extends AbstractResourceController {
-	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	private final ClinicService clinicService;
+	private final Logger				logger	= LoggerFactory.getLogger(getClass());
+
+	private final ClinicService	clinicService;
 
 	@Autowired
 	public PetResource(ClinicService clinicService) {
@@ -57,13 +58,13 @@ public class PetResource extends AbstractResourceController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void addNewPet(final @PathVariable("ownerId") int ownerId, final @Valid @RequestBody PetRequest petRequest,
 			final BindingResult bindingResult) {
-		
+
 		logger.info("PetRequest: {}", petRequest);
-		
+
 		if (bindingResult.hasErrors()) {
 			throw new InvalidRequestException("Submitted Pet invalid", bindingResult);
 		}
-		
+
 		Pet pet = new Pet();
 		Owner owner = this.clinicService.findOwnerById(ownerId);
 		if (owner == null) {
@@ -74,11 +75,16 @@ public class PetResource extends AbstractResourceController {
 		save(pet, petRequest);
 	}
 
-//	@PutMapping("/owners/{ownerId}/pets/{petId}")
-//	@ResponseStatus(HttpStatus.NO_CONTENT)
-//	public void processUpdateForm(@RequestBody PetRequest petRequest) {
-//		save(clinicService.findPetById(petRequest.getId()), petRequest);
-//	}
+	@PutMapping("/owners/{ownerId}/pets/{petId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void processUpdateForm(final @PathVariable("petId") int petId, final @Valid @RequestBody PetRequest petRequest, final BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			throw new InvalidRequestException("Submitted Pet invalid", bindingResult);
+		}
+
+		save(clinicService.findPetById(petId), petRequest);
+	}
 
 	private void save(Pet pet, PetRequest petRequest) {
 
@@ -95,30 +101,38 @@ public class PetResource extends AbstractResourceController {
 		clinicService.savePet(pet);
 	}
 
-//	@GetMapping("/owner/*/pet/{petId}")
-//	public PetDetails findPet(@PathVariable("petId") int petId) {
-//		Pet pet = this.clinicService.findPetById(petId);
-//		return new PetDetails(pet);
-//	}
+	@GetMapping("/owners/*/pets/{petId}")
+	public PetRequest findPet(@PathVariable("petId") int petId) {
+		final Pet pet = this.clinicService.findPetById(petId);
 
-//	@Getter
-//	static class PetDetails {
-//
-//		long		id;
-//		String	name;
-//		String	owner;
-//		@DateTimeFormat(pattern = "yyyy-MM-dd")
-//		Date		birthDate;
-//		PetType	type;
-//
-//		PetDetails(Pet pet) {
-//			this.id = pet.getId();
-//			this.name = pet.getName();
-//			this.owner = pet.getOwner().getFirstName() + " " + pet.getOwner().getLastName();
-//			this.birthDate = pet.getBirthDate();
-//			this.type = pet.getType();
-//		}
-//
-//	}
+		final PetRequest petRequest = new PetRequest();
+		petRequest.setId(pet.getId());
+		petRequest.setBirthDate(pet.getBirthDate());
+		petRequest.setName(pet.getName());
+		petRequest.setTypeId(pet.getType().getId());
+
+		return petRequest;
+	}
+
+	// @Getter
+	// static class PetDetails {
+	//
+	// long id;
+	// String name;
+	// String owner;
+	// @DateTimeFormat(pattern = "yyyy-MM-dd")
+	// Date birthDate;
+	// PetType type;
+	//
+	// PetDetails(Pet pet) {
+	// this.id = pet.getId();
+	// this.name = pet.getName();
+	// this.owner = pet.getOwner().getFirstName() + " " +
+	// pet.getOwner().getLastName();
+	// this.birthDate = pet.getBirthDate();
+	// this.type = pet.getType();
+	// }
+	//
+	// }
 
 }
