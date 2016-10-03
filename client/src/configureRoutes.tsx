@@ -10,6 +10,7 @@ import NewOwnerPage from './components/owners/NewOwnerPage';
 import EditOwnerPage from './components/owners/EditOwnerPage';
 import NewPetPage from './components/pets/NewPetPage';
 import EditPetPage from './components/pets/EditPetPage';
+import VisitsPage from './components/visits/VisitsPage';
 import VetsPage from './components/vets/VetsPage';
 import ErrorPage from './components/ErrorPage';
 
@@ -26,6 +27,7 @@ export default () => (
     <Route path='/owners/:ownerId/edit' component={EditOwnerPage} />
     <Route path='/owners/:ownerId/pets/:petId/edit' component={EditPetPage} />
     <Route path='/owners/:ownerId/pets/new' component={NewPetPage} />
+    <Route path='/owners/:ownerId/pets/:petId/visits/new' component={VisitsPage} />
     <Route path='/owners/:ownerId' component={OwnersPage} />
     <Route path='/vets' component={VetsPage} />
     <Route path='/error' component={ErrorPage} />

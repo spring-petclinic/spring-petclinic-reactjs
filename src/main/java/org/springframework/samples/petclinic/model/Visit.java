@@ -26,6 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -43,7 +44,9 @@ public class Visit extends BaseEntity {
     @Column(name = "visit_date")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
+  	@JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date;
+    
 
     /**
      * Holds value of property description.
