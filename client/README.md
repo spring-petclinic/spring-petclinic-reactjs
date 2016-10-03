@@ -1,5 +1,11 @@
 # React Frontend for Spring Boot PetClinic demo
 
+## Backend
+
+The backend source code is based on the `spring-boot` and the `angularjs` branch in the sample repository:
+* `https://github.com/spring-projects/spring-petclinic/tree/springboot`
+* `https://github.com/spring-projects/spring-petclinic/tree/angularjs`
+
 ## Install and run
 
 Note: Spring Boot App must be running before starting the client
