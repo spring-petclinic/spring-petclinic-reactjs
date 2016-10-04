@@ -12,8 +12,7 @@ const entries = [
 
 
 module.exports = {
-  /* redbox-react/README.md */
-  devtool: 'eval',
+  devtool: 'source-map',
   entry: entries,
   output: {
     path: path.join(__dirname, 'public/dist/'),
