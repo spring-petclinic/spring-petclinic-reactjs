@@ -33,6 +33,7 @@ export default class NewPetPage extends React.Component<INewPetPageProps, INewPe
     createPetEditorModel(this.props.params.ownerId, Promise.resolve(NEW_PET))
       .then(model => this.setState(model));
   }
+
   render() {
     if (!this.state) {
       return <LoadingPanel />;

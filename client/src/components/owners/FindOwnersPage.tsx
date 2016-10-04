@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { IRouter, Link } from 'react-router';
+import { IOwner, IRouterContext } from '../../types';
 import { url } from '../../util';
 
-import { IOwner, IRouterContext } from '../../types';
+import OwnersTable from './OwnersTable';
+
 
 interface IFindOwnersPageProps {
   location: HistoryModule.Location;
@@ -17,7 +19,6 @@ interface IFindOwnersPageState {
 const getFilterFromLocation = (location) => {
   return location.query ? (location.query as any).lastName : null;
 };
-
 
 export default class FindOwnersPage extends React.Component<IFindOwnersPageProps, IFindOwnersPageState> {
   context: IRouterContext;
@@ -91,51 +92,6 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
       .then(owners => { this.setState({ owners }); });
   }
 
-  renderOwners(owners: IOwner[]) {
-    if (!owners) {
-      return null;
-    }
-
-    if (owners.length === 0) {
-      return <h2>No owners found</h2>;
-    }
-
-    function renderRow(owner: IOwner) {
-      return <tr key={owner.id}>
-         <td>
-            <a href={'/owners/' + owner.id}>
-                {owner.firstName} {owner.lastName}
-            </a>
-        </td>
-        <td className='hidden-sm hidden-xs'>{owner.address}</td>
-        <td>{owner.city}</td>
-        <td>{owner.telephone}</td>
-        <td className='hidden-xs'>{owner.pets.map(pet => pet.name).join(', ')}</td>
-      </tr>;
-    }
-
-    return (
-      <div>
-        <h2>{owners.length} Owners found</h2>
-        <table className='table table-striped'>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th className='hidden-sm hidden-xs'>Address</th>
-              <th>City</th>
-              <th>Telephone</th>
-              <th className='hidden-xs'>Pets</th>
-            </tr>
-          </thead>
-          <tbody>
-            {owners.map(renderRow)}
-          </tbody>
-        </table>
-
-      </div>
-    );
-  }
-
   render() {
     const { filter, owners } = this.state;
 
@@ -160,11 +116,10 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
           </div>
         </form>
         <br />
-        {this.renderOwners(owners)}
+        <OwnersTable owners={owners} />
         <br />
         <Link className='btn btn-default' to='/owners/new'> Add Owner</Link>
       </span>
     );
   }
 };
-
