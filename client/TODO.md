@@ -1,5 +1,5 @@
 # To be done
-[ ] missing pages
+[x] missing pages
 [ ] localization
 [ ] align error messages in validations from server and client
 [ ] Submitting a form should only be possible if no errors in form

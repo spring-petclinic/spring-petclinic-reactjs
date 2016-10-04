@@ -3,14 +3,12 @@
   "version": "0.0.1",
   "description": "Spring Boot Pet Clinic Sample Application with React Frontend",
   "main": "index.js",
-  "repository": "https://github.com/nilshartmann/hapi-react-starter-kit",
+  "repository": "https://github.com/nilshartmann/spring-petclinic",
   "scripts": {
-    "postinstall": "typings install && npm run build:styles",
+    "postinstall": "typings install",
     "install-types": "typings install",
     "start": "node server.js",
-    "build:styles": "rimraf ./public/dist && webpack --config webpack.styles.config.js",
-    "build:clean": "rimraf ./public/dist && webpack --config webpack.config.js",
-    "build:prod": "npm run build:clean && cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+    "build:clean": "rimraf ./public/dist && webpack --config webpack.config.js"
   },
   "author": "Nils Hartmann",
   "license": "ISC",

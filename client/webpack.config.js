@@ -41,6 +41,24 @@ module.exports = {
     ],
     loaders: [
       {
+        test: /\.css$/,
+        loader: 'style!css'
+      },
+      {
+        test: /\.less$/,
+        loader: 'style!css!less',
+        include: path.join(__dirname, 'src/styles')
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url?limit=25000'
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file?name=/fonts/[name].[ext]'
+      },
+
+      {
         test: /\.tsx?$/,
         loader: 'babel!ts',
         include: path.join(__dirname, 'src')

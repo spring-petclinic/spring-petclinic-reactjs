@@ -5,6 +5,8 @@ import { AppContainer } from 'react-hot-loader';
 
 import { browserHistory as history } from 'react-router';
 
+require('./styles/less/petclinic.less');
+
 // The Application
 import Root from './Root';
 
