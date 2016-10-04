@@ -18,7 +18,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public/dist/'),
     filename: 'bundle.js',
-    publicPath: '/dist'
+    publicPath: '/dist/'
     /* redbox-react/README.md */
     // ,devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
   },
@@ -55,7 +55,7 @@ module.exports = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file?name=/fonts/[name].[ext]'
+        loader: 'file?name=public/fonts/[name].[ext]'
       },
 
       {
