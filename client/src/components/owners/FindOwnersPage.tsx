@@ -97,27 +97,27 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
 
     return (
       <span>
-        <h2>Find Owners</h2>
+        <section>
+          <h2>Find Owners</h2>
 
-        <form className='form-horizontal' action='javascript:void(0)'>
-          <div className='form-group'>
-            <div className='control-group' id='lastName'>
-              <label className='col-sm-2 control-label'>Last name </label>
-              <div className='col-sm-10'>
-                <input className='form-control' name='filter' value={filter || ''} onChange={this.onFilterChange} size={30} maxLength={80} />
-                { /* <span className='help-inline'><form:errors path='*'/></span> TODO */}
+          <form className='form-horizontal' action='javascript:void(0)'>
+            <div className='form-group'>
+              <div className='control-group' id='lastName'>
+                <label className='col-sm-2 control-label'>Last name </label>
+                <div className='col-sm-10'>
+                  <input className='form-control' name='filter' value={filter || ''} onChange={this.onFilterChange} size={30} maxLength={80} />
+                  { /* <span className='help-inline'><form:errors path='*'/></span> TODO */}
+                </div>
               </div>
             </div>
-          </div>
-          <div className='form-group'>
-            <div className='col-sm-offset-2 col-sm-10'>
-              <button type='button' onClick={this.submitSearchForm} className='btn btn-default'>Find Owner</button>
+            <div className='form-group'>
+              <div className='col-sm-offset-2 col-sm-10'>
+                <button type='button' onClick={this.submitSearchForm} className='btn btn-default'>Find Owner</button>
+              </div>
             </div>
-          </div>
-        </form>
-        <br />
+          </form>
+        </section>
         <OwnersTable owners={owners} />
-        <br />
         <Link className='btn btn-default' to='/owners/new'> Add Owner</Link>
       </span>
     );

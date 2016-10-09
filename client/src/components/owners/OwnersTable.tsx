@@ -17,7 +17,7 @@ const renderRow = (owner: IOwner) => (
 );
 
 const renderOwners = (owners: IOwner[]) => (
-  <div>
+  <section>
     <h2>{owners.length} Owners found</h2>
     <table className='table table-striped'>
       <thead>
@@ -33,7 +33,7 @@ const renderOwners = (owners: IOwner[]) => (
         {owners.map(renderRow)}
       </tbody>
     </table>
-  </div>
+  </section>
 );
 
 export default ({owners}: { owners: IOwner[] }) => owners ? renderOwners(owners) : null;
