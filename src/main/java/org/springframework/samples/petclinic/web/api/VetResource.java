@@ -39,6 +39,4 @@ public class VetResource extends AbstractResourceController {
     public Collection<Vet> showResourcesVetList() {
         return this.clinicService.findVets();
     }
-
-
 }
