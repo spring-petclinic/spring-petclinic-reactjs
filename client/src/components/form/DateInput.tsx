@@ -18,7 +18,7 @@ export default ({object, error, name, label, onChange}: { object: any, error: IE
 
   const selectedValue = object[name] ? moment(object[name], 'YYYY/MM/DD') : null;
   const fieldError = error && error.fieldErrors[name];
-  const valid = !fieldError && selectedValue;
+  const valid = !fieldError && selectedValue != null;
 
   const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router';
 import { IOwner, IPet } from '../../types';
 
-const VisitsTable = ({ownerId, pet}: { ownerId: string, pet: IPet }) => (
+const VisitsTable = ({ownerId, pet}: { ownerId: number, pet: IPet }) => (
   <table className='table-condensed'>
     <thead>
       <tr>
