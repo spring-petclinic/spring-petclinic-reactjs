@@ -20,6 +20,6 @@ export const submitForm = (method: IHttpMethod, path: string, data: any, onSucce
   };
 
   console.log('Submitting to ' + method + ' ' + requestUrl);
-  fetch(requestUrl, fetchParams)
+  return fetch(requestUrl, fetchParams)
     .then(response => response.status === 204 ? onSuccess(response.status, {}) : response.json().then(result => onSuccess(response.status, result)));
 };
