@@ -9,10 +9,11 @@ const NoConstraint: IConstraint = {
   validate: v => true
 };
 
+
 export default ({object, error, name, constraint = NoConstraint, label, onChange}: { object: any, error: IError, name: string, constraint?: IConstraint, label: string, onChange: IInputChangeHandler }) => {
 
   const handleOnChange = event => {
-    const { name, value } = event.target;
+    const { value } = event.target;
 
     // run validation (if any)
     let error = null;
@@ -24,7 +25,7 @@ export default ({object, error, name, constraint = NoConstraint, label, onChange
 
   const value = object[name];
   const fieldError = error && error.fieldErrors[name];
-  const valid = !fieldError && value;
+  const valid = !fieldError && value !== null && value !== undefined;
 
   const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 

@@ -1,4 +1,4 @@
-declare var jest, describe, beforeEach, it, test, expect;
+require('jest');
 
 import { url, submitForm } from '../util';
 

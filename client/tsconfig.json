@@ -5,7 +5,7 @@
     "noImplicitAny": false,
     "preserveConstEnums": true,
     "removeComments": true,
-    "target": "ES6",
+    "target": "ES5",
     "allowJs": true,
     "outDir": "public/dist",
     "sourceMap": true
