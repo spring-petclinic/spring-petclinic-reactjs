@@ -8,7 +8,7 @@
     "postinstall": "typings install",
     "install-types": "typings install",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watch --no-cache",
     "start": "node server.js",
     "build:clean": "rimraf ./public/dist && webpack --config webpack.config.js"
   },
