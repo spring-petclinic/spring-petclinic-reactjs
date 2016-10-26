@@ -2,11 +2,11 @@ require('jest');
 import * as React from 'react';
 import { shallow } from 'enzyme';
 
-import { NotEmpty } from '../Constraints';
-import FieldFeedbackPanel from '../FieldFeedbackPanel';
-import { IInputChangeHandler, IError, IConstraint } from '../../../types';
+import { NotEmpty } from '../../../../src/components/form/Constraints';
+import FieldFeedbackPanel from '../../../../src/components/form/FieldFeedbackPanel';
+import { IInputChangeHandler, IError, IConstraint } from '../../../../src/types';
 
-import Input from '../Input';
+import Input from '../../../../src/components/form/Input';
 
 describe('Input', () => {
 

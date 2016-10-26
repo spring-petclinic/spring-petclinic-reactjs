@@ -8,7 +8,7 @@
     "postinstall": "typings install",
     "install-types": "typings install",
     "test": "jest",
-    "test:watch": "jest --watch --no-cache",
+    "test:watch": "jest --watchAll --no-cache",
     "start": "node server.js",
     "build:clean": "rimraf ./public/dist && webpack --config webpack.config.js"
   },
@@ -27,8 +27,6 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
-    "@types/enzyme": "^2.4.36",
-    "@types/jest": "^15.1.32",
     "babel-core": "^6.4.0",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",

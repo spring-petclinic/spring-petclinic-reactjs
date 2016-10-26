@@ -5,7 +5,7 @@
     "noImplicitAny": false,
     "preserveConstEnums": true,
     "removeComments": true,
-    "target": "ES5",
+    "target": "ES6",
     "allowJs": true,
     "outDir": "public/dist",
     "sourceMap": true
@@ -13,6 +13,7 @@
   "exclude": [
     "node_modules",
     "typings/browser.d.ts",
-    "typings/browser"
+    "typings/browser",
+    "tests"
   ]
 }
