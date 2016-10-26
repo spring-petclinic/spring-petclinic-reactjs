@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watchAll --no-cache",
     "start": "node server.js",
-    "build:clean": "rimraf ./public/dist && webpack --config webpack.config.js"
+    "build:clean": "rimraf ./public/dist && webpack --config webpack.config.js",
+    "build:prod": "rimraf ./public/dist && NODE_ENV=production webpack --config webpack.config.prod.js"
   },
   "author": "Nils Hartmann",
   "license": "ISC",

@@ -4,9 +4,6 @@ const webpack = require('webpack');
 const port = process.env.PORT || 3000;
 
 const entries = [
-  'webpack-dev-server/client?http://localhost:' + port,
-  'webpack/hot/only-dev-server',
-  'react-hot-loader/patch',
   './src/main.tsx'
 ];
 
@@ -22,9 +19,11 @@ module.exports = {
     // ,devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      __API_SERVER_URL__: JSON.stringify('http://localhost:8080')
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
+      },
+       __API_SERVER_URL__: JSON.stringify('http://localhost:8080')
     })
   ],
   resolve: {
