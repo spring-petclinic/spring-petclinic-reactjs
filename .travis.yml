@@ -4,4 +4,10 @@ branches:
   - reactjs
 language: java
 jdk: oraclejdk8
+node_js:
+  - "6"
+script:
+ - nvm install 6 
+ - cd client && npm install && npm test
+
 
