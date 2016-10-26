@@ -1,2 +1,7 @@
+dist: trusty
+branches:
+  only:
+  - reactjs
 language: java
 jdk: oraclejdk8
+
