@@ -1,7 +1,7 @@
 dist: trusty
 branches:
   only:
-  - reactjs
+  - master
 language: java
 jdk: oraclejdk8
 node_js:
