@@ -1,9 +1,50 @@
-# Spring Boot version of the Spring PetClinic Sample Application with a ReactJS frontend
+# React Frontend for Spring Boot PetClinic demo
 [![Build Status](https://travis-ci.org/spring-projects/spring-petclinic.png?branch=master)](https://travis-ci.org/spring-projects/spring-petclinic/)
 
-## Notes on the ReactJS version
-Please find more information (e.g. how to run the sample) in the `client`-folder: [client/README.md](client/README.md)
+This project is a port of the [Spring (Boot) PetClinic demo](https://github.com/spring-projects/spring-petclinic) with a frontend built using [ReactJS](https://facebook.github.io/react/) and
+[TypeScript](https://www.typescriptlang.org/). 
 
+I have tried to make as few modifications to the backend code as necessary to the [spring-boot branch](https://github.com/spring-projects/spring-petclinic/tree/springboot) of the original sample project.
+Mainly I've added the new package `org.springframework.samples.petclinic.web.api`
+that contains the REST Api that is used by the React frontend. In this package most of the classes are taken 
+from the [angularjs version](https://github.com/spring-projects/spring-petclinic/tree/angularjs) of the demo.
+
+## Contribution
+
+If you like to help and contribute (there's lot root for improvements! I've collected a list of ideas [here: TODO.md](TODO.md)) you're more than welcome! Please open an issue or contact me on [Twitter](https://twitter.com/nilshartmann) so we can discuss together!
+
+
+## Install and run
+
+Note: Spring Boot Server App must be running before starting the client!
+
+To start the server, launch a Terminal and run from the project's root folder (`spring-petclinic`):
+```
+./mvnw spring-boot:run
+```
+
+When the server is running you can try to access the API for example to query all known pet types:
+```
+curl http://localhost:8080/api/pettypes
+```
+
+BTW: the original (JSP-based) frontend is still available at `http://localhost:8080`.
+
+After starting the server you can install and run the client from the `client` folder:
+
+1. `npm install` (installs the node modules and the TypeScript definition files)
+2. `PORT=4444 npm start` 
+3. Open `http://localhost:4444`
+
+(Why not use the same server for backend and frontend? Because Webpack does a great job for serving JavaScript-based SPAs and I think it's not too uncommon to run this kind of apps using two dedicated server, one for backend, one for frontend)
+
+## Feedback
+
+In case you have any comments, questions, bugs, enhancements feel free to open an issue in this repository.
+If you you want to follow me on twitter, my handle is [@nilshartmann](https://twitter.com/nilshartmann).
+ 
+------
+ 
 # From the original sample README file:
 
 ## Understanding the Spring Petclinic application with a few diagrams

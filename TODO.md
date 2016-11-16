@@ -8,6 +8,7 @@
 - [ ] REST calls not resulting in valid JSON (i.e. 500) must be handled correctly (or make sure on server side that we ALWAYS get json). Anyway those errors must be shown to the user not only on the console.
 
 # Refactoring / Clean up
+- [ ] General clean-up as this is an own repository now and not only a branch
 - [ ] Centralize fetch calls in own function and add error handling
 - [ ] maybe centralize location handling (push / redirect to other url) to remove need of context in components
 - [ ] OwnersPage => OwnerPage
@@ -15,7 +16,8 @@
 - [ ] centralize loading of an owner (EditOwnerPage, OwnersPage) and handle 404 from API
 - [ ] remove isNew from API (use id===null instead)
 - [ ] IBaseEntity: id as 'any'?
-- [ ] Refactor/Clean-up IPetRequest, IEditablePet (also on Server PetRequest) 
+- [ ] Refactor/Clean-up IPetRequest, IEditablePet (also on Server PetRequest)
+- [ ] Base on [spring-petclinic-microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) 
 
 # New Features
 - [x] add client-side validation to input fields to show advantage of SPA 
