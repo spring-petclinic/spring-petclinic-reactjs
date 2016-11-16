@@ -1,9 +1,9 @@
 {
-  "name": "springboot-petclinic-react",
+  "name": "spring-petclinic-reactjs",
   "version": "0.0.1",
   "description": "Spring Boot Pet Clinic Sample Application with React Frontend",
   "main": "index.js",
-  "repository": "https://github.com/nilshartmann/spring-petclinic",
+  "repository": "https://github.com/spring-petclinic/spring-petclinic-reactjs",
   "scripts": {
     "postinstall": "typings install",
     "install-types": "typings install",
