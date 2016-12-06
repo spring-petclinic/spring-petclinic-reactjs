@@ -54,11 +54,11 @@ public class VisitResource extends AbstractResourceController {
 
 		final Pet pet = clinicService.findPetById(petId);
 		if (pet == null) {
-			throw new BadRequestException("Pet with Id '" + pet + "' is unknown.");
+			throw new BadRequestException("Pet with Id '" + petId + "' is unknown.");
 		}
-		
+
 		pet.addVisit(visit);
-		
+
 		clinicService.saveVisit(visit);
 	}
 }
