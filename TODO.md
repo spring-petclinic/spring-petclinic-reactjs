@@ -18,6 +18,7 @@
 - [ ] IBaseEntity: id as 'any'?
 - [ ] Refactor/Clean-up IPetRequest, IEditablePet (also on Server PetRequest)
 - [ ] Base on [spring-petclinic-microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) 
+- [x] Remove JSP pages and static resources from the Spring Boot backend
 
 # New Features
 - [x] add client-side validation to input fields to show advantage of SPA 
@@ -29,4 +30,3 @@
 * Client-side validation
 
 
- 
