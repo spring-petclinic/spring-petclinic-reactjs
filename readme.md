@@ -9,6 +9,10 @@ Mainly I've added the new package `org.springframework.samples.petclinic.web.api
 that contains the REST Api that is used by the React frontend. In this package most of the classes are taken 
 from the [angularjs version](https://github.com/spring-projects/spring-petclinic/tree/angularjs) of the demo.
 
+## Related projects
+
+Note there is another Spring PetClinic example that uses React: [spring-petclinic-graphql](https://github.com/spring-petclinic/spring-petclinic-graphql). Beside React that example uses **GraphQL** for API queries instead of the REST API.
+
 ## Contribution
 
 If you like to help and contribute (there's lot root for improvements! I've collected a list of ideas [here: TODO.md](TODO.md)) you're more than welcome! Please open an issue or contact me on [Twitter](https://twitter.com/nilshartmann) so we can discuss together!
