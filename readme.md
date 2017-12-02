@@ -32,8 +32,6 @@ When the server is running you can try to access the API for example to query al
 curl http://localhost:8080/api/pettypes
 ```
 
-BTW: the original (JSP-based) frontend is still available at `http://localhost:8080`.
-
 After starting the server you can install and run the client from the `client` folder:
 
 1. `npm install` (installs the node modules and the TypeScript definition files)
