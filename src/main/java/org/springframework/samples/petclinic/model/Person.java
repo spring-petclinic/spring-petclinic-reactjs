@@ -30,10 +30,12 @@ public class Person extends BaseEntity {
 
     @Column(name = "first_name")
     @NotEmpty
+    @Pattern(regexp = "[a-z-A-Z]*", message = "First name has invalid characters")
     protected String firstName;
 
     @Column(name = "last_name")
     @NotEmpty
+    @Pattern(regexp = "[a-z-A-Z]*", message = "First name has invalid characters")
     protected String lastName;
 
     public String getFirstName() {
