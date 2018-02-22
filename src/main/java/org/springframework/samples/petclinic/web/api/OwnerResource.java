@@ -51,7 +51,11 @@ public class OwnerResource extends AbstractResourceController {
 	}
 
 	private Owner retrieveOwner(int ownerId) {
-		return this.clinicService.findOwnerById(ownerId);
+		Owner owner = this.clinicService.findOwnerById(ownerId);
+		if (owner == null) {
+			throw new BadRequestException("Owner with Id '" + ownerId + "' is unknown.");
+		}
+		return owner;
 	}
 
 	/**
