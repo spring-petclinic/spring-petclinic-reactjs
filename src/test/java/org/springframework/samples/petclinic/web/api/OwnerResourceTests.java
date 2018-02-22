@@ -38,6 +38,17 @@ public class OwnerResourceTests {
 	ClinicService		clinicService;
 
 	@Test
+	public void shouldNotGetOwnerById() throws Exception {
+		given(clinicService.findOwnerById(1)).willReturn(setupOwners().get(1));
+
+		mvc.perform(get("/api/owner/20") //
+				.accept(MediaType.APPLICATION_JSON)) //
+				.andExpect(status().is4xxClientError()) //
+				.andExpect(content().contentType("application/json")); //
+				
+	}
+	
+	@Test
 	public void shouldGetOwnerById() throws Exception {
 		given(clinicService.findOwnerById(1)).willReturn(setupOwners().get(1));
 
