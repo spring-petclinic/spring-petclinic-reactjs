@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.model;
+package org.springframework.samples.petclinic.model;   
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -35,7 +36,7 @@ public class Person extends BaseEntity {
 
     @Column(name = "last_name")
     @NotEmpty
-    @Pattern(regexp = "[a-z-A-Z]*", message = "First name has invalid characters")
+    @Pattern(regexp = "[a-z-A-Z]*", message = "Last name has invalid characters")
     protected String lastName;
 
     public String getFirstName() {
