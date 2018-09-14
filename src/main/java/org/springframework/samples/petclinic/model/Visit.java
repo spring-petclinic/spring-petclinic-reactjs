@@ -56,7 +56,7 @@ public class Visit extends BaseEntity {
     @DateTimeFormat(pattern = "hh:mm:ss a")
   	@JsonFormat(pattern = "hh:mm:ss a")
     private LocalTime time;
-    
+
 
     /**
      * Holds value of property description.
@@ -142,6 +142,25 @@ public class Visit extends BaseEntity {
      */
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+
+    /**
+     * Getter for property pet.
+     *
+     * @return Value of property pet.
+     */
+    public Vet getVet() {
+        return this.vet;
+    }
+
+    /**
+     * Setter for property pet.
+     *
+     * @param vet New value of property pet.
+     */
+    public void setVet(Vet vet) {
+        this.vet = vet;
     }
 
 }

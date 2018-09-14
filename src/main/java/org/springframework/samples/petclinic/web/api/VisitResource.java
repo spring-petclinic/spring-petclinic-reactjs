@@ -22,16 +22,11 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Juergen Hoeller
@@ -54,9 +49,17 @@ public class VisitResource extends AbstractResourceController {
         return this.clinicService.findVisitsByVetId(vetId);
     }
 
+    @DeleteMapping("/visits/{visitId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVisit(@PathVariable("visitId") int visitId){
+	    this.clinicService.deleteVisit(visitId);
+    }
+
 	@PostMapping("/owners/{ownerId}/pets/{petId}/visits")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void create(@PathVariable("petId") int petId, @Valid @RequestBody Visit visit, BindingResult bindingResult) {
+	public void create(@PathVariable("petId") int petId, @RequestBody
+        Visit visit, @RequestParam("vetId") int vetId, BindingResult
+                       bindingResult) {
 		if (bindingResult.hasErrors()) {
 			throw new InvalidRequestException("Visit is invalid", bindingResult);
 		}
@@ -65,6 +68,9 @@ public class VisitResource extends AbstractResourceController {
 		if (pet == null) {
 			throw new BadRequestException("Pet with Id '" + petId + "' is unknown.");
 		}
+
+		final Vet vet = clinicService.findVetById(vetId);
+		visit.setVet(vet);
 
 		pet.addVisit(visit);
 

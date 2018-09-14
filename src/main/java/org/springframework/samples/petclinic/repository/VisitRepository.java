@@ -18,9 +18,12 @@ package org.springframework.samples.petclinic.repository;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring Data naming
@@ -44,5 +47,10 @@ public interface VisitRepository extends Repository<Visit, Integer> {
     List<Visit> findByPetId(Integer petId);
 
     List<Visit> findByVetId(Integer vetId);
+
+    @Modifying
+    @Transactional
+    @Query(value="delete from Visit v where v.id = ?1")
+    void deleteById(Integer visitId);
 
 }

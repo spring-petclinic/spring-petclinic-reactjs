@@ -64,10 +64,12 @@ const PetEditDialog = ({
   currentVisitDescription,
   isDialogOpen,
   handleCloseDialog,
+  handleDeleteVisit,
   handleUpdateSelectedVet,
   handleUpdateSelectedDate,
   handleUpdateSelectedTimeSlot,
   handleUpdateVisitDescription,
+  handleSaveVisitForm,
   selectedDate,
   selectedVet,
   selectedTimeSlot,
@@ -149,7 +151,11 @@ const PetEditDialog = ({
               />
             </FormControl>
             <FormControl className={classes.formControl}>
-              <Button color="primary" variant="contained">
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={handleSaveVisitForm}
+              >
                 Save
               </Button>
             </FormControl>
@@ -177,7 +183,10 @@ const PetEditDialog = ({
                       secondary={`${visit.date} ${visit.time}`}
                     />
                     <ListItemSecondaryAction>
-                      <IconButton aria-label="Delete">
+                      <IconButton
+                        aria-label="Delete"
+                        onClick={handleDeleteVisit(visit.id)}
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
@@ -190,7 +199,7 @@ const PetEditDialog = ({
     </DialogContent>
     <DialogActions>
       <Button onClick={handleCloseDialog} color="primary">
-        Save
+        Close
       </Button>
     </DialogActions>
   </Dialog>
@@ -200,10 +209,12 @@ PetEditDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   isDialogOpen: PropTypes.bool.isRequired,
   handleCloseDialog: PropTypes.func.isRequired,
+  handleDeleteVisit: PropTypes.func.isRequired,
   handleUpdateSelectedVet: PropTypes.func.isRequired,
   handleUpdateSelectedDate: PropTypes.func.isRequired,
   handleUpdateSelectedTimeSlot: PropTypes.func.isRequired,
   handleUpdateVisitDescription: PropTypes.func.isRequired,
+  handleSaveVisitForm: PropTypes.func.isRequired,
   selectedDate: PropTypes.string,
   selectedVet: PropTypes.object,
   selectedTimeSlot: PropTypes.string,

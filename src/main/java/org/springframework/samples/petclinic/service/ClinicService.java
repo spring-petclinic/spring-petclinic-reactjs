@@ -42,6 +42,8 @@ public interface ClinicService {
 
     void saveVisit(Visit visit) throws DataAccessException;
 
+    Vet findVetById(int vetId) throws DataAccessException;
+
     Collection<Vet> findVets() throws DataAccessException;
 
     void saveOwner(Owner owner) throws DataAccessException;
@@ -49,7 +51,8 @@ public interface ClinicService {
     Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException;
 
     Collection<Visit> findVisitsByPetId(int petId);
-    
+
     Collection<Visit> findVisitsByVetId(int vetId);
 
+    void deleteVisit(int visitId);
 }

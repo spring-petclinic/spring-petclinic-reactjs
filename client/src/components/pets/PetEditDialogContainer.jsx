@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { ajax } from 'rxjs/ajax';
 import { catchError } from 'rxjs/operators';
 
-import { fetchPet } from '../../state/modules/pet';
+import { fetchPet, saveVisit } from '../../state/modules/pet';
 import PetEditDialog from './PetEditDialog';
 import getToday from '../../util/getToday';
+
+const moment = require('moment');
 
 class PetEditDialogContainer extends React.Component {
   state = {
@@ -21,6 +23,17 @@ class PetEditDialogContainer extends React.Component {
     const { fetchPetById, petId, ownerId } = this.props;
     fetchPetById(ownerId, petId);
   }
+
+  handleDeleteVisit = visitId => () => {
+    const { fetchPetById, petId, ownerId } = this.props;
+
+    const req = ajax.delete(`http://localhost:8080/api/visits/${visitId}`);
+
+    req.subscribe(
+      () => fetchPetById(ownerId, petId),
+      catchError(error => console.log(error.xhr.response))
+    );
+  };
 
   handleUpdateSelectedVet = e => {
     const req = ajax.getJSON(
@@ -51,6 +64,37 @@ class PetEditDialogContainer extends React.Component {
     this.setState({ currentVisitDescription: e.target.value });
   };
 
+  handleSaveVisitForm = () => {
+    const {
+      props: { fetchPetById, petId, saveVisitForm, ownerId },
+      state: {
+        currentVisitDescription,
+        selectedDate,
+        selectedTimeSlot,
+        selectedVet
+      }
+    } = this;
+
+    const visit = {
+      petId,
+      description: currentVisitDescription,
+      date: moment(selectedDate).format('YYYY/MM/DD'),
+      time: selectedTimeSlot,
+      vetId: selectedVet.id,
+      ownerId
+    };
+
+    saveVisitForm(visit);
+    fetchPetById(ownerId, petId);
+
+    this.setState({
+      selectedVet: undefined,
+      selectedDate: getToday(),
+      selectedTimeSlot: '',
+      currentVisitDescription: ''
+    });
+  };
+
   render() {
     const {
       props: { isDialogOpen, handleCloseDialog, visitDetails },
@@ -66,10 +110,12 @@ class PetEditDialogContainer extends React.Component {
       <PetEditDialog
         isDialogOpen={isDialogOpen}
         handleCloseDialog={handleCloseDialog}
+        handleDeleteVisit={this.handleDeleteVisit}
         handleUpdateSelectedVet={this.handleUpdateSelectedVet}
         handleUpdateSelectedDate={this.handleUpdateSelectedDate}
         handleUpdateSelectedTimeSlot={this.handleUpdateSelectedTimeSlot}
         handleUpdateVisitDescription={this.handleUpdateVisitDescription}
+        handleSaveVisitForm={this.handleSaveVisitForm}
         currentVisitDescription={currentVisitDescription}
         selectedDate={selectedDate}
         selectedVet={selectedVet}
@@ -86,7 +132,8 @@ PetEditDialogContainer.propTypes = {
   visitDetails: PropTypes.object,
   petId: PropTypes.number.isRequired,
   isDialogOpen: PropTypes.bool.isRequired,
-  handleCloseDialog: PropTypes.func.isRequired
+  handleCloseDialog: PropTypes.func.isRequired,
+  saveVisitForm: PropTypes.func.isRequired
 };
 
 PetEditDialogContainer.defaultProps = {
@@ -96,7 +143,8 @@ PetEditDialogContainer.defaultProps = {
 const mapStateToProps = state => ({ visitDetails: state.pet.visitDetails });
 
 const mapDispatchToProps = {
-  fetchPetById: fetchPet
+  fetchPetById: fetchPet,
+  saveVisitForm: saveVisit
 };
 
 const ConnectedComponent = connect(
