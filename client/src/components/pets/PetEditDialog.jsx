@@ -26,6 +26,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import getToday from '../../util/getToday';
+import times from '../../util/times';
 
 const Transition = props => <Slide direction="up" {...props} />;
 
@@ -55,13 +56,18 @@ const styles = theme => ({
   }
 });
 
+const disableTime = (time, selectedVet) =>
+  selectedVet ? selectedVet.timesBooked.indexOf(time) !== -1 : true;
+
 const PetEditDialog = ({
   classes,
+  currentVisitDescription,
   isDialogOpen,
   handleCloseDialog,
   handleUpdateSelectedVet,
   handleUpdateSelectedDate,
   handleUpdateSelectedTimeSlot,
+  handleUpdateVisitDescription,
   selectedDate,
   selectedVet,
   selectedTimeSlot,
@@ -93,7 +99,7 @@ const PetEditDialog = ({
                   name: 'vets'
                 }}
                 onChange={handleUpdateSelectedVet}
-                value={selectedVet}
+                value={selectedVet ? selectedVet.id : ''}
               >
                 {visitDetails.vets.map(vet => (
                   <MenuItem key={vet.id} value={`${vet.id}`}>
@@ -118,12 +124,28 @@ const PetEditDialog = ({
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="times">Times</InputLabel>
               <Select
-                disabled
                 inputProps={{
                   name: 'times'
                 }}
                 value={selectedTimeSlot}
                 onChange={handleUpdateSelectedTimeSlot}
+              >
+                {times.map(t => (
+                  <MenuItem
+                    key={t}
+                    value={t}
+                    disabled={disableTime(t, selectedVet)}
+                  >
+                    {t}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <TextField
+                label="Description"
+                value={currentVisitDescription}
+                onChange={handleUpdateVisitDescription}
               />
             </FormControl>
             <FormControl className={classes.formControl}>
@@ -143,14 +165,17 @@ const PetEditDialog = ({
         <Paper className={classes.paper}>
           <List>
             {visitDetails.pet.visits.length > 0
-              ? visitDetails.pet.visits.map(() => (
-                  <ListItem>
+              ? visitDetails.pet.visits.map(visit => (
+                  <ListItem key={visit.id}>
                     <ListItemAvatar>
                       <Avatar>
                         <TodayIcon />
                       </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="Visit" />
+                    <ListItemText
+                      primary={visit.description}
+                      secondary={`${visit.date} ${visit.time}`}
+                    />
                     <ListItemSecondaryAction>
                       <IconButton aria-label="Delete">
                         <DeleteIcon />
@@ -178,9 +203,11 @@ PetEditDialog.propTypes = {
   handleUpdateSelectedVet: PropTypes.func.isRequired,
   handleUpdateSelectedDate: PropTypes.func.isRequired,
   handleUpdateSelectedTimeSlot: PropTypes.func.isRequired,
+  handleUpdateVisitDescription: PropTypes.func.isRequired,
   selectedDate: PropTypes.string,
-  selectedVet: PropTypes.string,
+  selectedVet: PropTypes.object,
   selectedTimeSlot: PropTypes.string,
+  currentVisitDescription: PropTypes.string.isRequired,
   visitDetails: PropTypes.object.isRequired
 };
 

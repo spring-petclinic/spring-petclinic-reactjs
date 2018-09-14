@@ -17,17 +17,21 @@ package org.springframework.samples.petclinic.web.api;
 
 import javax.validation.Valid;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Juergen Hoeller
@@ -45,9 +49,14 @@ public class VisitResource extends AbstractResourceController {
 		this.clinicService = clinicService;
 	}
 
+	@GetMapping(value="/visits/list")
+    public Collection<Visit> showVetVisitList(@RequestParam("vetId") int vetId) {
+        return this.clinicService.findVisitsByVetId(vetId);
+    }
+
 	@PostMapping("/owners/{ownerId}/pets/{petId}/visits")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void createÏ(@PathVariable("petId") int petId, @Valid @RequestBody Visit visit, BindingResult bindingResult) {
+	public void create(@PathVariable("petId") int petId, @Valid @RequestBody Visit visit, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			throw new InvalidRequestException("Visit is invalid", bindingResult);
 		}
