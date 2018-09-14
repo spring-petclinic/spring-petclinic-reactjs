@@ -39,5 +39,12 @@ public interface VetRepository extends Repository<Vet, Integer> {
      */
     Collection<Vet> findAll() throws DataAccessException;
 
+    /**
+     * Retrieve a {@link Vet} from the data store by id.
+     * @param id the id to search for
+     * @return the {@link Vet} if found
+     */
+    Vet findById(int id);
+
 
 }

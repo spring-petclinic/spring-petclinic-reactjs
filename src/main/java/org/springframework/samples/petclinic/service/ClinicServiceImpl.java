@@ -98,6 +98,13 @@ public class ClinicServiceImpl implements ClinicService {
         petRepository.save(pet);
     }
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public Vet findVetById(int id) throws DataAccessException {
+        return vetRepository.findById(id);
+    }
+
     @Override
     @Transactional(readOnly = true)
     @Cacheable(value = "vets")
@@ -110,5 +117,14 @@ public class ClinicServiceImpl implements ClinicService {
 		return visitRepository.findByPetId(petId);
 	}
 
+    @Override
+	public Collection<Visit> findVisitsByVetId(int vetId) {
+		return visitRepository.findByVetId(vetId);
+	}
+
+    @Override
+    public void deleteVisit(int visitId) {
+        visitRepository.deleteById(visitId);
+    }
 
 }

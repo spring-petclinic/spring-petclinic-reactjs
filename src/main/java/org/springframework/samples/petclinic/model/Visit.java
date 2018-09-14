@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -46,7 +47,16 @@ public class Visit extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
   	@JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date;
-    
+
+    /**
+     * Holds value of property date.
+     */
+    @Column(name = "visit_time")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalTime")
+    @DateTimeFormat(pattern = "hh:mm:ss a")
+  	@JsonFormat(pattern = "hh:mm:ss a")
+    private LocalTime time;
+
 
     /**
      * Holds value of property description.
@@ -62,6 +72,14 @@ public class Visit extends BaseEntity {
     @JoinColumn(name = "pet_id")
     @JsonIgnore
     private Pet pet;
+
+    /**
+     * Holds value of property pet.
+     */
+    @ManyToOne
+    @JoinColumn(name = "vet_id")
+    @JsonIgnore
+    private Vet vet;
 
 
     /**
@@ -124,6 +142,25 @@ public class Visit extends BaseEntity {
      */
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+
+    /**
+     * Getter for property pet.
+     *
+     * @return Value of property pet.
+     */
+    public Vet getVet() {
+        return this.vet;
+    }
+
+    /**
+     * Setter for property pet.
+     *
+     * @param vet New value of property pet.
+     */
+    public void setVet(Vet vet) {
+        this.vet = vet;
     }
 
 }
