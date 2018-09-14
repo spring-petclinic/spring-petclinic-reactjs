@@ -44,7 +44,7 @@ class PetEditDialogContainer extends React.Component {
         this.setState({
           selectedVet: {
             id: e.target.value,
-            timesBooked: visits.map(v => v.time)
+            timesBooked: visits.map(({ date, time }) => ({ date, time }))
           }
         }),
 

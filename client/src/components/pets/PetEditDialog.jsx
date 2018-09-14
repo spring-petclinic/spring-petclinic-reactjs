@@ -28,6 +28,8 @@ import React from 'react';
 import getToday from '../../util/getToday';
 import times from '../../util/times';
 
+const moment = require('moment');
+
 const Transition = props => <Slide direction="up" {...props} />;
 
 const styles = theme => ({
@@ -56,8 +58,12 @@ const styles = theme => ({
   }
 });
 
-const disableTime = (time, selectedVet) =>
-  selectedVet ? selectedVet.timesBooked.indexOf(time) !== -1 : true;
+const disableTime = (t, d, selectedVet) =>
+  selectedVet
+    ? selectedVet.timesBooked.findIndex(tb => {
+        return tb.date === moment(d).format('YYYY/MM/DD') && tb.time === t;
+      }) !== -1
+    : true;
 
 const PetEditDialog = ({
   classes,
@@ -136,7 +142,7 @@ const PetEditDialog = ({
                   <MenuItem
                     key={t}
                     value={t}
-                    disabled={disableTime(t, selectedVet)}
+                    disabled={disableTime(t, selectedDate, selectedVet)}
                   >
                     {t}
                   </MenuItem>
