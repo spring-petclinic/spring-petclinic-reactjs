@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, IndexRoute, Redirect } from 'react-router';
+import {Route} from 'react-router';
 
 import App from './components/App';
 
@@ -12,12 +12,21 @@ import NewPetPage from './components/pets/NewPetPage';
 import EditPetPage from './components/pets/EditPetPage';
 import VisitsPage from './components/visits/VisitsPage';
 import VetsPage from './components/vets/VetsPage';
-import ErrorPage from './components/ErrorPage';
-
-
+import Login from './components/Login';
 import NotFoundPage from './components/NotFoundPage';
 
+function loggedIn() {
+    return false;
+}
 
+function requireAuth(nextState, replace) {
+    console.log('AUTH');
+    if (!loggedIn()) {
+        replace({
+            pathname: '/login'
+        });
+    }
+}
 
 export default () => (
   <Route component={App}>
@@ -29,8 +38,8 @@ export default () => (
     <Route path='/owners/:ownerId/pets/new' component={NewPetPage} />
     <Route path='/owners/:ownerId/pets/:petId/visits/new' component={VisitsPage} />
     <Route path='/owners/:ownerId' component={OwnersPage} />
-    <Route path='/vets' component={VetsPage} />
-    <Route path='/error' component={ErrorPage} />
+    <Route path='/vets' component={VetsPage} onEnter={requireAuth}/>
+    <Route path='/login' component={Login}/>
     <Route path='*' component={NotFoundPage} />
   </Route>
 );
