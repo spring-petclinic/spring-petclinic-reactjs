@@ -1,0 +1,55 @@
+buildscript {
+    ext {
+        dependencyManagementPluginVersion = '1.0.6.RELEASE'
+        springBootVersion = '2.1.2.RELEASE'
+    }
+
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+plugins {
+    id "org.sonarqube" version "2.6.2"
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'org.springframework.samples'
+version = '1.6.0-SNAPSHOT'
+description = 'petclinic'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'org.postgresql:postgresql'
+    compile 'org.flywaydb:flyway-core'
+
+    compile 'javax.cache:cache-api:1.0.0'
+    compile 'org.ehcache:ehcache:3.1.1'
+
+    runtime 'org.hsqldb:hsqldb:2.3.3'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
