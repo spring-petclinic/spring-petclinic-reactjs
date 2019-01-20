@@ -45,9 +45,8 @@ dependencies {
     compile 'javax.cache:cache-api:1.0.0'
     compile 'org.ehcache:ehcache:3.1.1'
 
-    runtime 'org.hsqldb:hsqldb:2.3.3'
-
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.testcontainers:postgresql:1.10.0'
 }
 
 tasks.withType(JavaCompile) {

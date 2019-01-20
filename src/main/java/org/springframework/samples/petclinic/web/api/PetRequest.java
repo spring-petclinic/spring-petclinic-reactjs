@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 public class PetRequest {
 	private Integer		id;
 	@JsonFormat(pattern = "yyyy/MM/dd")
-	
 	@NotNull
 	private LocalDate birthDate;
 	@Size(min = 2, max = 14 )

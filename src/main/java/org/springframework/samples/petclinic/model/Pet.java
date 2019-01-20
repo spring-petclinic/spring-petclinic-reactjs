@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.beans.support.MutableSortDefinition;
@@ -48,6 +49,7 @@ import javax.persistence.Table;
 public class Pet extends NamedEntity {
 
     @Column(name = "birth_date")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthDate;
 
     @ManyToOne

@@ -1,0 +1,7 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <logger name="org.testcontainers" level="warn"/>
+    <logger name="org.testcontainers.shaded.com.github.dockerjava.core.async.ResultCallbackTemplate"
+            level="warn"/>
+</configuration>

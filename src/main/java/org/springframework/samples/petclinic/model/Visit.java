@@ -17,6 +17,8 @@ package org.springframework.samples.petclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -40,6 +42,7 @@ public class Visit extends BaseEntity {
      * Holds value of property date.
      */
     @Column(name = "visit_date")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate date;
 
 
