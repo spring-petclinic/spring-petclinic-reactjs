@@ -12,10 +12,10 @@ const fetchParams = {
 
 export default (ownerId: string, petLoaderPromise: Promise<any>): Promise<any> => {
   return Promise.all(
-    [fetch(url('/api/pettypes'), fetchParams)
+    [fetch(url('api/pettypes'), fetchParams)
       .then(response => response.json())
       .then(toSelectOptions),
-    fetch(url('/api/owner/' + ownerId))
+    fetch(url('api/owners/' + ownerId))
       .then(response => response.json()),
       petLoaderPromise,
     ]

@@ -51,13 +51,15 @@ export default class Login extends React.Component<any, ILoginState> {
 
     onSubmit(event) {
         event.preventDefault();
-        console.log('here');
         let payload = {'username': this.state.username, 'password': this.state.password};
         console.log(payload);
         submitForm('POST', 'login', payload, (status, response) => {
             if (status === 200) {
                 let in30Minutes = 1 / 48;
-                Cookies.set('user', response.token, {expires: in30Minutes});
+                let date = new Date();
+                let minutes = 30;
+                date.setTime(date.getTime() + (minutes * 60 * 1000));
+                Cookies.set('user', response.token, {expires: date});
                 this.context.router.push({
                     pathname: '/'
                 });

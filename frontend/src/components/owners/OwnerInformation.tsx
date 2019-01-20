@@ -28,7 +28,7 @@ export default ({owner}: { owner: IOwner }) => (
       </tbody>
     </table>
 
-    <Link to={`/owners/${owner.id}/edit`} className='btn btn-default'>Edit Owner</Link>
+    <Link to={`owners/${owner.id}/edit`} className='btn btn-default'>Edit Owner</Link>
     &nbsp;
     <Link to={`/owners/${owner.id}/pets/new`} className='btn btn-default'>Add New Pet</Link>
   </section>

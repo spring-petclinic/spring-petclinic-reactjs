@@ -29,7 +29,6 @@ export default class VetsPage extends React.Component<void, IVetsPageState> {
         fetch(requestUrl, fetchParams)
             .then(response => response.json())
             .then(vets => {
-                console.log('vets', vets);
                 this.setState({vets});
             });
     }

@@ -48,7 +48,7 @@ export default class PetEditor extends React.Component<IPetEditorProps, IPetEdit
       typeId: editablePet.typeId
     };
 
-    const url = editablePet.isNew ? '/api/owners/' + owner.id + '/pets' :  '/api/owners/' + owner.id + '/pets/' + editablePet.id;
+    const url = editablePet.isNew ? 'api/owners/' + owner.id + '/pets' :  'api/owners/' + owner.id + '/pets/' + editablePet.id;
     submitForm(editablePet.isNew ? 'POST' : 'PUT', url, request, (status, response) => {
       if (status === 204) {
         this.context.router.push({
@@ -77,7 +77,7 @@ export default class PetEditor extends React.Component<IPetEditorProps, IPetEdit
     return (
       <span>
         <h2>{formLabel}</h2>
-        <form className='form-horizontal' method='POST' action={url('/api/owner')}>
+        <form className='form-horizontal' method='POST' action={url('api/owners')}>
           <div className='form-group has-feedback'>
             <div className='form-group'>
               <label className='col-sm-2 control-label'>Owner</label>

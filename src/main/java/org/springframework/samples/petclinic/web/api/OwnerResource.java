@@ -100,7 +100,7 @@ public class OwnerResource {
 	 * Update Owner
 	 */
 	@PutMapping("/{ownerId}")
-	public Owner updateOwner(@PathVariable("ownerId") int ownerId, @Valid @RequestBody Owner ownerRequest,
+	public Owner updateOwner(@PathVariable("ownerId") int ownerId, @RequestBody Owner ownerRequest,
 			final BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			throw new InvalidRequestException("Invalid Owner", bindingResult);

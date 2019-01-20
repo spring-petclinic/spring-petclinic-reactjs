@@ -23,11 +23,14 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Juergen Hoeller
@@ -60,5 +63,10 @@ public class VisitResource extends AbstractResourceController {
 		pet.addVisit(visit);
 
 		clinicService.saveVisit(visit);
+	}
+
+	@GetMapping("/visits")
+	public List<Visit> getAll() {
+		return clinicService.getAllVisits();
 	}
 }

@@ -51,7 +51,7 @@ export default class VisitsPage extends React.Component<IVisitsPageProps, IVisit
                 }
             };
 
-            fetch(url(`/api/owner/${params.ownerId}`), fetchParams)
+            fetch(url(`api/owners/${params.ownerId}`), fetchParams)
                 .then(response => response.json())
                 .then(owner => this.setState(
                     {
@@ -73,7 +73,7 @@ export default class VisitsPage extends React.Component<IVisitsPageProps, IVisit
             description: visit.description
         };
 
-        const url = '/api/owners/' + owner.id + '/pets/' + petId + '/visits';
+        const url = 'api/owners/' + owner.id + '/pets/' + petId + '/visits';
         submitForm('POST', url, request, (status, response) => {
             if (status === 204) {
                 this.context.router.push({
@@ -110,7 +110,7 @@ export default class VisitsPage extends React.Component<IVisitsPageProps, IVisit
                 <b>Pet</b>
                 <PetDetails owner={owner} pet={pet}/>
 
-                <form className='form-horizontal' method='POST' action={url('/api/owner')}>
+                <form className='form-horizontal' method='POST' action={url('api/owners')}>
                     <div className='form-group has-feedback'>
                         <DateInput object={visit} error={error} label='Date' name='date'
                                    onChange={this.onInputChange}/>

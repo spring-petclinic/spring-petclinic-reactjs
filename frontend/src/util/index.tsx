@@ -1,4 +1,4 @@
-import { IHttpMethod } from '../types';
+import {IHttpMethod} from '../types';
 import * as Cookies from 'es-cookie';
 
 declare var __API_SERVER_URL__;
@@ -13,20 +13,21 @@ export const url = (path: string): string => `${BACKEND_URL}/${path}`;
  * regardless of the HTTP status code.
  */
 export const submitForm = (method: IHttpMethod, path: string, data: any, onSuccess: (status: number, response: any) => void) => {
-  const requestUrl = url(path);
-  const token = Cookies.get('user');
+    const requestUrl = url(path);
+    const token = Cookies.get('user');
 
-  const fetchParams = {
-    method: method,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    },
-    body: JSON.stringify(data)
-  };
+    const fetchParams = {
+        method: method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(data)
+    };
 
-  console.log('Submitting to ' + method + ' ' + requestUrl);
-  return fetch(requestUrl, fetchParams)
-    .then(response => response.status === 204 ? onSuccess(response.status, {}) : response.json().then(result => onSuccess(response.status, result)));
+    console.log('Submitting to ' + method + ' ' + requestUrl);
+    return fetch(requestUrl, fetchParams)
+        .then(response => response.status === 204 ? onSuccess(response.status, {}) : response.json().then(result => onSuccess(response.status, result)))
+        .catch(error => console.log(error));
 };
