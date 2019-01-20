@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petclinic
+    username: petclinic
+    password: q9KqUiu2vqnAuf
+    driverClassName: org.postgresql.Driver
+
+  data:
+     jpa:
+       repositories:
+         bootstrap-mode: deferred
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: public
+        show_sql: false
+        use_sql_comments: true
+        format_sql: true
+        jdbc:
+          time_zone: "UTC"
+          lob:
+            non_contextual_creation: true
+    open-in-view: false
+  flyway:
+    locations: ["classpath:db/migration/ddl", "classpath:db/migration/dml"]
+
+security:
+    custom:
+      login-url: "/login"
+      excluded-api: "/actuator/**, /, /test, /css/**, /fonts/**, /img/**, /js/**, /favicon.ico"
+    token:
+      expiration-time-seconds: 600
+      token-prefix: "Bearer"

@@ -1,4 +1,5 @@
 import { IHttpMethod } from '../types';
+import * as Cookies from 'es-cookie';
 
 declare var __API_SERVER_URL__;
 const BACKEND_URL = (typeof __API_SERVER_URL__ === 'undefined' ? 'http://localhost:8080' : __API_SERVER_URL__);
@@ -13,12 +14,14 @@ export const url = (path: string): string => `${BACKEND_URL}/${path}`;
  */
 export const submitForm = (method: IHttpMethod, path: string, data: any, onSuccess: (status: number, response: any) => void) => {
   const requestUrl = url(path);
+  const token = Cookies.get('user');
 
   const fetchParams = {
     method: method,
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(data)
   };

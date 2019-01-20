@@ -1,0 +1,46 @@
+version: '3'
+services:
+
+   application:
+     build:
+       context: .
+       dockerfile: Dockerfile
+       args:
+         jarFile: build/libs/spring-petclinic-reactjs-ui-tests-1.6.0-SNAPSHOT.jar
+     command: -m 2056m
+     ports:
+       - 8070:8080
+       - 9999:9999
+     volumes:
+       - ./jacocoagent:/jacocoagent
+       - ./ui-tests/build/jacoco:/jacocoreport
+     environment:
+       - MONGODB_HOST=mongodb
+       - SPRING_DATASOURCE_URL=jdbc:p6spy:postgresql://postgres:5432/hsa_crawler
+       - SPRING_FLYWAY_LOCATIONS=${FLYWAY_LOCATIONS:-classpath:/db/migration}
+     entrypoint: [
+     "java",
+     "-Dcom.sun.management.jmxremote",
+     "-Dcom.sun.management.jmxremote.local.only=false",
+     "-Dcom.sun.management.jmxremote.ssl=false",
+     "-Dcom.sun.management.jmxremote.authenticate=false",
+     "-Dcom.sun.management.jmxremote.port=9999",
+     "-Dcom.sun.management.jmxremote.rmi.port=9999",
+     "-Djava.rmi.server.hostname=localhost",
+     "-Djava.security.egd=file:/dev/./urandom",
+     "-javaagent:/jacocoagent/jacocoagent.jar=output=file,destfile=/jacocoreport/test.exec,jmx=true",
+     "-jar",
+     "/app.jar"
+     ]
+     depends_on:
+       - mongodb
+       - postgres
+
+   postgres:
+     image: postgres:9.6.1
+     ports:
+        - 5422:5432
+     environment:
+        - POSTGRES_DB=petclinic
+        - POSTGRES_USER=petclinic
+        - POSTGRES_PASSWORD=q9KqUiu2vqnAuf

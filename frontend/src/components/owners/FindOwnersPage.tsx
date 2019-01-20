@@ -1,102 +1,110 @@
 import * as React from 'react';
 
-import { IRouter, Link } from 'react-router';
-import { IOwner, IRouterContext } from '../../types';
-import { url } from '../../util';
+import {IRouter, Link} from 'react-router';
+import {IOwner, IRouterContext} from '../../types';
+import {url} from '../../util';
 
 import OwnersTable from './OwnersTable';
+import * as Cookies from 'es-cookie';
 
 
 interface IFindOwnersPageProps {
-  location: HistoryModule.Location;
+    location: HistoryModule.Location;
 }
 
 interface IFindOwnersPageState {
-  owners?: IOwner[];
-  filter?: string;
+    owners?: IOwner[];
+    filter?: string;
 }
 
 const getFilterFromLocation = (location) => {
-  return location.query ? (location.query as any).lastName : null;
+    return location.query ? (location.query as any).lastName : null;
 };
 
 export default class FindOwnersPage extends React.Component<IFindOwnersPageProps, IFindOwnersPageState> {
-  context: IRouterContext;
+    context: IRouterContext;
 
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
-  constructor(props) {
-    super(props);
-    this.onFilterChange = this.onFilterChange.bind(this);
-    this.submitSearchForm = this.submitSearchForm.bind(this);
-
-    this.state = {
-      filter: getFilterFromLocation(props.location)
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
     };
-  }
 
-  componentDidMount() {
-    const { filter } = this.state;
-    if (typeof filter === 'string') {
-      // only load data on mount (initialy) if filter is specified
-      // i.e. lastName query param in uri was set
-      this.fetchData(filter);
+    constructor(props) {
+        super(props);
+        this.onFilterChange = this.onFilterChange.bind(this);
+        this.submitSearchForm = this.submitSearchForm.bind(this);
+
+        this.state = {
+            filter: getFilterFromLocation(props.location)
+        };
     }
-  }
 
-  componentWillReceiveProps(nextProps: IFindOwnersPageProps) {
-    const { location } = nextProps;
+    componentDidMount() {
+        const {filter} = this.state;
+        if (typeof filter === 'string') {
+            // only load data on mount (initialy) if filter is specified
+            // i.e. lastName query param in uri was set
+            this.fetchData(filter);
+        }
+    }
 
-    // read the filter from uri
-    const filter = getFilterFromLocation(location);
+    componentWillReceiveProps(nextProps: IFindOwnersPageProps) {
+        const {location} = nextProps;
 
-    // set state
-    this.setState({ filter });
+        // read the filter from uri
+        const filter = getFilterFromLocation(location);
 
-    // load data according to filter
-    this.fetchData(filter);
-  }
+        // set state
+        this.setState({filter});
 
-  onFilterChange(event) {
-    this.setState({
-      filter: event.target.value as string
-    });
-  }
+        // load data according to filter
+        this.fetchData(filter);
+    }
 
-  /**
-   * Invoked when the submit button was pressed.
-   * 
-   * This method updates the URL with the entered lastName. The change of the URL
-   * leads to new properties and thus results in rerending
-   */
-  submitSearchForm() {
-    const { filter } = this.state;
+    onFilterChange(event) {
+        this.setState({
+            filter: event.target.value as string
+        });
+    }
 
-    this.context.router.push({
-      pathname: '/owners/list',
-      query: { 'lastName': filter || '' }
-    });
-  }
+    /**
+     * Invoked when the submit button was pressed.
+     *
+     * This method updates the URL with the entered lastName. The change of the URL
+     * leads to new properties and thus results in rerending
+     */
+    submitSearchForm() {
+        const {filter} = this.state;
 
-  /** 
-   * Actually loads data from the server
-   */
-  fetchData(filter: string) {
-    const query = filter ? encodeURIComponent(filter) : '';
-    const requestUrl = url('api/owner/list?lastName=' + query);
+        this.context.router.push({
+            pathname: '/owners/list',
+            query: {'lastName': filter || ''}
+        });
+    }
 
-    fetch(requestUrl)
-      .then(response => response.json())
-      .then(owners => { this.setState({ owners }); });
-  }
+    /**
+     * Actually loads data from the server
+     */
+    fetchData(filter: string) {
+        const query = filter ? encodeURIComponent(filter) : '';
+        const requestUrl = url('api/owner/list?lastName=' + query);
+        const fetchParams = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('user')
+            }
+        };
+        fetch(requestUrl, fetchParams)
+            .then(response => response.json())
+            .then(owners => {
+                this.setState({owners});
+            });
+    }
 
-  render() {
-    const { filter, owners } = this.state;
+    render() {
+        const {filter, owners} = this.state;
 
-    return (
-      <span>
+        return (
+            <span>
         <section>
           <h2>Find Owners</h2>
 
@@ -105,8 +113,9 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
               <div className='control-group' id='lastName'>
                 <label className='col-sm-2 control-label'>Last name </label>
                 <div className='col-sm-10'>
-                  <input className='form-control' name='filter' value={filter || ''} onChange={this.onFilterChange} size={30} maxLength={80} />
-                  { /* <span className='help-inline'><form:errors path='*'/></span> TODO */}
+                  <input className='form-control' name='filter' value={filter || ''}
+                         onChange={this.onFilterChange} size={30} maxLength={80}/>
+                    {/* <span className='help-inline'><form:errors path='*'/></span> TODO */}
                 </div>
               </div>
             </div>
@@ -117,9 +126,9 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
             </div>
           </form>
         </section>
-        <OwnersTable owners={owners} />
+        <OwnersTable owners={owners}/>
         <Link className='btn btn-default' to='/owners/new'> Add Owner</Link>
       </span>
-    );
-  }
+        );
+    }
 };
