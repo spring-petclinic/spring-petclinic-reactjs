@@ -22,6 +22,7 @@ import javax.persistence.Table;
  * Models a {@link Vet Vet's} specialty (for example, dentistry).
  *
  * @author Juergen Hoeller
+ * @author Igor Dmitriev
  */
 @Entity
 @Table(name = "specialties")

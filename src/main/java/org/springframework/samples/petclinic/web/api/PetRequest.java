@@ -1,20 +1,19 @@
 package org.springframework.samples.petclinic.web.api;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotNull;
-
-import org.joda.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDate;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class PetRequest {
 	private Integer		id;
 	@JsonFormat(pattern = "yyyy/MM/dd")
 	
 	@NotNull
-	private LocalDate	birthDate;
+	private LocalDate birthDate;
 	@Size(min = 2, max = 14 )
 	private String		name;
 	
