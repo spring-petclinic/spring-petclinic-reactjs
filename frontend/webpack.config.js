@@ -52,7 +52,7 @@ module.exports = {
         include: path.join(__dirname, 'src/styles')
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpg|gif)$/,
         loader: 'url?limit=25000'
       },
       {

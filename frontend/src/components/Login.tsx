@@ -3,13 +3,14 @@ import {IRouterContext} from '../types/index';
 import Input from './form/Input';
 import {NotEmpty} from './form/Constraints';
 import {IError} from '../types';
-import {url, submitForm} from '../util';
+import {url} from '../util';
 import * as Cookies from 'es-cookie';
 
 interface ILoginState {
     username: string;
     password: string;
     error?: IError;
+    fail: boolean;
 }
 
 export default class Login extends React.Component<any, ILoginState> {
@@ -29,7 +30,8 @@ export default class Login extends React.Component<any, ILoginState> {
         this.state = {
             username: '',
             password: '',
-            error: null
+            error: null,
+            fail: false
         };
     }
 
@@ -37,7 +39,8 @@ export default class Login extends React.Component<any, ILoginState> {
         this.setState({
             username: value,
             password: this.state.password,
-            error: this.state.error
+            error: this.state.error,
+            fail: this.state.fail
         });
     }
 
@@ -45,30 +48,63 @@ export default class Login extends React.Component<any, ILoginState> {
         this.setState({
             username: this.state.username,
             password: value,
-            error: this.state.error
+            error: this.state.error,
+            fail: this.state.fail
         });
     }
 
     onSubmit(event) {
         event.preventDefault();
+
         let payload = {'username': this.state.username, 'password': this.state.password};
-        console.log(payload);
-        submitForm('POST', 'login', payload, (status, response) => {
-            if (status === 200) {
-                let in30Minutes = 1 / 48;
-                let date = new Date();
-                let minutes = 30;
-                date.setTime(date.getTime() + (minutes * 60 * 1000));
-                Cookies.set('user', response.token, {expires: date});
-                this.context.router.push({
-                    pathname: '/'
-                });
-            }
-        });
+
+        const requestUrl = url('login');
+        const token = Cookies.get('user');
+
+        const fetchParams = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify(payload)
+        };
+
+        console.log('Submitting to ' + 'POST' + ' ' + requestUrl);
+        return fetch(requestUrl, fetchParams)
+            .then(response => {
+                if (response.status === 200) {
+                    let in30Minutes = 1 / 48;
+                    let date = new Date();
+                    let minutes = 30;
+                    date.setTime(date.getTime() + (minutes * 60 * 1000));
+                    response.json().then(result => {
+                        Cookies.set('user', result.token, {expires: date});
+                    });
+                    this.context.router.push({
+                        pathname: '/'
+                    });
+                } else if (response.status === 401) {
+                    this.setState({
+                        username: this.state.username,
+                        password: this.state.password,
+                        error: this.state.error,
+                        fail: true
+                    });
+                }
+            })
+            .catch(error => {
+                console.log('error');
+            });
     }
 
     render() {
-        const {username, password, error} = this.state;
+        const {username, password, error, fail} = this.state;
+        const errorMessage = fail ?
+            <div className='alert alert-danger' style={{marginLeft: '67px'}}>
+                <p>Incorrect login or password</p>
+            </div> : '';
 
         return (
             <form className='form-horizontal' method='POST' action={url('/login')}>
@@ -83,6 +119,7 @@ export default class Login extends React.Component<any, ILoginState> {
                     <br/>
                     <br/>
                     <div className='row'>
+                        {errorMessage}
                         <div className='form-group has-feedback'>
                             <Input object={username} error={error} constraint={NotEmpty}
                                    label='Username:' name='username'

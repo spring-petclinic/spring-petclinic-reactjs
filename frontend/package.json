@@ -25,7 +25,8 @@
     "react-dom": "^15.0.0",
     "react-router": "^2.7.0",
     "redbox-react": "^1.2.3",
-    "whatwg-fetch": "^1.0.0"
+    "whatwg-fetch": "^1.0.0",
+    "react-loader-advanced": "^1.7.1"
   },
   "devDependencies": {
     "es-cookie": "^1.2.0",
