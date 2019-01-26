@@ -26,7 +26,7 @@ public abstract class LocalUiTest extends TestDataSource implements ApplicationE
 
   @Override
   public String homePath() {
-    return "http://localhost:7000";
+    return "http://localhost:3000";
   }
 
   @Override

@@ -25,6 +25,5 @@ clean {
 }
 
 bootJar {
-    baseName "application"
-    archiveName "test"
+    baseName "spring-petclinic"
 }

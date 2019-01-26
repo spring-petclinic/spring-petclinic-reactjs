@@ -6,7 +6,7 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         jarFile: build/libs/spring-petclinic-reactjs-ui-tests-1.6.0-SNAPSHOT.jar
+         jarFile: build/libs/spring-petclinic-1.6.0-SNAPSHOT.jar
      command: -m 2056m
      ports:
        - 8080:8080
