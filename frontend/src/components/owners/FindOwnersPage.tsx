@@ -6,7 +6,7 @@ import {url} from '../../util';
 
 import OwnersTable from './OwnersTable';
 import * as Cookies from 'es-cookie';
-
+import Loader from 'react-loader-advanced';
 
 interface IFindOwnersPageProps {
     location: HistoryModule.Location;
@@ -15,10 +15,11 @@ interface IFindOwnersPageProps {
 interface IFindOwnersPageState {
     owners?: IOwner[];
     filter?: string;
+    isDataLoading: boolean;
 }
 
 const getFilterFromLocation = (location) => {
-    return location.query ? (location.query as any).lastName : null;
+    return location.query ? (location.query as any).lastName : '';
 };
 
 export default class FindOwnersPage extends React.Component<IFindOwnersPageProps, IFindOwnersPageState> {
@@ -34,17 +35,14 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
         this.submitSearchForm = this.submitSearchForm.bind(this);
 
         this.state = {
-            filter: getFilterFromLocation(props.location)
+            filter: getFilterFromLocation(props.location),
+            isDataLoading: false
         };
     }
 
     componentDidMount() {
         const {filter} = this.state;
-        if (typeof filter === 'string') {
-            // only load data on mount (initialy) if filter is specified
-            // i.e. lastName query param in uri was set
-            this.fetchData(filter);
-        }
+        this.fetchData(filter);
     }
 
     componentWillReceiveProps(nextProps: IFindOwnersPageProps) {
@@ -54,7 +52,7 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
         const filter = getFilterFromLocation(location);
 
         // set state
-        this.setState({filter});
+        this.setState({filter, isDataLoading: this.state.isDataLoading});
 
         // load data according to filter
         this.fetchData(filter);
@@ -62,7 +60,8 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
 
     onFilterChange(event) {
         this.setState({
-            filter: event.target.value as string
+            filter: event.target.value as string,
+            isDataLoading: this.state.isDataLoading
         });
     }
 
@@ -93,15 +92,17 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
                 'Authorization': 'Bearer ' + Cookies.get('user')
             }
         };
+
+        this.setState({isDataLoading: true});
         fetch(requestUrl, fetchParams)
             .then(response => response.json())
             .then(owners => {
-                this.setState({owners});
+                this.setState({owners, isDataLoading: false});
             });
     }
 
     render() {
-        const {filter, owners} = this.state;
+        let {filter, owners, isDataLoading} = this.state;
 
         return (
             <span>
@@ -126,7 +127,9 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
             </div>
           </form>
         </section>
-        <OwnersTable owners={owners}/>
+        <Loader className={'test'} show={isDataLoading} message={<img src='/images/loader.gif' width={'25px'} height={'25px'}/>}>
+            <OwnersTable owners={owners}/>
+        </Loader>
         <Link className='btn btn-default' to='/owners/new'> Add Owner</Link>
       </span>
         );

@@ -1,0 +1,30 @@
+apply plugin: 'org.springframework.boot'
+apply from: 'deploy.gradle'
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'org.postgresql:postgresql'
+    compile 'org.flywaydb:flyway-core'
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+    compile 'javax.cache:cache-api:1.0.0'
+    compile 'org.ehcache:ehcache:3.1.1'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.testcontainers:postgresql:1.10.0'
+}
+
+clean {
+    dependsOn(deleteOldFrontend)
+}
+
+bootJar {
+    baseName "application"
+    archiveName "test"
+}

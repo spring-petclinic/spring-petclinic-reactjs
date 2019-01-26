@@ -1,0 +1,40 @@
+task npmInstall(type: Exec) {
+    inputs.file("${rootDir}/frontend/package.json")
+    outputs.dir("${rootDir}/frontend/node_modules")
+    outputs.file("${rootDir}/frontend/package-lock.json")
+
+    workingDir "${rootDir}/frontend"
+    commandLine 'npm', 'install'
+}
+
+task npmBuild(type: Exec) {
+    dependsOn(npmInstall)
+    inputs.dir("${rootDir}/frontend/src")
+    inputs.dir("${rootDir}/frontend/public")
+    outputs.dir("${rootDir}/frontend/dist")
+
+    workingDir "${rootDir}/frontend"
+    commandLine 'npm', 'run', 'build'
+}
+
+task deleteOldFrontend() {
+    delete "${rootDir}/application/src/main/resources/static"
+}
+
+task buildFrontend(type: Copy) {
+    dependsOn(npmBuild)
+    from("${rootDir}/frontend/dist") {
+        include "**"
+    }
+    into "${rootDir}/application/src/main/resources/static"
+}
+
+task buildApp() {
+    dependsOn(buildFrontend)
+    finalizedBy(build)
+}
+
+task assembleApp() {
+    dependsOn(buildFrontend)
+    finalizedBy(assemble)
+}

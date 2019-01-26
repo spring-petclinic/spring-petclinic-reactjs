@@ -8,12 +8,10 @@
     "target": "ES6",
     "allowJs": true,
     "outDir": "public/dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "moduleResolution": "node"
   },
-  "exclude": [
-    "node_modules",
-    "typings/browser.d.ts",
-    "typings/browser",
-    "tests"
-  ]
+    "exclude": [
+      "./node_modules/**/*"
+    ]
 }

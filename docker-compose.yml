@@ -9,7 +9,7 @@ services:
          jarFile: build/libs/spring-petclinic-reactjs-ui-tests-1.6.0-SNAPSHOT.jar
      command: -m 2056m
      ports:
-       - 8070:8080
+       - 8080:8080
        - 9999:9999
      volumes:
        - ./jacocoagent:/jacocoagent
@@ -33,13 +33,12 @@ services:
      "/app.jar"
      ]
      depends_on:
-       - mongodb
        - postgres
 
    postgres:
      image: postgres:9.6.1
      ports:
-        - 5422:5432
+        - 5432:5432
      environment:
         - POSTGRES_DB=petclinic
         - POSTGRES_USER=petclinic

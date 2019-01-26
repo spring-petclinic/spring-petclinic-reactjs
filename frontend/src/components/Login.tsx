@@ -11,6 +11,7 @@ interface ILoginState {
     password: string;
     error?: IError;
     fail: boolean;
+    showingAlert: boolean;
 }
 
 export default class Login extends React.Component<any, ILoginState> {
@@ -31,7 +32,8 @@ export default class Login extends React.Component<any, ILoginState> {
             username: '',
             password: '',
             error: null,
-            fail: false
+            fail: false,
+            showingAlert: true
         };
     }
 
@@ -40,7 +42,8 @@ export default class Login extends React.Component<any, ILoginState> {
             username: value,
             password: this.state.password,
             error: this.state.error,
-            fail: this.state.fail
+            fail: this.state.fail,
+            showingAlert: this.state.showingAlert
         });
     }
 
@@ -49,7 +52,8 @@ export default class Login extends React.Component<any, ILoginState> {
             username: this.state.username,
             password: value,
             error: this.state.error,
-            fail: this.state.fail
+            fail: this.state.fail,
+            showingAlert: this.state.showingAlert
         });
     }
 
@@ -71,6 +75,17 @@ export default class Login extends React.Component<any, ILoginState> {
             body: JSON.stringify(payload)
         };
 
+        setTimeout(() => {
+            console.log('1');
+            this.setState({
+                username: this.state.username,
+                password: this.state.password,
+                error: this.state.error,
+                fail: this.state.fail,
+                showingAlert: false
+            });
+        }, 2000);
+
         console.log('Submitting to ' + 'POST' + ' ' + requestUrl);
         return fetch(requestUrl, fetchParams)
             .then(response => {
@@ -90,7 +105,8 @@ export default class Login extends React.Component<any, ILoginState> {
                         username: this.state.username,
                         password: this.state.password,
                         error: this.state.error,
-                        fail: true
+                        fail: true,
+                        showingAlert: this.state.showingAlert
                     });
                 }
             })
@@ -100,11 +116,17 @@ export default class Login extends React.Component<any, ILoginState> {
     }
 
     render() {
-        const {username, password, error, fail} = this.state;
+        console.log('2');
+        const {username, password, error, fail, showingAlert} = this.state;
         const errorMessage = fail ?
             <div className='alert alert-danger' style={{marginLeft: '67px'}}>
                 <p>Incorrect login or password</p>
             </div> : '';
+
+        console.log(showingAlert);
+        const successMessage = <div className={`alert alert-success ${showingAlert ? 'alert-shown' : 'alert-hidden'}`}>
+            <strong>Success!</strong> Thank you for subscribing!
+        </div>;
 
         return (
             <form className='form-horizontal' method='POST' action={url('/login')}>
@@ -120,6 +142,8 @@ export default class Login extends React.Component<any, ILoginState> {
                     <br/>
                     <div className='row'>
                         {errorMessage}
+                        {successMessage}
+
                         <div className='form-group has-feedback'>
                             <Input object={username} error={error} constraint={NotEmpty}
                                    label='Username:' name='username'

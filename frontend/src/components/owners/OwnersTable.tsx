@@ -36,4 +36,22 @@ const renderOwners = (owners: IOwner[]) => (
   </section>
 );
 
-export default ({owners}: { owners: IOwner[] }) => owners ? renderOwners(owners) : null;
+const emptyOwners = () => (
+    <section>
+        <table className='table table-striped'>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th className='hidden-sm hidden-xs'>Address</th>
+                <th>City</th>
+                <th>Telephone</th>
+                <th className='hidden-xs'>Pets</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </section>
+);
+
+export default ({owners}: { owners: IOwner[] }) => owners ? renderOwners(owners) : emptyOwners();

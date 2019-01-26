@@ -1,1 +1,3 @@
 rootProject.name = 'spring-petclinic-reactjs-ui-tests'
+include 'application'
+include 'ui-tests'

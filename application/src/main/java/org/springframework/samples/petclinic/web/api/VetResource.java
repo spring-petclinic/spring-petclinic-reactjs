@@ -37,6 +37,11 @@ public class VetResource extends AbstractResourceController {
     
     @GetMapping(value="/vets")
     public Collection<Vet> showResourcesVetList() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this.clinicService.findVets();
     }
 }
