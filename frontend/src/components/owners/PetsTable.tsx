@@ -33,7 +33,7 @@ const VisitsTable = ({ownerId, pet}: { ownerId: number, pet: IPet }) => (
 export default ({owner}: { owner: IOwner }) => (
   <section>
     <h2>Pets and Visits</h2>
-    <table className='table table-striped'>
+    <table id='pets-and-visits-table' className='table table-striped'>
       <tbody>
         {owner.pets.map(pet => (
           <tr key={pet.id}>

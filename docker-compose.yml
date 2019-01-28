@@ -6,17 +6,17 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         jarFile: build/libs/spring-petclinic-1.6.0-SNAPSHOT.jar
+         jarFile: application/build/libs/spring-petclinic-1.6.0-SNAPSHOT.jar
      command: -m 2056m
      ports:
-       - 8080:8080
+       - 8070:8080
        - 9999:9999
      volumes:
        - ./jacocoagent:/jacocoagent
        - ./ui-tests/build/jacoco:/jacocoreport
      environment:
        - MONGODB_HOST=mongodb
-       - SPRING_DATASOURCE_URL=jdbc:p6spy:postgresql://postgres:5432/hsa_crawler
+       - SPRING_DATASOURCE_URL=jdbc:p6spy:postgresql://postgres:5432/petclinic
        - SPRING_FLYWAY_LOCATIONS=${FLYWAY_LOCATIONS:-classpath:/db/migration}
      entrypoint: [
      "java",
@@ -38,7 +38,7 @@ services:
    postgres:
      image: postgres:9.6.1
      ports:
-        - 5432:5432
+        - 5422:5432
      environment:
         - POSTGRES_DB=petclinic
         - POSTGRES_USER=petclinic

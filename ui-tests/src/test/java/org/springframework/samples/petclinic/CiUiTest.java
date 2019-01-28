@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.samples.petclinic.util.FailingUiTestsWatcher;
-import org.springframework.samples.petclinic.util.JmxUtil;
 import org.springframework.samples.petclinic.util.TestContainerUtil;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode;
@@ -17,6 +16,9 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import java.io.File;
 import java.time.Duration;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class CiUiTest extends TestDataSource implements ApplicationEndpoints {
   private static final String APPLICATION_SERVICE = "application_1";
   private static final String POSTGRES_SERVICE = "postgres_1";
@@ -26,9 +28,9 @@ public abstract class CiUiTest extends TestDataSource implements ApplicationEndp
   private static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("../docker-compose.yml"))
       .withLocalCompose(true)
       .withExposedService(APPLICATION_SERVICE, APPLICATION_PORT, Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(3)))
-      .withExposedService(POSTGRES_SERVICE, POSTGRES_PORT)
-      .withEnv("PROFILES", "ui-tests")
-      .withEnv("FLYWAY_LOCATIONS", "classpath:db/migration/ddl");
+      //.withLogConsumer(APPLICATION_SERVICE, new Slf4jLogConsumer(log))
+      .withExposedService(POSTGRES_SERVICE, POSTGRES_PORT);
+
   private static BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
       .withDesiredCapabilities(DesiredCapabilities.chrome())
       .withRecordingMode(VncRecordingMode.SKIP, null) // managed by UiTestsWatcher
@@ -38,11 +40,11 @@ public abstract class CiUiTest extends TestDataSource implements ApplicationEndp
   static {
     composeContainer.start();
     TestContainerUtil.linkContainersNetworks(composeContainer, chromeContainer, APPLICATION_SERVICE);
-    System.setProperty("user.timezone", "UTC");
+    //System.setProperty("user.timezone", "UTC");
     chromeContainer.start();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      JmxUtil.generateJacocoDump();
+      // JmxUtil.generateJacocoDump();
       composeContainer.stop();
     }));
 

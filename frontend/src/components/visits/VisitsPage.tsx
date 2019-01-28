@@ -112,9 +112,9 @@ export default class VisitsPage extends React.Component<IVisitsPageProps, IVisit
 
                 <form className='form-horizontal' method='POST' action={url('api/owners')}>
                     <div className='form-group has-feedback'>
-                        <DateInput object={visit} error={error} label='Date' name='date'
+                        <DateInput id='visit-date' object={visit} error={error} label='Date' name='date'
                                    onChange={this.onInputChange}/>
-                        <Input object={visit} error={error} constraint={NotEmpty}
+                        <Input type='text' id='description' object={visit} error={error} constraint={NotEmpty}
                                label='Description' name='description'
                                onChange={this.onInputChange}/>
                     </div>

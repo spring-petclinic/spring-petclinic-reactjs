@@ -72,11 +72,11 @@ export default class OwnerEditor extends React.Component<IOwnerEditorProps, IOwn
         <h2>New Owner</h2>
         <form className='form-horizontal' method='POST' action={url('api/owners')}>
           <div className='form-group has-feedback'>
-            <Input object={owner} error={error} constraint={NotEmpty} label='First Name' name='firstName' onChange={this.onInputChange} />
-            <Input object={owner} error={error} constraint={NotEmpty} label='Last Name' name='lastName' onChange={this.onInputChange} />
-            <Input object={owner} error={error} constraint={NotEmpty} label='Address' name='address' onChange={this.onInputChange} />
-            <Input object={owner} error={error} constraint={NotEmpty} label='City' name='city' onChange={this.onInputChange} />
-            <Input object={owner} error={error} constraint={Digits(10)} label='Telephone' name='telephone' onChange={this.onInputChange} />
+            <Input type='text' id='firstname-input' object={owner} error={error} constraint={NotEmpty} label='First Name' name='firstName' onChange={this.onInputChange} />
+            <Input type='text' id='lastname-input' object={owner} error={error} constraint={NotEmpty} label='Last Name' name='lastName' onChange={this.onInputChange} />
+            <Input type='text' id='address-input' object={owner} error={error} constraint={NotEmpty} label='Address' name='address' onChange={this.onInputChange} />
+            <Input type='text' id='city-input' object={owner} error={error} constraint={NotEmpty} label='City' name='city' onChange={this.onInputChange} />
+            <Input type='text' id='telephone-input' object={owner} error={error} constraint={Digits(10)} label='Telephone' name='telephone' onChange={this.onInputChange} />
           </div>
           <div className='form-group'>
             <div className='col-sm-offset-2 col-sm-10'>

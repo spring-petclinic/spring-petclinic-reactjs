@@ -75,30 +75,16 @@ export default class Login extends React.Component<any, ILoginState> {
             body: JSON.stringify(payload)
         };
 
-        setTimeout(() => {
-            console.log('1');
-            this.setState({
-                username: this.state.username,
-                password: this.state.password,
-                error: this.state.error,
-                fail: this.state.fail,
-                showingAlert: false
-            });
-        }, 2000);
-
         console.log('Submitting to ' + 'POST' + ' ' + requestUrl);
         return fetch(requestUrl, fetchParams)
             .then(response => {
                 if (response.status === 200) {
-                    let in30Minutes = 1 / 48;
                     let date = new Date();
                     let minutes = 30;
                     date.setTime(date.getTime() + (minutes * 60 * 1000));
                     response.json().then(result => {
                         Cookies.set('user', result.token, {expires: date});
-                    });
-                    this.context.router.push({
-                        pathname: '/'
+                        this.context.router.push('/');
                     });
                 } else if (response.status === 401) {
                     this.setState({
@@ -108,25 +94,21 @@ export default class Login extends React.Component<any, ILoginState> {
                         fail: true,
                         showingAlert: this.state.showingAlert
                     });
+                } else if (response.status === 500) {
+                    console.log(response);
                 }
             })
             .catch(error => {
-                console.log('error');
+                console.log(error);
             });
     }
 
     render() {
-        console.log('2');
-        const {username, password, error, fail, showingAlert} = this.state;
+        const {username, password, fail} = this.state;
         const errorMessage = fail ?
             <div className='alert alert-danger' style={{marginLeft: '67px'}}>
-                <p>Incorrect login or password</p>
+                <p>Incorrect username or password</p>
             </div> : '';
-
-        console.log(showingAlert);
-        const successMessage = <div className={`alert alert-success ${showingAlert ? 'alert-shown' : 'alert-hidden'}`}>
-            <strong>Success!</strong> Thank you for subscribing!
-        </div>;
 
         return (
             <form className='form-horizontal' method='POST' action={url('/login')}>
@@ -142,15 +124,15 @@ export default class Login extends React.Component<any, ILoginState> {
                     <br/>
                     <div className='row'>
                         {errorMessage}
-                        {successMessage}
-
                         <div className='form-group has-feedback'>
-                            <Input object={username} error={error} constraint={NotEmpty}
+                            <Input type='text' id='username' object={username} error={null}
+                                   constraint={NotEmpty}
                                    label='Username:' name='username'
                                    onChange={this.onUsernameChanged}/>
                         </div>
                         <div className='form-group has-feedback'>
-                            <Input object={password} error={error} constraint={NotEmpty}
+                            <Input type='password' id='password' object={password} error={null}
+                                   constraint={NotEmpty}
                                    label='Password:' name='password'
                                    onChange={this.onPasswordChanged}/>
                         </div>
@@ -158,7 +140,8 @@ export default class Login extends React.Component<any, ILoginState> {
                     <div className='form-group'>
                         <button id='login-button' className='btn btn-primary'
                                 style={{marginLeft: '70px'}}
-                                onClick={this.onSubmit}>Login
+                                onClick={this.onSubmit}>
+                            Login
                         </button>
                     </div>
                 </div>

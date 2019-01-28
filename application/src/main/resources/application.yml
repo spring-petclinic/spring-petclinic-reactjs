@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/petclinic
+    url: jdbc:p6spy:postgresql://localhost:5432/petclinic
     username: petclinic
     password: q9KqUiu2vqnAuf
-    driverClassName: org.postgresql.Driver
+    driverClassName: com.p6spy.engine.spy.P6SpyDriver
 
   data:
      jpa:
@@ -31,7 +31,7 @@ spring:
 security:
     custom:
       login-url: "/login"
-      excluded-api: "/actuator/**, /, /test, /css/**, /fonts/**, /img/**, /js/**, /favicon.ico"
+      excluded-api: "/actuator/**, /, /login, /test, /css/**, /fonts/**, /img/**, /js/**, /favicon.ico"
     token:
       expiration-time-seconds: 600
       token-prefix: "Bearer"

@@ -1,14 +1,13 @@
 import * as React from 'react';
 
 import { IOwner } from '../../types';
+import {Link} from 'react-router';
 
 const renderRow = (owner: IOwner) => (
   <tr key={owner.id}>
     <td>
-      <a href={`/owners/${owner.id}`}>
-        {owner.firstName} {owner.lastName}
-      </a>
-    </td>
+       <Link to={`/owners/${owner.id}`}><span>{owner.firstName} {owner.lastName}</span></Link>
+  </td>
     <td className='hidden-sm hidden-xs'>{owner.address}</td>
     <td>{owner.city}</td>
     <td>{owner.telephone}</td>
@@ -19,7 +18,7 @@ const renderRow = (owner: IOwner) => (
 const renderOwners = (owners: IOwner[]) => (
   <section>
     <h2>{owners.length} Owners found</h2>
-    <table className='table table-striped'>
+    <table id='owners-table' className='table table-striped'>
       <thead>
         <tr>
           <th>Name</th>

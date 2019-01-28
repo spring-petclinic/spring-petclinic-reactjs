@@ -4,7 +4,7 @@ import { IError, IInputChangeHandler, ISelectOption } from '../../types';
 
 import FieldFeedbackPanel from './FieldFeedbackPanel';
 
-export default ({object, error, name, label, options, onChange}: { object: any, error: IError, name: string, label: string, options: ISelectOption[], onChange: IInputChangeHandler }) => {
+export default ({object, error, id, name, label, options, onChange}: { object: any, error: IError, id: string, name: string, label: string, options: ISelectOption[], onChange: IInputChangeHandler }) => {
 
   const handleOnChange = event => {
     console.log('select on change', event.target.value);
@@ -22,7 +22,7 @@ export default ({object, error, name, label, options, onChange}: { object: any, 
       <label className='col-sm-2 control-label'>{label}</label>
 
       <div className='col-sm-10'>
-        <select size={5} className='form-control' name={name} onChange={handleOnChange} value={selectedValue}>
+        <select id={id} size={5} className='form-control' name={name} onChange={handleOnChange} value={selectedValue}>
           {options.map(option => <option key={option.value} value={option.value as string}>{option.name}</option>)}
         </select>
         <FieldFeedbackPanel valid={valid} fieldError={fieldError} />

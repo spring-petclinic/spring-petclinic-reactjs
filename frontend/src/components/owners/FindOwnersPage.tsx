@@ -114,7 +114,7 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
               <div className='control-group' id='lastName'>
                 <label className='col-sm-2 control-label'>Last name </label>
                 <div className='col-sm-10'>
-                  <input className='form-control' name='filter' value={filter || ''}
+                  <input id='owner-last-name-input' className='form-control' name='filter' value={filter || ''}
                          onChange={this.onFilterChange} size={30} maxLength={80}/>
                     {/* <span className='help-inline'><form:errors path='*'/></span> TODO */}
                 </div>
@@ -130,7 +130,7 @@ export default class FindOwnersPage extends React.Component<IFindOwnersPageProps
         <Loader className={'test'} show={isDataLoading} message={<img src='/images/loader.gif' width={'25px'} height={'25px'}/>}>
             <OwnersTable owners={owners}/>
         </Loader>
-        <Link className='btn btn-default' to='/owners/new'> Add Owner</Link>
+        <Link id='add-owner-button' className='btn btn-default' to='/owners/new'>Add Owner</Link>
       </span>
         );
     }

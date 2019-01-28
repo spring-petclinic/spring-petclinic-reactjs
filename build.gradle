@@ -56,6 +56,8 @@ subprojects {
 
     dependencies {
         compile 'org.projectlombok:lombok'
+        compile 'p6spy:p6spy:3.7.0'
+        compile 'org.slf4j:slf4j-api'
 
         annotationProcessor 'org.projectlombok:lombok'
     }

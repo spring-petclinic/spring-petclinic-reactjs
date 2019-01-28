@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.jayway.restassured.RestAssured;
 
+import org.apache.http.HttpStatus;
 import org.openqa.selenium.Cookie;
 
 import java.io.UnsupportedEncodingException;
@@ -11,6 +12,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -39,13 +41,15 @@ public class MainSteps {
             "}\n")
         .post(apiLoginPath)
         .then()
+        .assertThat()
+        .statusCode(HttpStatus.SC_OK)
+        .and()
         .extract()
         .response()
         .jsonPath()
         .get("token");
 
-    String cookieValue = URLEncoder.encode("{\"username\":\"" + username + "\"," +
-        "\"token\":\"" + token + "\"}", StandardCharsets.UTF_8.toString());
+    String cookieValue = URLEncoder.encode(token, StandardCharsets.UTF_8.toString());
 
     Cookie cookie = new Cookie("user", cookieValue, "/");
     WebDriverRunner.getWebDriver().manage().addCookie(cookie);
@@ -59,13 +63,10 @@ public class MainSteps {
     Selenide.open(loginPath);
   }
 
+  @SneakyThrows
   public void fastLogin() {
-    Selenide.open(homePath + "/test");
-    try {
-      loginUsingApi(TEST_USERNAME, TEST_PASS);
-    } catch (UnsupportedEncodingException e) {
-      throw new RuntimeException(e);
-    }
+    Selenide.open( homePath + "/test");
+    loginUsingApi(TEST_USERNAME, TEST_PASS);
   }
 
   public void open(String path) {

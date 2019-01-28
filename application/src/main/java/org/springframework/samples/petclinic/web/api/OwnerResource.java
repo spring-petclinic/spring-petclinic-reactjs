@@ -87,16 +87,10 @@ public class OwnerResource {
 	 * Read List of Owners
 	 */
 	@GetMapping("/list")
-	public Collection<Owner> findOwnerCollection(@RequestParam("lastName") String ownerLastName) {
+	public Collection<Owner> findOwnerCollection(@RequestParam(value = "lastName", required = false) String ownerLastName) {
 		if (ownerLastName == null) {
 			ownerLastName = "";
 		}
-		try {
-			Thread.sleep(10_000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return this.clinicService.findOwnerByLastName(ownerLastName);
 	}
 

@@ -21,17 +21,17 @@ export default ({name}: { name: string }) => (
         <ul className='nav navbar-nav navbar-right'>
           <MenuItem active={name === '/'} url='/' title='home page'>
             <span className='glyphicon glyphicon-home' aria-hidden='true'></span>&nbsp;
-                    <span>Home</span>
+                    <span>HOME</span>
           </MenuItem>
 
-          <MenuItem active={name.startsWith('/owners')} url='/owners/list' title='find owners'>
+          <MenuItem active={name.startsWith('/#/owners')} url='/#/owners/list' title='find owners'>
             <span className='glyphicon glyphicon-search' aria-hidden='true'></span>&nbsp;
-                    <span>Find owners</span>
+                    <span>FIND OWNERS</span>
           </MenuItem>
 
-          <MenuItem active={name === 'vets'} url='/vets' title='veterinarians'>
+          <MenuItem active={name === 'vets'} url='/#/vets' title='veterinarians'>
             <span className='glyphicon glyphicon-th-list' aria-hidden='true'></span>&nbsp;
-                    <span>Veterinarians</span>
+                    <span>VETERINARIANS</span>
           </MenuItem>
         </ul>
       </div>

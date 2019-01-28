@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="favicon.ico">
+    <script type="text/javascript">
+      clearState();
+      refreshPage();
+
+      function clearState() {
+        deleteAllCookies();
+        localStorage.clear();
+        sessionStorage.clear();
+      }
+
+      function refreshPage() {
+        document.addEventListener("DOMContentLoaded", function () {
+          if (document.URL.indexOf("#") === -1) {
+            // Set the URL to whatever it was plus "#".
+            let url = document.URL + "#";
+            location = "#";
+
+            //Reload the page
+            location.reload(true);
+          }
+        });
+      }
+
+      function deleteAllCookies() {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i];
+          console.log(cookie);
+          let eqPos = cookie.indexOf("=");
+          let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+      }
+    </script>
+</head>
+<style>
+    .center {
+        width: 60%;
+        padding: 10px;
+        margin-left: 150px;
+    }
+</style>
+<body>
+<div class="center">
+    <h1 style="position: relative; top: 120px; margin-left: 485px; font-size: 46px;">UI testing</h1>
+    <img src="loading.gif" style="width: 1072px; height: 448px"/>
+</div>
+</body>
+</html>

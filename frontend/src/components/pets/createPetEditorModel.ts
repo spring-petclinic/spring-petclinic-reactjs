@@ -3,19 +3,20 @@ import { url, submitForm } from '../../util';
 import * as Cookies from 'es-cookie';
 
 const toSelectOptions = (pettypes: IPetType[]): ISelectOption[] => pettypes.map(pettype => ({ value: pettype.id, name: pettype.name }));
-const fetchParams = {
-    method: 'GET',
-    headers: {
-        'Authorization': 'Bearer ' + Cookies.get('user')
-    }
-};
-
 export default (ownerId: string, petLoaderPromise: Promise<any>): Promise<any> => {
-  return Promise.all(
+    console.log(Cookies.getAll());
+    const fetchParams = {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + Cookies.get('user')
+        }
+    };
+
+    return Promise.all(
     [fetch(url('api/pettypes'), fetchParams)
       .then(response => response.json())
       .then(toSelectOptions),
-    fetch(url('api/owners/' + ownerId))
+    fetch(url('api/owners/' + ownerId), fetchParams)
       .then(response => response.json()),
       petLoaderPromise,
     ]

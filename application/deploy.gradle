@@ -14,7 +14,7 @@ task npmBuild(type: Exec) {
     outputs.dir("${rootDir}/frontend/dist")
 
     workingDir "${rootDir}/frontend"
-    commandLine 'npm', 'run', 'build'
+    commandLine 'npm', 'run', 'build:prod'
 }
 
 task deleteOldFrontend() {
@@ -23,7 +23,7 @@ task deleteOldFrontend() {
 
 task buildFrontend(type: Copy) {
     dependsOn(npmBuild)
-    from("${rootDir}/frontend/dist") {
+    from("${rootDir}/frontend/public") {
         include "**"
     }
     into "${rootDir}/application/src/main/resources/static"

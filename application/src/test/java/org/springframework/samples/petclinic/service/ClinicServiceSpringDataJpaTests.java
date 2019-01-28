@@ -61,7 +61,7 @@ public class ClinicServiceSpringDataJpaTests {
 
   @BeforeClass
   public static void setUpClass() {
-    String urlPattern = "jdbc:postgresql://%s:%s/petclinic";
+    String urlPattern = "jdbc:p6spy:postgresql://%s:%s/petclinic";
     String url = String.format(urlPattern, POSTGESQL_CONTAINER.getContainerIpAddress(), POSTGESQL_CONTAINER.getMappedPort(5432));
     System.setProperty("spring.datasource.url", url);
     System.setProperty("spring.datasource.username", "test_login");

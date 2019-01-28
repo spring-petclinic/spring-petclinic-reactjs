@@ -10,7 +10,7 @@ const NoConstraint: IConstraint = {
 };
 
 
-export default ({object, error, name, constraint = NoConstraint, label, onChange}: { object: any, error: IError, name: string, constraint?: IConstraint, label: string, onChange: IInputChangeHandler }) => {
+export default ({type, object, error, name, id, constraint = NoConstraint, label, onChange}: {type: string, object: any, error: IError, name: string, id: string, constraint?: IConstraint, label: string, onChange: IInputChangeHandler }) => {
 
   const handleOnChange = event => {
     const { value } = event.target;
@@ -34,7 +34,7 @@ export default ({object, error, name, constraint = NoConstraint, label, onChange
       <label className='col-sm-2 control-label'>{label}</label>
 
       <div className='col-sm-10'>
-        <input type='text' name={name} className='form-control' value={value} onChange={handleOnChange} />
+        <input type={type} id={id} name={name} className='form-control' value={value} onChange={handleOnChange} />
 
          <FieldFeedbackPanel valid={valid} fieldError={fieldError} />
       </div>

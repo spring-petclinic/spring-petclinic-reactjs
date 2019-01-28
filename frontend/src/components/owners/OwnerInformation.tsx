@@ -7,7 +7,7 @@ export default ({owner}: { owner: IOwner }) => (
   <section>
     <h2>Owner Information</h2>
 
-    <table className='table table-striped'>
+    <table id='owners-information-table' className='table table-striped'>
       <tbody>
         <tr>
           <th>Name</th>
@@ -30,6 +30,6 @@ export default ({owner}: { owner: IOwner }) => (
 
     <Link to={`owners/${owner.id}/edit`} className='btn btn-default'>Edit Owner</Link>
     &nbsp;
-    <Link to={`/owners/${owner.id}/pets/new`} className='btn btn-default'>Add New Pet</Link>
+    <Link id='add-new-pet-button' to={`/owners/${owner.id}/pets/new`} className='btn btn-default'>Add New Pet</Link>
   </section>
 );
