@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.samples.petclinic.CiUiTest;
 
@@ -12,6 +13,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
+@Ignore
 public class LoginTest extends CiUiTest {
 
   @Test
