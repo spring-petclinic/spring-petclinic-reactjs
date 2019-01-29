@@ -40,7 +40,7 @@
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.flywaydb" level="WARN" />
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ASYNC"/>
     </root>
