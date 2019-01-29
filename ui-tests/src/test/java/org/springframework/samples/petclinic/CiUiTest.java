@@ -11,6 +11,7 @@ import org.springframework.samples.petclinic.util.TestContainerUtil;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode;
 import org.testcontainers.containers.DockerComposeContainer;
+import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public abstract class CiUiTest extends TestDataSource implements ApplicationEndp
   private static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("../docker-compose.yml"))
       .withLocalCompose(true)
       .withExposedService(APPLICATION_SERVICE, APPLICATION_PORT, Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(5)))
-      //.withLogConsumer(APPLICATION_SERVICE, new Slf4jLogConsumer(log))
+      .withLogConsumer(APPLICATION_SERVICE, new Slf4jLogConsumer(log))
       .withExposedService(POSTGRES_SERVICE, POSTGRES_PORT);
 
   private static BrowserWebDriverContainer chromeContainer = new BrowserWebDriverContainer<>()
