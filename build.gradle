@@ -68,14 +68,14 @@ subprojects {
             property "sonar.groovy.jacoco.reportPath", testCoverageFile
             property "sonar.groovy.jacoco.itReportPath", testCoverageFile
             property "sonar.groovy.binaries", "${project.buildDir.name}/test-results/test/binary"
-            property "sonar.tests", "src/test/groovy, src/test/java"
+            property "sonar.tests", "src/test/java"
         }
     }
 }
 
 sonarqube {
     properties {
-        property "sonar.host.url", "localhost"
+        property "sonar.host.url", "http://localhost:9001"
         property "sonar.login", "admin"
         property "sonar.password", "admin"
         property "sonar.projectKey", "sonar:spring-petclinic-reactjs-ui-tests"
