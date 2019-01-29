@@ -27,7 +27,7 @@ public abstract class CiUiTest extends TestDataSource implements ApplicationEndp
 
   private static DockerComposeContainer composeContainer = new DockerComposeContainer(new File("../docker-compose.yml"))
       .withLocalCompose(true)
-      .withExposedService(APPLICATION_SERVICE, APPLICATION_PORT, Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(3)))
+      .withExposedService(APPLICATION_SERVICE, APPLICATION_PORT, Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(5)))
       //.withLogConsumer(APPLICATION_SERVICE, new Slf4jLogConsumer(log))
       .withExposedService(POSTGRES_SERVICE, POSTGRES_PORT);
 
