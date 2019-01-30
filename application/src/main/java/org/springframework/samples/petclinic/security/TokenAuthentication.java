@@ -10,13 +10,17 @@ import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Slf4j
 public class TokenAuthentication {
 
   private static final String SECRET = UUID.randomUUID().toString();
@@ -56,6 +60,9 @@ public class TokenAuthentication {
           new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()) :
           null;
     } catch (ExpiredJwtException e) {
+      return null;
+    } catch (SignatureException e) {
+      log.info("JWT signature does not match locally computed signature");
       return null;
     }
   }
