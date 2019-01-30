@@ -28,7 +28,7 @@ services:
          "-Dcom.sun.management.jmxremote.rmi.port=9999",
          "-Djava.rmi.server.hostname=localhost",
          "-Djava.security.egd=file:/dev/./urandom",
-         "-javaagent:/jacocoagent/agent.jar=output=file,destfile=/jacocoreport/test.exec,append=false,dumponexit=false,jmx=true",
+         "-javaagent:/jacocoagent/jacocoagent.jar=output=file,destfile=/jacocoreport/test.exec,append=false,dumponexit=false,jmx=true",
          "-jar",
          "/app.jar"
        ]
