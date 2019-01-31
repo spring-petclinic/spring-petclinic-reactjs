@@ -113,26 +113,4 @@ public class PetResource extends AbstractResourceController {
 
 		return petRequest;
 	}
-
-	// @Getter
-	// static class PetDetails {
-	//
-	// long id;
-	// String name;
-	// String owner;
-	// @DateTimeFormat(pattern = "yyyy-MM-dd")
-	// Date birthDate;
-	// PetType type;
-	//
-	// PetDetails(Pet pet) {
-	// this.id = pet.getId();
-	// this.name = pet.getName();
-	// this.owner = pet.getOwner().getFirstName() + " " +
-	// pet.getOwner().getLastName();
-	// this.birthDate = pet.getBirthDate();
-	// this.type = pet.getType();
-	// }
-	//
-	// }
-
 }

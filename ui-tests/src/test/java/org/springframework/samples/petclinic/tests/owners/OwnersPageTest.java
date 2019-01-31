@@ -81,41 +81,4 @@ public class OwnersPageTest extends CiUiTest {
     owners.get(2).shouldHave(text("New York"));
     owners.get(3).shouldHave(text("0321321"));
   }
-
-  @Test
-  @DataSet(
-      value = {"datasets/test_user.xml", "datasets/owners/owner-to-edit.xml"},
-      executeScriptsBefore = "datasets/cleanup.sql",
-      strategy = SeedStrategy.INSERT
-  )
-  public void ownerMayBeEdited() {
-    Selenide.open(homePath());
-    $("#username").val("test");
-    $("#password").val("testovich");
-    $("#login-button").click();
-
-    $(byText("FIND OWNERS")).click();
-
-    $("#owner-last-name-input").val("Dmitriev");
-    $(byText("Find Owner")).click();
-
-    $(linkText("Igor Dmitriev")).click();
-    $(byText("Edit Owner")).click();
-
-    $("#firstname-input").val("newfirstname");
-    $("#lastname-input").val("newlastname");
-    $("#address-input").val("new street");
-    $("#city-input").val("new city");
-    $("#telephone-input").val("1111");
-
-    $(byText("Update Owner")).click();
-
-    $(byText("Owner Information")).shouldBe(visible);
-    $$("#owners-information-table tbody").shouldHaveSize(1);
-    ElementsCollection owners = $$("#owners-information-table tbody tr td");
-    owners.get(0).shouldHave(text("newfirstname newlastname"));
-    owners.get(1).shouldHave(text("new street"));
-    owners.get(2).shouldHave(text("new city"));
-    owners.get(3).shouldHave(text("1111"));
-  }
 }

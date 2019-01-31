@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -45,12 +44,10 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
       };
       map = objectMapper.readValue(req.getInputStream(), typeRef);
     } catch (Exception e) {
-      //log.warn("Attempt to login with empty data: {}", e);
       unsuccessfulAuthenticationResponse(res);
       return null;
     }
 
-    logLoginAttempt(map.get("username"), req);
     return getAuthenticationManager().authenticate(
         new UsernamePasswordAuthenticationToken(
             map.get("username"),
@@ -79,16 +76,5 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     response.setStatus(HttpStatus.UNAUTHORIZED.value());
     response.getWriter().print(HttpStatus.UNAUTHORIZED.getReasonPhrase());
-  }
-
-  private void logLoginAttempt(String userName, HttpServletRequest req) {
-    String ip;
-    String xForwardedForHeader = req.getHeader("X-Forwarded-For");
-    if (xForwardedForHeader == null) {
-      ip = req.getRemoteAddr();
-    } else {
-      ip = new StringTokenizer(xForwardedForHeader, ",").nextToken().trim();
-    }
-    //log.info("Login attempt with username: {} from ip {}", userName, ip);
   }
 }

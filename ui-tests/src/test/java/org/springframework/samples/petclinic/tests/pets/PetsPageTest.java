@@ -38,6 +38,7 @@ public class PetsPageTest extends CiUiTest {
     $("#owner-last-name-input").val("Dmitriev");
     $(byText("Find Owner")).click();
     $(linkText("Igor Dmitriev")).click();
+
     $(byText("Add New Pet")).click();
     $("#name").val("Jacky").click();
     $("#birth-date").val("2019-10-10");

@@ -18,8 +18,6 @@ package org.springframework.samples.petclinic.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDate;
 
 import javax.persistence.Column;

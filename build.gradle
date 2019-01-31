@@ -65,10 +65,6 @@ subprojects {
     sonarqube {
         properties {
             property "sonar.jacoco.reportPaths", testCoverageFile
-            property "sonar.groovy.jacoco.reportPath", testCoverageFile
-            property "sonar.groovy.jacoco.itReportPath", testCoverageFile
-            property "sonar.groovy.binaries", "${project.buildDir.name}/test-results/test/binary"
-            property "sonar.tests", "src/test/java"
         }
     }
 }
@@ -76,15 +72,13 @@ subprojects {
 sonarqube {
     properties {
         property "sonar.host.url", "http://localhost:9001"
-        property "sonar.login", "admin"
-        property "sonar.password", "admin"
-        property "sonar.projectKey", "sonar:spring-petclinic-reactjs-ui-tests"
-        property "sonar.projectName", "spring-petclinic-reactjs-ui-tests"
+        property "sonar.projectKey", "sonar:petclinic"
+        property "sonar.projectName", "petclinic"
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.verbose", "true"
         property "sonar.exclusions", "**/build/generated/**"
-        property "sonar.coverage.exclusions", "**/*Entity.java, **/*Dto.java, **/*View.java, **/*Exception.java, **/*Event.java, **/data/**, **/model/**, **/exception/**, **/error/**, **/config/**, **/properties/**, **/meta/**"
+        property "sonar.coverage.exclusions", "**/test/*, **/*Entity.java, **/*Dto.java, **/*View.java, **/*Exception.java, **/*Event.java, **/data/**, **/model/**, **/exception/**, **/error/**, **/config/**, **/properties/**, **/meta/**"
     }
 }
 

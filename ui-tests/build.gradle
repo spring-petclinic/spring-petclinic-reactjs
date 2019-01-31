@@ -28,3 +28,7 @@ test {
         project.hasProperty("uiTests")
     }
 }
+
+sonarqube {
+    skipProject = true
+}

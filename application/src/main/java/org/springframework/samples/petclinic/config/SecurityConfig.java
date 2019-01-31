@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.samples.petclinic.security.AuthenticationHelper;
 import org.springframework.samples.petclinic.security.JWTAuthenticationFilter;
 import org.springframework.samples.petclinic.security.JWTAuthenticationHelper;

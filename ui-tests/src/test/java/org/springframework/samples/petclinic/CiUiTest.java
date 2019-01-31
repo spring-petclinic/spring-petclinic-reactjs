@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.samples.petclinic.util.FailingUiTestsWatcher;
+import org.springframework.samples.petclinic.util.JmxUtil;
 import org.springframework.samples.petclinic.util.TestContainerUtil;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.BrowserWebDriverContainer.VncRecordingMode;
@@ -45,7 +46,7 @@ public abstract class CiUiTest extends TestDataSource implements ApplicationEndp
     chromeContainer.start();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      // JmxUtil.generateJacocoDump();
+      JmxUtil.generateJacocoDump();
       composeContainer.stop();
     }));
 

@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web.api;
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
