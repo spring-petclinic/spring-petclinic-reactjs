@@ -1,5 +1,0 @@
-git:latest
-github:latest
-gradle:latest
-greenballs:latest
-blueocean:latest

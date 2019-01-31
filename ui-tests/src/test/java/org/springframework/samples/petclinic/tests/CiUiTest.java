@@ -5,6 +5,7 @@ import com.codeborne.selenide.WebDriverRunner;
 
 import org.junit.Before;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.springframework.samples.petclinic.util.JmxUtil;
 import org.springframework.samples.petclinic.util.TestContainerUtil;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.DockerComposeContainer;
@@ -27,6 +28,7 @@ public abstract class CiUiTest {
   static {
     dockerComposeContainer.start();
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      JmxUtil.generateJacocoDump();
       dockerComposeContainer.stop();
     }));
   }

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.service;
 
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +144,7 @@ public class ClinicServiceSpringDataJpaTests {
 
   @Test
   @Transactional
+  @Ignore // ignored just to show UI tests coverage impact
   public void shouldInsertPetIntoDatabaseAndGenerateId() {
     Owner owner6 = this.clinicService.findOwnerById(6);
     int found = owner6.getPets().size();
@@ -166,6 +168,7 @@ public class ClinicServiceSpringDataJpaTests {
 
   @Test
   @Transactional
+  @Ignore // ignored just to show UI tests coverage impact
   public void shouldUpdatePetName() throws Exception {
     Pet pet7 = this.clinicService.findPetById(7);
     String oldName = pet7.getName();
@@ -191,6 +194,7 @@ public class ClinicServiceSpringDataJpaTests {
 
   @Test
   @Transactional
+  @Ignore // ignored just to show UI tests coverage impact
   public void shouldAddNewVisitForPet() {
     Pet pet7 = this.clinicService.findPetById(7);
     int found = pet7.getVisits().size();

@@ -12,7 +12,7 @@ task testUi() {
     doFirst {
         project.ext."uiTests" = true
     }
-    //dependsOn('createJacocoCoverageFile')
+    dependsOn('createJacocoCoverageFile')
     dependsOn(':application:assembleApp')
     finalizedBy(':ui-tests:test')
 }
