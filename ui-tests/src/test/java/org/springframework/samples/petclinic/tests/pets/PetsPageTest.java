@@ -5,8 +5,6 @@ import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 
 import org.junit.Test;
-import org.springframework.samples.petclinic.CiUiTest;
-import org.springframework.samples.petclinic.steps.MainSteps;
 
 import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Selectors.byText;
@@ -14,8 +12,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.openqa.selenium.By.linkText;
 
-public class PetsPageTest extends CiUiTest {
-  private MainSteps mainSteps = new MainSteps(apiLoginPath(), loginPath(), homePath());
+public class PetsPageTest {
 
   @Test
   @DataSet(
@@ -28,8 +25,7 @@ public class PetsPageTest extends CiUiTest {
       strategy = SeedStrategy.INSERT
   )
   public void addNewPet() {
-    //mainSteps.fastLogin();
-    Selenide.open(homePath());
+    Selenide.open("/");
     $("#username").val("test");
     $("#password").val("testovich");
     $("#login-button").click();
