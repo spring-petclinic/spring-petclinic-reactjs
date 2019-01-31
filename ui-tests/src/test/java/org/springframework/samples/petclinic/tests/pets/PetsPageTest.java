@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.SeedStrategy;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.codeborne.selenide.CollectionCondition.texts;
@@ -12,6 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.openqa.selenium.By.linkText;
 
+@Ignore
 public class PetsPageTest {
 
   @Test
