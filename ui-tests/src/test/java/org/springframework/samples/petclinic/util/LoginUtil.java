@@ -22,13 +22,8 @@ public class LoginUtil {
   private final String homePath;
   private final String apiLoginPath;
 
-  public void fastLogin() {
-    Selenide.open(homePath + "/test.html");
-    loginUsingApi(TEST_USERNAME, TEST_PASSWORD);
-  }
-
   @SneakyThrows
-  private void loginUsingApi(String username, String password) {
+  public void loginUsingApi(String username, String password) {
     String token = RestAssured.given()
         .body("{\n" +
             "\"username\":\"" + username + "\",\n" +
@@ -48,5 +43,10 @@ public class LoginUtil {
 
     Cookie cookie = new Cookie("user", cookieValue, "/");
     WebDriverRunner.getWebDriver().manage().addCookie(cookie);
+  }
+
+  public void fastLogin() {
+    Selenide.open(homePath + "/test.html");
+    loginUsingApi(TEST_USERNAME, TEST_PASSWORD);
   }
 }
