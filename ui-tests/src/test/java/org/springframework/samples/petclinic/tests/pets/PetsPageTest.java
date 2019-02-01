@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 
 import org.junit.Test;
 import org.springframework.samples.petclinic.tests.CiUiTest;
+import org.springframework.samples.petclinic.tests.LocalUiTest;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -12,7 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.openqa.selenium.By.linkText;
 
-public class PetsPageTest extends CiUiTest {
+public class PetsPageTest extends LocalUiTest {
   @Test
   public void petMayBeCreated() {
     Selenide.open("/");

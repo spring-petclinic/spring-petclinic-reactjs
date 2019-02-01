@@ -2,9 +2,10 @@ package org.springframework.samples.petclinic.tests.owners;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
+import com.github.database.rider.core.api.dataset.DataSet;
 
 import org.junit.Test;
-import org.springframework.samples.petclinic.tests.CiUiTest;
+import org.springframework.samples.petclinic.tests.LocalUiTest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,9 +14,10 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.openqa.selenium.By.linkText;
 
 @Slf4j
-public class OwnersPageTest extends CiUiTest {
+public class OwnersPageTest extends LocalUiTest {
 
   @Test
   public void shouldBePossibleToSearchOwnersByLastName() {
@@ -63,4 +65,46 @@ public class OwnersPageTest extends CiUiTest {
     newOwners.get(2).shouldHave(text("test city"));
     newOwners.get(3).shouldHave(text("555543434"));
   }
+
+  @Test
+  @DataSet(
+      value = {
+          "datasets/test_user.xml",
+          "datasets/owners/owner-to-edit.xml"
+      },
+      executeScriptsBefore = "datasets/cleanup.sql"
+  )
+  public void ownerMayBeEdited() {
+    Selenide.open("/");
+
+    $("#username").val("test");
+    $("#password").val("testovich");
+    $("#login-button").click();
+
+    $(byText("FIND OWNERS")).click();
+
+    $("#owner-last-name-input").val("Dmitriev");
+    $(byText("Find Owner")).click();
+
+    $(linkText("Igor Dmitriev")).click();
+    $(byText("Edit Owner")).click();
+
+    $("#firstname-input").val("newfirstname");
+    $("#lastname-input").val("newlastname");
+    $("#address-input").val("new street");
+    $("#city-input").val("new city");
+    $("#telephone-input").val("1111");
+
+    $(byText("Update Owner")).click();
+
+    $(byText("Owner Information")).shouldBe(visible);
+    $$("#owners-information-table tbody").shouldHaveSize(1);
+    ElementsCollection owners = $$("#owners-information-table tbody tr td");
+    owners.get(0).shouldHave(text("newfirstname newlastname"));
+    owners.get(1).shouldHave(text("new street"));
+    owners.get(2).shouldHave(text("new city"));
+    owners.get(3).shouldHave(text("1111"));
+  }
+
+
 }
