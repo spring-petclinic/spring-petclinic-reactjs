@@ -6,6 +6,7 @@ import com.github.database.rider.core.api.dataset.DataSet;
 
 import org.junit.Test;
 import org.springframework.samples.petclinic.tests.LocalUiTest;
+import org.springframework.samples.petclinic.util.LoginUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,10 +15,11 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static org.openqa.selenium.By.linkText;
 
 @Slf4j
 public class OwnersPageTest extends LocalUiTest {
+
+  private final LoginUtil loginUtil = new LoginUtil(homePath(), apiLoginPath());
 
   @Test
   public void shouldBePossibleToSearchOwnersByLastName() {
@@ -75,7 +77,7 @@ public class OwnersPageTest extends LocalUiTest {
       executeScriptsBefore = "datasets/cleanup.sql"
   )
   public void ownerMayBeEdited() {
-    Selenide.open("/");
+    /*Selenide.open("/");
 
     $("#username").val("test");
     $("#password").val("testovich");
@@ -87,7 +89,10 @@ public class OwnersPageTest extends LocalUiTest {
     $(byText("Find Owner")).click();
 
     $(linkText("Igor Dmitriev")).click();
-    $(byText("Edit Owner")).click();
+    $(byText("Edit Owner")).click();*/
+
+    loginUtil.fastLogin();
+    Selenide.open("/#/owners/1000/edit");
 
     $("#firstname-input").val("newfirstname");
     $("#lastname-input").val("newlastname");

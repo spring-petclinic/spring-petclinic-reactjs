@@ -5,6 +5,7 @@ import com.codeborne.selenide.Configuration;
 import org.junit.BeforeClass;
 
 public abstract class LocalUiTest extends TestDataSource {
+
   @BeforeClass
   public static void setUpClass() {
     Configuration.holdBrowserOpen = true;
@@ -19,5 +20,13 @@ public abstract class LocalUiTest extends TestDataSource {
   @Override
   protected int jdbcPort() {
     return 5432;
+  }
+
+  protected String homePath() {
+    return "http://localhost:3000";
+  }
+
+  protected String apiLoginPath() {
+    return "http://localhost:8080/login";
   }
 }
