@@ -118,7 +118,7 @@ export default class Login extends React.Component<any, ILoginState> {
                     width: '400px'
                 }}>
                     <div style={{marginLeft: '170px'}}>
-                        <h1>Login</h1>
+                        <h1>Petclinic</h1>
                     </div>
                     <br/>
                     <br/>
