@@ -55,7 +55,7 @@ public class OwnersPageTest {
     $(byText("Find Owner")).click();
     $$("#owners-table tbody tr").shouldHaveSize(1);
 
-    ElementsCollection owners = $$("owners-table body tr:nth-child(1) td");
+    ElementsCollection owners = $$("owners-table tbody tr:nth-child(1) td");
     owners.get(0).shouldHave(exactText("George Franklin"));
     owners.get(1).shouldHave(exactText("110 W. Liberty St."));
     owners.get(2).shouldHave(exactText("Madison"));
