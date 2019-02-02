@@ -12,16 +12,16 @@ task testUi() {
     doFirst {
         project.ext."uiTests" = true
     }
-    // dependsOn('createJacocoCoverageFile')
+    dependsOn('createJacocoCoverageFile')
     dependsOn(':application:assembleApp')
     finalizedBy(':ui-tests:test')
 }
 
-/*task createJacocoCoverageFile() {
+task createJacocoCoverageFile() {
     def f = new File("${project.buildDir}/jacoco")
     f.mkdirs()
     file("${f.getAbsolutePath()}/test.exec").createNewFile()
-}*/
+}
 
 test {
     onlyIf {

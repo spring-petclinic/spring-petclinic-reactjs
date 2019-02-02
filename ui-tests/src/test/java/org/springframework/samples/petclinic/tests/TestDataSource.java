@@ -27,5 +27,4 @@ public abstract class TestDataSource {
   protected abstract String jdbcHost();
 
   protected abstract int jdbcPort();
-
 }
