@@ -10,7 +10,7 @@ const NoConstraint: IConstraint = {
 };
 
 
-export default ({type, object, error, name, id, constraint = NoConstraint, label, onChange}: {type: string, object: any, error: IError, name: string, id: string, constraint?: IConstraint, label: string, onChange: IInputChangeHandler }) => {
+export default ({type, object, error, name, id, constraint = NoConstraint, label, onChange}: {type: string, object: any, error: IError, name: string, id?: string, constraint?: IConstraint, label: string, onChange: IInputChangeHandler }) => {
 
   const handleOnChange = event => {
     const { value } = event.target;
