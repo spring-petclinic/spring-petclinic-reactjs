@@ -53,7 +53,7 @@ public class OwnersPageTest {
     $(byText("FIND OWNERS")).click();
     $("#owner-last-name-input").val("F");
     $(byText("Find Owner")).click();
-    $$("#owners-table body tr").shouldHaveSize(1);
+    $$("#owners-table tbody tr").shouldHaveSize(1);
 
     ElementsCollection owners = $$("owners-table body tr:nth-child(1) td");
     owners.get(0).shouldHave(exactText("George Franklin"));
