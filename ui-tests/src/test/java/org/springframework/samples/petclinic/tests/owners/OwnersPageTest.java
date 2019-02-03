@@ -1,9 +1,7 @@
 package org.springframework.samples.petclinic.tests.owners;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 
 import org.junit.Before;
@@ -36,7 +34,7 @@ public class OwnersPageTest {
       .withExposedService("application_1", 8080, Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(3)))
       .withExposedService("postgres_1", 5432);
 
-  private static BrowserWebDriverContainer chrome;
+  private BrowserWebDriverContainer chrome;
 
   @Before
   public void setUpClass() {
@@ -47,8 +45,8 @@ public class OwnersPageTest {
     WebDriverRunner.setWebDriver(chrome.getWebDriver());
   }
 
-/*  @Before
-  public void setUp() throws Exception {
+  /*@BeforeClass
+  public static void setUpClass() {
     Configuration.baseUrl = "http://localhost:3000";
   }*/
 

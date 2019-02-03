@@ -17,11 +17,13 @@ task testUi() {
     finalizedBy(':ui-tests:test')
 }
 
+/*
 task createJacocoCoverageFile() {
     def f = new File("${project.buildDir}/jacoco")
     f.mkdirs()
     file("${f.getAbsolutePath()}/test.exec").createNewFile()
 }
+*/
 
 test {
     onlyIf {
