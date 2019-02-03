@@ -131,9 +131,9 @@ export default class Login extends React.Component<any, ILoginState> {
                                    onChange={this.onUsernameChanged}/>
                         </div>
                         <div className='form-group has-feedback'>
-                            <Input type='password' id='password' object={password} error={null}
+                            <Input id='password' type='password' object={password} error={null}
                                    constraint={NotEmpty}
-                                   label='Password:' name='password'
+                                   label='Password:'
                                    onChange={this.onPasswordChanged}/>
                         </div>
                     </div>

@@ -21,12 +21,15 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
+import static org.openqa.selenium.By.linkText;
 
 public class OwnersPageTest {
+
   @ClassRule
   public static DockerComposeContainer dockerComposeContainer = new DockerComposeContainer(new File("../docker-compose.yml"))
       .withLocalCompose(true)
@@ -36,7 +39,7 @@ public class OwnersPageTest {
   private static BrowserWebDriverContainer chrome;
 
   @Before
-  public void setUp() {
+  public void setUpClass() {
     chrome = new BrowserWebDriverContainer().withCapabilities(DesiredCapabilities.chrome());
     TestContainerUtil.linkContainersNetworks(dockerComposeContainer, chrome, "application_1");
     chrome.start();
@@ -44,18 +47,22 @@ public class OwnersPageTest {
     WebDriverRunner.setWebDriver(chrome.getWebDriver());
   }
 
+/*  @Before
+  public void setUp() throws Exception {
+    Configuration.baseUrl = "http://localhost:3000";
+  }*/
+
   @Test
   public void shouldSearchOwnersByLastName() {
-    Selenide.open("/");
+    open("/");
     $("#username").val("test");
     $("#password").val("testovich");
     $(byText("Login")).click();
-    $(byText("FIND OWNERS")).click();
+    $(linkText("FIND OWNERS")).click();
     $("#owner-last-name-input").val("F");
     $(byText("Find Owner")).click();
     $$("#owners-table tbody tr").shouldHaveSize(1);
-
-    ElementsCollection owners = $$("#owners-table tbody tr:nth-child(1) td");
+    ElementsCollection owners = $$("#owners-table tbody tr td");
     owners.get(0).shouldHave(exactText("George Franklin"));
     owners.get(1).shouldHave(exactText("110 W. Liberty St."));
     owners.get(2).shouldHave(exactText("Madison"));
@@ -80,7 +87,7 @@ public class OwnersPageTest {
 
     $(byText("Add Owner")).click();
 
-    $(byText("Owner Information")).shouldBe(Condition.visible);
+    $(byText("Owner Information")).shouldBe(visible);
     $$("#owners-information-table tbody").shouldHaveSize(1);
 
     ElementsCollection newOwners = $$("#owners-information-table tbody tr td");
