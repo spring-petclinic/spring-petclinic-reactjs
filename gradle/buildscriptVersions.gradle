@@ -1,0 +1,9 @@
+ext {
+    dependencyManagementVersion = '1.0.6.RELEASE'
+    gradleGitPropertiesVersion = '1.5.1'
+    springBootVersion = '2.1.2.RELEASE'
+    gradleLintVersion = '10.4.2'
+    sonarqubeVersion = '2.6.2'
+    gradleBomVersion = '0.3'
+    jacocoVersion = '0.8.2'
+}

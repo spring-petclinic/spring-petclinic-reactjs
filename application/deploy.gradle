@@ -17,24 +17,21 @@ task npmBuild(type: Exec) {
     commandLine 'npm', 'run', 'build:prod'
 }
 
-task deleteOldFrontend() {
-    delete "${rootDir}/application/src/main/resources/static"
-}
-
-task buildFrontend(type: Copy) {
-    dependsOn(npmBuild)
-    from("${rootDir}/frontend/public") {
-        include "**"
+task copyJacocoAgentJar(type: Copy) {
+    def jacocoAgentJarName = "org.jacoco.agent-${jacocoVersion}.jar"
+    def jacocoAgentJar = configurations.getByName('jacocoAgent').filter {
+        it.name == jacocoAgentJarName
     }
-    into "${rootDir}/application/src/main/resources/static"
-}
-
-task buildApp() {
-    dependsOn(buildFrontend)
-    finalizedBy(build)
+    if (jacocoAgentJar.empty) {
+        throw new FileNotFoundException("Can't find the file $jacocoAgentJarName")
+    }
+    from(zipTree(jacocoAgentJar.singleFile)) {
+        include 'jacocoagent.jar'
+    }
+    into "${project.buildDir}/jacocoagent"
 }
 
 task assembleApp() {
-    dependsOn(buildFrontend)
+    dependsOn(npmBuild, copyJacocoAgentJar)
     finalizedBy(assemble)
 }

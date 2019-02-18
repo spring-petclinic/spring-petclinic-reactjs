@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import org.assertj.core.util.Lists;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(VetController.class)
 @MockBean(UserDetailsService.class)
+@Ignore
 public class VetControllerTests {
 
     @Autowired

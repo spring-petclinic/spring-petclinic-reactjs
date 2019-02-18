@@ -1,21 +1,15 @@
 package org.springframework.samples.petclinic.tests.owners;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.Selenide;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.SeedStrategy;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.springframework.samples.petclinic.util.TestContainerUtil;
-import org.testcontainers.containers.BrowserWebDriverContainer;
-import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-
-import java.io.File;
-import java.time.Duration;
+import org.springframework.samples.petclinic.steps.MainSteps;
+import org.springframework.samples.petclinic.steps.OwnersSteps;
+import org.springframework.samples.petclinic.tests.CiUiTest;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
@@ -24,41 +18,37 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
-import static org.openqa.selenium.By.linkText;
 
-public class OwnersPageTest {
+@Ignore
+public class OwnersPageTest  {
 
-  @ClassRule
-  public static DockerComposeContainer dockerComposeContainer = new DockerComposeContainer(new File("../docker-compose.yml"))
-      .withLocalCompose(true)
-      .withExposedService("application_1", 8080, Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(3)))
-      .withExposedService("postgres_1", 5432);
+  private MainSteps mainSteps = new MainSteps(homePath(), apiLoginPath());
 
-  private BrowserWebDriverContainer chrome;
-
-  @Before
-  public void setUpClass() {
-    chrome = new BrowserWebDriverContainer().withCapabilities(DesiredCapabilities.chrome());
-    TestContainerUtil.linkContainersNetworks(dockerComposeContainer, chrome, "application_1");
-    chrome.start();
-    Configuration.baseUrl = "http://application:8080";
-    WebDriverRunner.setWebDriver(chrome.getWebDriver());
+  private String apiLoginPath() {
+    return null;
   }
 
-  /*@BeforeClass
-  public static void setUpClass() {
-    Configuration.baseUrl = "http://localhost:3000";
-  }*/
+  private String homePath() {
+    return null;
+  }
+
+  private OwnersSteps ownersSteps = new OwnersSteps();
 
   @Test
   public void shouldSearchOwnersByLastName() {
-    open("/");
-    $("#username").val("test");
-    $("#password").val("testovich");
-    $(byText("Login")).click();
-    $(linkText("FIND OWNERS")).click();
-    $("#owner-last-name-input").val("F");
-    $(byText("Find Owner")).click();
+    mainSteps.fastLogin();
+    mainSteps.openFindOwnersTab();
+    ownersSteps.searchOwnersByLastName("F");
+    ownersSteps.assertOwnersTableHasSize(1);
+    ownersSteps.assertOwnersTableHasData(
+        2,
+        "George Franklin",
+        "110 W. Liberty St.",
+        "Madison",
+        "6085551023",
+        "Leo"
+    );
+
     $$("#owners-table tbody tr").shouldHaveSize(1);
     ElementsCollection owners = $$("#owners-table tbody tr td");
     owners.get(0).shouldHave(exactText("George Franklin"));
@@ -93,5 +83,49 @@ public class OwnersPageTest {
     newOwners.get(1).shouldHave(text("test address"));
     newOwners.get(2).shouldHave(text("test city"));
     newOwners.get(3).shouldHave(text("555543434"));
+  }
+
+  @Test
+  @DataSet(
+      value = {
+          "datasets/test_user.xml",
+          "datasets/owners/owner-to-edit.xml"
+      },
+      executeScriptsBefore = "datasets/cleanup.sql",
+      strategy = SeedStrategy.INSERT
+  )
+  public void shouldEditOwner() {
+    /*Selenide.open("/");
+
+    $("#username").val("test");
+    $("#password").val("testovich");
+    $("#login-button").click();
+
+    $(byText("FIND OWNERS")).click();
+
+    $("#owner-last-name-input").val("Dmitriev");
+    $(byText("Find Owner")).click();
+
+    $(linkText("Igor Dmitriev")).click();*/
+    mainSteps.fastLogin();
+    Selenide.open("/#/owners/1000");
+
+    $(byText("Edit Owner")).click();
+
+    $("#firstname-input").val("newfirstname");
+    $("#lastname-input").val("newlastname");
+    $("#address-input").val("new street");
+    $("#city-input").val("new city");
+    $("#telephone-input").val("1111");
+
+    $(byText("Update Owner")).click();
+
+    $(byText("Owner Information")).shouldBe(visible);
+    $$("#owners-information-table tbody").shouldHaveSize(1);
+    ElementsCollection owners = $$("#owners-information-table tbody tr td");
+    owners.get(0).shouldHave(text("newfirstname newlastname"));
+    owners.get(1).shouldHave(text("new street"));
+    owners.get(2).shouldHave(text("new city"));
+    owners.get(3).shouldHave(text("1111"));
   }
 }

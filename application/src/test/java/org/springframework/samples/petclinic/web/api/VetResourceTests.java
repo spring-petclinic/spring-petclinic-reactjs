@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(VetResource.class)
 @MockBean(UserDetailsService.class)
+@Ignore
 public class VetResourceTests {
 
   @Autowired

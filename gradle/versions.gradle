@@ -1,0 +1,16 @@
+BOM.rules([
+        'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'  : '2.4.0',
+        'com.fasterxml.jackson.datatype:jackson-datatype-guava'   : '2.2.0',
+        'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml': '2.9.6',
+        'com.codeborne:selenide'                                  : '5.1.0',
+        'com.jayway.restassured:rest-assured'                     : '2.9.0',
+        'com.github.database-rider:rider-core'                    : '1.4.0',
+        'io.jsonwebtoken:jjwt'                                    : '0.9.1',
+        'p6spy:p6spy'                                             : '3.7.0',
+        'javax.cache:cache-api'                                   : '1.0.0',
+        'org.ehcache:ehcache'                                     : '3.1.1',
+        'org.apache.commons:commons-collections4'                 : '4.2',
+        'org.testcontainers:selenium'                             : '1.10.6',
+        'org.testcontainers:postgresql'                           : '1.10.0',
+        'org.dbunit:dbunit'                                       : '2.5.1',
+])

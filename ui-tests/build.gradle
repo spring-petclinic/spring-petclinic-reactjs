@@ -1,8 +1,8 @@
 dependencies {
-    testCompile 'com.codeborne:selenide:5.1.0'
-    testCompile 'org.testcontainers:selenium:1.10.6'
-    testCompile 'com.jayway.restassured:rest-assured:2.9.0'
-    testCompile 'com.github.database-rider:rider-core:1.4.0'
+    testCompile 'com.codeborne:selenide'
+    testCompile 'org.testcontainers:selenium'
+    testCompile 'com.jayway.restassured:rest-assured'
+    testCompile 'com.github.database-rider:rider-core'
     compile 'org.postgresql:postgresql'
     compile 'com.zaxxer:HikariCP'
     compile 'org.springframework.boot:spring-boot-starter-logging'
@@ -12,18 +12,15 @@ task testUi() {
     doFirst {
         project.ext."uiTests" = true
     }
-    //dependsOn('createJacocoCoverageFile')
-    dependsOn(':application:assembleApp')
+    dependsOn('createJacocoCoverageFile', ':application:assembleApp')
     finalizedBy(':ui-tests:test')
 }
 
-/*
 task createJacocoCoverageFile() {
     def f = new File("${project.buildDir}/jacoco")
     f.mkdirs()
     file("${f.getAbsolutePath()}/test.exec").createNewFile()
 }
-*/
 
 test {
     onlyIf {
