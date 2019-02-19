@@ -3,7 +3,10 @@ package org.springframework.samples.petclinic.web;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,6 +18,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,18 +34,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Colin But
  */
-@RunWith(SpringRunner.class)
 @WebMvcTest(value = PetController.class,
     includeFilters = @ComponentScan.Filter(
         value = PetTypeFormatter.class,
         type = FilterType.ASSIGNABLE_TYPE))
 @MockBean(UserDetailsService.class)
-@Ignore
+@ExtendWith(SpringExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PetControllerTests {
 
   private static final int TEST_OWNER_ID = 1;
   private static final int TEST_PET_ID = 1;
-
 
   @Autowired
   private MockMvc mockMvc;
@@ -69,7 +72,7 @@ public class PetControllerTests {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void testProcessCreationFormSuccess() throws Exception {
     mockMvc.perform(post("/owners/{ownerId}/pets/new", TEST_OWNER_ID)
         .param("name", "Betty")
@@ -101,7 +104,7 @@ public class PetControllerTests {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void testProcessUpdateFormSuccess() throws Exception {
     mockMvc.perform(post("/owners/{ownerId}/pets/{petId}/edit", TEST_OWNER_ID, TEST_PET_ID)
         .param("name", "Betty")

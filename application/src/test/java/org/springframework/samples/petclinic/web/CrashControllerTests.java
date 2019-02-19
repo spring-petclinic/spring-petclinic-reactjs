@@ -1,8 +1,8 @@
 package org.springframework.samples.petclinic.web;
 
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = PetClinicApplication.class)
 @WebAppConfiguration
 // Waiting https://github.com/spring-projects/spring-boot/issues/5574
-@Ignore
+@Disabled
 public class CrashControllerTests {
 
     @Autowired

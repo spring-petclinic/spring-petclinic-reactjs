@@ -5,9 +5,9 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.samples.petclinic.tests.LocalUiTest;
 
-import io.qameta.allure.junit4.DisplayName;
 import io.qameta.allure.selenide.AllureSelenide;
 
 import static com.codeborne.selenide.Condition.text;

@@ -2,8 +2,8 @@ package org.springframework.samples.petclinic.web;
 
 import org.assertj.core.util.Lists;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = OwnerController.class, secure = false)
 @MockBean(UserDetailsService.class)
-@Ignore
+@Disabled
 public class OwnerControllerTests {
 
     private static final int TEST_OWNER_ID = 1;

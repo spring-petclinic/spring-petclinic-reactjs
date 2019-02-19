@@ -18,7 +18,7 @@ task npmBuild(type: Exec) {
 }
 
 task copyJacocoAgentJar(type: Copy) {
-    def jacocoAgentJarName = "org.jacoco.agent-${jacocoVersion}.jar"
+    def jacocoAgentJarName = "org.jacoco.agent-0.8.2.jar"
     def jacocoAgentJar = configurations.getByName('jacocoAgent').filter {
         it.name == jacocoAgentJarName
     }

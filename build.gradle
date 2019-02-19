@@ -1,57 +1,28 @@
 import io.qameta.allure.gradle.task.AllureReport
 
 buildscript {
-    apply from: "$rootDir/gradle/buildscriptVersions.gradle"
-
     ext {
         testCoverageFile = "$buildDir/jacoco/coverage.exec"
+        lombokVersion = '1.18.4'
     }
 
     repositories {
         jcenter()
-        gradlePluginPortal()
     }
 
     dependencies {
-        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}")
-        classpath "com.netflix.nebula:gradle-lint-plugin:${gradleLintVersion}"
-        classpath "com.github.lkishalmi.gradle:gradle-bom-plugin:${gradleBomVersion}"
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarqubeVersion}"
-        classpath "io.qameta.allure:allure-gradle:2.5"
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.2.RELEASE")
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2"
+        classpath "io.qameta.allure:allure-gradle:2.7.0"
     }
 }
 
 apply plugin: 'org.sonarqube'
-apply plugin: 'com.github.lkishalmi.bill-of-materials'
-apply from: "$rootDir/gradle/versions.gradle"
 
 allprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
-    apply plugin: 'nebula.lint'
-
-    jacoco {
-        toolVersion = "${jacocoVersion}"
-    }
-
-    gradleLint {
-        rules = ['unused-dependency']
-        alwaysRun = false
-        reportFormat = 'html'
-    }
-
-    group = 'org.springframework.samples.petclinic'
-    version = '1.6.0-SNAPSHOT'
-
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-}
-
-subprojects {
-    apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.qameta.allure'
 
     allure {
@@ -59,29 +30,53 @@ subprojects {
         downloadLinkFormat = 'https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/%s/allure-commandline-%<s.zip'
     }
 
+    task allureAggregatedReport(type: AllureReport) {
+        resultsDirs = subprojects.allure.resultsDir
+    }
+
+    jacoco {
+        toolVersion = "0.8.2"
+    }
+
+    group = 'org.springframework.samples.petclinic'
+    version = '1.7.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging.showStandardStreams = true
+    }
+}
+
+subprojects {
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'io.qameta.allure'
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:2.1.2.RELEASE")
         }
     }
 
     dependencies {
-        compile 'org.projectlombok:lombok'
         compile 'p6spy:p6spy:3.7.0'
         compile 'org.slf4j:slf4j-api'
-        testCompile 'io.qameta.allure:allure-junit4:2.9.0'
-        testCompile 'io.qameta.allure:allure-selenide:2.9.0'
-        testCompile "io.qameta.allure:allure-gradle:2.5"
-        testCompile 'ru.yandex.qatools.allure:allure-junit-adaptor:1.5.4'
+        testCompile 'io.qameta.allure:allure-junit5:2.10.0'
+        testCompile 'io.qameta.allure:allure-selenide:2.10.0'
+        testImplementation('org.junit.jupiter:junit-jupiter-api:5.3.2')
+        testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.3.2')
 
-        annotationProcessor 'org.projectlombok:lombok'
-    }
-
-    task allureAggregatedReport(type: AllureReport) {
-        resultsDirs = subprojects.allure.resultsDir
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+        testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     }
 
     sonarqube {
