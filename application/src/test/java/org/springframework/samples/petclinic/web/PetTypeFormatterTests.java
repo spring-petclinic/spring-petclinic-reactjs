@@ -1,10 +1,13 @@
 package org.springframework.samples.petclinic.web;
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.ClinicService;
@@ -21,7 +24,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Colin But
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PetTypeFormatterTests {
 
   @Mock
@@ -29,7 +32,7 @@ public class PetTypeFormatterTests {
 
   private PetTypeFormatter petTypeFormatter;
 
-  @Before
+  @BeforeEach
   public void setup() {
     petTypeFormatter = new PetTypeFormatter(clinicService);
   }

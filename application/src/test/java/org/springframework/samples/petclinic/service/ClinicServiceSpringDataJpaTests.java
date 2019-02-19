@@ -3,7 +3,9 @@ package org.springframework.samples.petclinic.service;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,6 +18,7 @@ import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -48,20 +51,23 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Igor Dmitriev
  */
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Ignore
 public class ClinicServiceSpringDataJpaTests {
 
-  @ClassRule
-  public static PostgreSQLContainer POSTGESQL_CONTAINER = (PostgreSQLContainer) new PostgreSQLContainer("postgres:9.6.1")
+  private static PostgreSQLContainer POSTGESQL_CONTAINER = (PostgreSQLContainer) new PostgreSQLContainer("postgres:9.6.1")
       .withUsername("test_login")
       .withPassword("test_password")
       .withDatabaseName("petclinic")
       .withExposedPorts(5432);
 
-  @BeforeClass
+  static {
+    POSTGESQL_CONTAINER.start();
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> POSTGESQL_CONTAINER.stop()));
+  }
+
+  @BeforeAll
   public static void setUpClass() {
     String urlPattern = "jdbc:p6spy:postgresql://%s:%s/petclinic";
     String url = String.format(urlPattern, POSTGESQL_CONTAINER.getContainerIpAddress(), POSTGESQL_CONTAINER.getMappedPort(5432));

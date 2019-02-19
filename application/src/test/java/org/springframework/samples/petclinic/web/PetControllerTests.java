@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.web;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -40,7 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         type = FilterType.ASSIGNABLE_TYPE))
 @MockBean(UserDetailsService.class)
 @ExtendWith(SpringExtension.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PetControllerTests {
 
   private static final int TEST_OWNER_ID = 1;
@@ -52,7 +52,7 @@ public class PetControllerTests {
   @MockBean
   private ClinicService clinicService;
 
-  @Before
+  @BeforeEach
   public void setup() {
     PetType cat = new PetType();
     cat.setId(3);
