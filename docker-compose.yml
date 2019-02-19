@@ -6,7 +6,7 @@ services:
        context: .
        dockerfile: Dockerfile
        args:
-         jarFile: application/build/libs/spring-petclinic-1.6.0-SNAPSHOT.jar
+         jarFile: application/build/libs/spring-petclinic-1.7.0-SNAPSHOT.jar
      command: -m 2056m
      volumes:
         - ./application/build/jacocoagent:/jacocoagent

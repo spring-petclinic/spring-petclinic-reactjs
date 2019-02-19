@@ -3,7 +3,6 @@ package org.springframework.samples.petclinic.tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.samples.petclinic.util.FailingUiTestsWatcher;

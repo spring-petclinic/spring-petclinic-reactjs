@@ -7,9 +7,12 @@ import com.github.database.rider.core.api.dataset.SeedStrategy;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.samples.petclinic.steps.MainSteps;
 import org.springframework.samples.petclinic.steps.OwnersSteps;
 import org.springframework.samples.petclinic.tests.CiUiTest;
+
+import lombok.RequiredArgsConstructor;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
@@ -19,18 +22,10 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
-@Ignore
-public class OwnersPageTest  {
+@Disabled
+public class OwnersPageTest extends CiUiTest  {
 
   private MainSteps mainSteps = new MainSteps(homePath(), apiLoginPath());
-
-  private String apiLoginPath() {
-    return null;
-  }
-
-  private String homePath() {
-    return null;
-  }
 
   private OwnersSteps ownersSteps = new OwnersSteps();
 

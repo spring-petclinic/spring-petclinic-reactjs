@@ -8,6 +8,7 @@ buildscript {
 
     repositories {
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -30,10 +31,6 @@ allprojects {
         downloadLinkFormat = 'https://dl.bintray.com/qameta/maven/io/qameta/allure/allure-commandline/%s/allure-commandline-%<s.zip'
     }
 
-    task allureAggregatedReport(type: AllureReport) {
-        resultsDirs = subprojects.allure.resultsDir
-    }
-
     jacoco {
         toolVersion = "0.8.2"
     }
@@ -44,11 +41,6 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
-    }
-
-    test {
-        useJUnitPlatform()
-        testLogging.showStandardStreams = true
     }
 }
 
@@ -80,6 +72,11 @@ subprojects {
         testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     }
 
+    test {
+        useJUnitPlatform()
+        testLogging.showStandardStreams = true
+    }
+
     sonarqube {
         properties {
             property "sonar.jacoco.reportPaths", testCoverageFile
@@ -107,6 +104,10 @@ sonarqube {
 task jacocoMergeTest(type: JacocoMerge) {
     destinationFile = file(testCoverageFile)
     executionData = project.fileTree(dir: '.', include: '**/build/jacoco/*.exec')
+}
+
+task allureAggregatedReport(type: AllureReport) {
+    resultsDirs = subprojects.allure.resultsDir
 }
 
 tasks['sonarqube'].with {

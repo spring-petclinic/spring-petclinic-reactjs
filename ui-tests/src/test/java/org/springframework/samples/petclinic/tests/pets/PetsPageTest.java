@@ -4,9 +4,9 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.springframework.samples.petclinic.tests.LocalUiTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.samples.petclinic.tests.CiUiTest;
 
 import io.qameta.allure.selenide.AllureSelenide;
 
@@ -16,7 +16,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.openqa.selenium.By.linkText;
 
-public class PetsPageTest extends LocalUiTest {
+public class PetsPageTest extends CiUiTest {
   @Test
   @DisplayName("should create a pet")
   public void shouldCreatePet() {
