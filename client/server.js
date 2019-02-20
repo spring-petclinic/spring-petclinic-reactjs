@@ -1,5 +1,5 @@
 // This file is based on by start.js from create-react-app
-// https://github.com/facebookincubator/create-react-app/blob/master/scripts/start.js
+// https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/scripts/start.js
 
 process.env.NODE_ENV = 'development';
 
