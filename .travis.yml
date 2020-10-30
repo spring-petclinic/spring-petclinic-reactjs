@@ -9,5 +9,5 @@ node_js:
 script:
  - nvm install 6 
  - cd client && npm install && npm test && npm run build:prod
-
+ - ./mvnw test -B
 
