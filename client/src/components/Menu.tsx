@@ -26,7 +26,7 @@ export default ({name}: { name: string }) => (
 
           <MenuItem active={name.startsWith('/owners')} url='/owners/list' title='find owners'>
             <span className='glyphicon glyphicon-search' aria-hidden='true'></span>&nbsp;
-                    <span>Find owners</span>
+                    <span>Find owners123</span>
           </MenuItem>
 
           <MenuItem active={name === 'vets'} url='/vets' title='veterinarians'>
