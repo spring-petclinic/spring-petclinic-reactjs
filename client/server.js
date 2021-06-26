@@ -243,7 +243,6 @@ function runDevServer(port, protocol) {
     // clearConsole();
     console.log(chalk.cyan('Starting the development server...'));
     console.log();
-    // openBrowser(port, protocol);
   });
 }
 
