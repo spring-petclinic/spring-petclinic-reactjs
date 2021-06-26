@@ -1,32 +1,4 @@
 
-// export interface IApiCallData {
-//   endpoint: string;
-//   method?: IApiCallMethod;
-//   // fetching, onSuccess, onFailure
-//   types: string[];
-//   body?: any;
-//   successMessage?: string;
-// }
-
-// const CALL_API = 'CALL_API';
-
-// export interface IApiAction {
-//   CALL_API: IApiCallData;
-// }
-
-// function doApiCall(store, apiCallData: IApiCallData) {
-
-//   const params: any = {
-//     headers: {}
-//   };
-//   params.method = apiCallData.method || 'GET';
-//   params.body = JSON.stringify(apiCallData.body);
-//   if (params.body) {
-//     params.headers['Accept'] = 'application/json';
-//     params.headers['Content-Type']  = 'application/json';
-//   }
-
-
 //   return fetch(`http://localhost:8080${apiCallData.endpoint}`, params)
 //     .then(response =>
 //       response.json().then(json => ({ json, response }))
