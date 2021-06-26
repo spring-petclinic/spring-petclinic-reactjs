@@ -16,14 +16,6 @@ const newOwner = (): IOwner => ({
 
 export default () => <OwnerEditor initialOwner={newOwner()} />;
 
-// export default class NewOwnerPage extends React.Component<void, INewOwnerPageState> {
-
-//   context: IRouterContext;
-
-//   static contextTypes = {
-//     router: React.PropTypes.object.isRequired
-//   };
-
 //   constructor() {
 //     super();
 //     this.onInputChange = this.onInputChange.bind(this);
