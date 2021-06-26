@@ -16,24 +16,6 @@ const newOwner = (): IOwner => ({
 
 export default () => <OwnerEditor initialOwner={newOwner()} />;
 
-//   onSubmit(event) {
-//     event.preventDefault();
-
-//     const { owner } = this.state;
-
-//     submitForm('/api/owner', owner, (status, response) => {
-//       if (status === 201) {
-//         const newOwner = response as IOwner;
-//         this.context.router.push({
-//           pathname: '/owners/' + newOwner.id
-//         });
-//       } else {
-//         console.log('ERROR?!...', response);
-//         this.setState({ error: response });
-//       }
-//     });
-//   }
-
 //   onInputChange(name: string, value: string) {
 //     const { owner } = this.state;
 //     const modifiedOwner = Object.assign({}, owner, { [name]: value });
