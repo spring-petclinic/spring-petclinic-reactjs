@@ -16,12 +16,6 @@ const newOwner = (): IOwner => ({
 
 export default () => <OwnerEditor initialOwner={newOwner()} />;
 
-//   onInputChange(name: string, value: string) {
-//     const { owner } = this.state;
-//     const modifiedOwner = Object.assign({}, owner, { [name]: value });
-//     this.setState({ owner: modifiedOwner });
-//   }
-
 //   render() {
 //     const { owner, error } = this.state;
 //     return (
