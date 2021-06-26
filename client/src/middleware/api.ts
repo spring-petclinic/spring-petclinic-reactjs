@@ -1,4 +1,4 @@
-// // taken from  by https://github.com/reactjs/redux/blob/master/examples/real-world/middleware/api.js
+
 
 // type IApiCallMethod = 'GET' | 'POST' | 'PATCH';
 
