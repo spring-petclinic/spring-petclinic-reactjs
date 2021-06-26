@@ -1,7 +1,4 @@
 
-
-// type IApiCallMethod = 'GET' | 'POST' | 'PATCH';
-
 // export interface IApiCallData {
 //   endpoint: string;
 //   method?: IApiCallMethod;
