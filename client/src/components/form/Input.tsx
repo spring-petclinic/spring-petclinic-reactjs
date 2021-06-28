@@ -25,7 +25,7 @@ export default ({object, error, name, constraint = NoConstraint, label, onChange
 
   const value = object[name];
   const fieldError = error && error.fieldErrors[name];
-  const valid = !fieldError && value !== null && value !== undefined && value.trim().length > 0;
+  const valid = !fieldError && value !== null && value !== undefined;
 
   const cssGroup = `form-group ${fieldError ? 'has-error' : ''}`;
 
