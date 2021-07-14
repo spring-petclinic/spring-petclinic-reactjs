@@ -111,7 +111,7 @@ File -> Import -> Maven -> Existing Maven project
   </tr>
   <tr>
     <td>The Main Class</td>
-    <td><a href="/src/main/java/org/springframework/samples/petclinic/application/PetClinicApplication.java">PetClinicApplication.java</a></td>
+    <td><a href="/src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java">PetClinicApplication.java</a></td>
   </tr>
   <tr>
     <td>Properties Files</td>
