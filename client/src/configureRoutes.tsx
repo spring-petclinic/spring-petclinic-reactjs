@@ -22,6 +22,7 @@ import NotFoundPage from './components/NotFoundPage';
 export default () => (
   <Route component={App}>
     <Route path='/' component={WelcomePage} />
+    <Route path='/Locale' component={WelcomePage} />
     <Route path='/owners/list' component={FindOwnersPage} />
     <Route path='/owners/new' component={NewOwnerPage} />
     <Route path='/owners/:ownerId/edit' component={EditOwnerPage} />
