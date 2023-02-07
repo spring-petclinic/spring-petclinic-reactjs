@@ -1,5 +1,5 @@
 # React Frontend for Spring Boot PetClinic demo
-[![Build Status](https://travis-ci.org/spring-petclinic/spring-petclinic-reactjs.svg?branch=master)](https://travis-ci.org/spring-petclinic/spring-petclinic-reactjs)
+[![Build Status](https://github.com/bxtp4p-demos/spring-petclinic-reactjs/actions/workflows/maven.yml/badge.svg)](https://github.com/bxtp4p-demos/spring-petclinic-reactjs)
 
 This project is a port of the [Spring (Boot) PetClinic demo](https://github.com/spring-projects/spring-petclinic) with a frontend built using [ReactJS](https://facebook.github.io/react/) and
 [TypeScript](https://www.typescriptlang.org/). 
