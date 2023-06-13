@@ -24,8 +24,4 @@ dist-ssr
 *.sw?
 
 .vite
-
-*.iml
-/target
-
-generated/
+package-lock.json
