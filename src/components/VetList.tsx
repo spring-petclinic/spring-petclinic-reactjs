@@ -11,18 +11,18 @@ import {
 } from '@material-ui/core';
 import PetService from '../service/PetClinicService';
 
-const Owners = () => {
-  const [owners, setOwners] = useState([
-    { id: '', firstName: '', lastName: '', address: '', city: '', phone: '' },
+const VetList = () => {
+  const [vetList, setVetList] = useState([
+    { id: '', firstName: '', lastName: '', specialties: [] },
   ]);
 
   const petService = new PetService();
 
   useEffect(() => {
     petService
-      .findAllOwners()
+      .findAllVets()
       .then((data) => {
-        setOwners(data);
+        setVetList(data);
       })
       .catch((error) => {
         console.error(error);
@@ -48,22 +48,18 @@ const Owners = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>City</TableCell>
-              <TableCell>Phone</TableCell>
+              <TableCell>Specialties</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {owners
+            {vetList
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((owner) => (
-                <TableRow key={owner.id}>
+              .map((vet) => (
+                <TableRow key={vet.id}>
                   <TableCell>
-                    {owner.firstName} {owner.lastName}
+                    {vet.firstName} {vet.lastName}
                   </TableCell>
-                  <TableCell>{owner.address}</TableCell>
-                  <TableCell>{owner.city}</TableCell>
-                  <TableCell>{owner.telephone}</TableCell>
+                  <TableCell>{vet.specialties.length > 0 ? vet.specialties.map(specialty => specialty.name).join(', ') : 'none'}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -72,7 +68,7 @@ const Owners = () => {
       <TablePagination
         rowsPerPageOptions={[10, 20]}
         component="div"
-        count={owners.length}
+        count={vetList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -82,4 +78,4 @@ const Owners = () => {
   );
 };
 
-export default Owners;
+export default VetList;

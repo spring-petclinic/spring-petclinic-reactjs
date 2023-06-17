@@ -17,7 +17,7 @@ export default function App() {
         <Menu name={'Pets'} />
         <Routes>
           <Route path="/" element={<Root />} />
-          <Route path="/owners" element={<OwnerList />} />
+          <Route path="/owners/list" element={<OwnerList />} />
           <Route path="/vets" element={<VetList />} />
         </Routes>
       </Router>

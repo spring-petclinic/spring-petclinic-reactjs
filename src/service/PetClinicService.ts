@@ -13,7 +13,7 @@ class PetService {
 
   findAllVets = (): Promise<any> => {
     return axios.get(this.url + '/vets')
-      .then((response) => response.data)
+      .then((response) => {console.log(response.data); return response.data})
       .catch((error) => {
         console.error(error);
       });
