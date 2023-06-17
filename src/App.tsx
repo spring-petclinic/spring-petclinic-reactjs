@@ -1,27 +1,16 @@
-import * as React from 'react';
-import { Menu } from './navigation';
-import { useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Footer, Menu } from './navigation';
 
 export default function App() {
-  const location = useLocation();
+  // TODO: add ErrorPage to Routes
+
+  //const location = useLocation();
 
   return (
-    <div>
-      <Menu name={location.pathname} />
-      <div className="container-fluid">
-        <div className="container xd-container">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 text-center">
-                <img
-                  src="/images/spring-pivotal-logo.png"
-                  alt="Sponsored by Pivotal"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Menu name={'Pets'} />
+      <Outlet />
+      <Footer />
+    </>
   );
 }

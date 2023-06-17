@@ -1,4 +1,3 @@
-import * as React from 'react';
 
 const MenuItem = ({
   active,
@@ -40,7 +39,7 @@ export default function Menu({ name }: { name: string }) {
               <span>Home</span>
             </MenuItem>
 
-            <MenuItem active={name.startsWith('/owners')} url="/owners/list" title="find owners">
+            <MenuItem active={name.startsWith('/owners')} url="/owners" title="find owners">
               <span className="glyphicon glyphicon-search" aria-hidden="true" />
               &nbsp;
               <span>Find owners</span>

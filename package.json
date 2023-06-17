@@ -11,6 +11,10 @@
     "apply-prettier": "prettier --write ."
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "axios": "^1.4.0",
     "bootstrap": "3.4.1",
     "history": "^5.3.0",
     "localforage": "^1.10.0",
@@ -20,6 +24,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.12.1",
     "sort-by": "^1.2.0"
+  },
+  "overrides": {
+    "object-path": "^0.11.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.11",
