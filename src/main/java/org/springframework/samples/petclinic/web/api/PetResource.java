@@ -51,7 +51,7 @@ public class PetResource extends AbstractResourceController {
 
 	@GetMapping("/pettypes")
 	Object getPetTypes() {
-		return clinicService.findPetTypes();
+		return "Welcome";
 	}
 
 	@PostMapping("/owners/{ownerId}/pets")
