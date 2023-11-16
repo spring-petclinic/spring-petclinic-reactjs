@@ -5,6 +5,7 @@ COPY pom.xml .
 COPY ./src ./src
 RUN mvn install
 RUN mvn clean package
-COPY /target/*.jar app.jar
+#COPY app/target/*.jar app.jar
+
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "target/petclinic.jar"]
