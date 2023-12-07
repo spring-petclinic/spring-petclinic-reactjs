@@ -91,18 +91,20 @@
         </dependency>
 
         <!-- Databases - Uses HSQL by default -->
-        <dependency>
+       <!--dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency-->
 
         <!-- For MySql only -->
-        <!--dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-driver.version}</version>
-        </dependency-->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.8</version>
+        </dependency>
+
 
         <!-- EhCache -->
         <dependency>
