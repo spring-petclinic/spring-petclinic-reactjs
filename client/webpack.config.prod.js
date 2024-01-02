@@ -18,12 +18,19 @@ module.exports = {
     /* redbox-react/README.md */
     // ,devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
   },
+  devServer: {
+    host: '0.0.0.0', // Bind to all network interfaces
+    compress: true,
+    port: port,
+    disableHostCheck: true,
+    // other configurations...
+    },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
       },
-       __API_SERVER_URL__: JSON.stringify('3.121.109.94:8080')
+       __API_SERVER_URL__: JSON.stringify('3.76.102.164:8080')
     })
   ],
   resolve: {
