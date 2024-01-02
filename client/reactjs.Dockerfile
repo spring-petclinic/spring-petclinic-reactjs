@@ -7,4 +7,5 @@ COPY typings.json .
 RUN npm install
 COPY . .
 ENV PORT 4444
-CMD ["npm" , "start"]
+RUN npm run build:prod
+CMD ["npm" , "run", "start"]
