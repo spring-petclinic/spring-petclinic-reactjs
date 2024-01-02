@@ -31,7 +31,7 @@ devServer: {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      __API_SERVER_URL__: JSON.stringify('3.76.102.164:8080')
+      __API_SERVER_URL__: JSON.stringify('0.0.0.0:8080')
     })
   ],
   resolve: {
