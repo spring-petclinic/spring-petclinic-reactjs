@@ -21,7 +21,10 @@ module.exports = {
     /* redbox-react/README.md */
     // ,devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
   },
-
+  devServer: {
+    compress: true,
+    disableHostCheck: true,
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
