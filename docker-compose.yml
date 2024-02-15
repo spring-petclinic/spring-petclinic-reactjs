@@ -1,0 +1,14 @@
+version: "3"
+services:
+  backend:
+    image: bogaczynski/petclinicbimg
+    networks:
+      - petclinic-network
+
+  frontend:
+    image: bogaczynski/petclinicbimg
+    networks:
+      - petclinic-network
+
+networks:
+  petclinic-network:

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4444;
 
 const entries = [
   'webpack-dev-server/client?http://localhost:' + port,
@@ -13,6 +13,7 @@ const entries = [
 
 module.exports = {
   devtool: 'source-map',
+  disableHostCheck: true,
   entry: entries,
   output: {
     path: path.join(__dirname, 'public/dist/'),
@@ -24,7 +25,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      __API_SERVER_URL__: JSON.stringify('http://localhost:8080')
+      __API_SERVER_URL__: JSON.stringify('http://192.168.50.217:8080')
     })
   ],
   resolve: {

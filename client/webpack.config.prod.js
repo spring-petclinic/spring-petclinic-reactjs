@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4444;
 
 const entries = [
   './src/main.tsx'
@@ -23,7 +23,7 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
       },
-       __API_SERVER_URL__: JSON.stringify('http://localhost:8080')
+      __API_SERVER_URL__: JSON.stringify('http://192.168.50.217:8080')
     })
   ],
   resolve: {

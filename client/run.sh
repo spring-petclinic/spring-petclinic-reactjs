@@ -1,3 +1,3 @@
-#! /bin/bash
+docker #! /bin/bash
 
 PORT=4444 npm start

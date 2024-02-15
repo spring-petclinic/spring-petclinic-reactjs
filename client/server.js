@@ -12,7 +12,7 @@ var httpProxyMiddleware = require('http-proxy-middleware');
 var config = require('./webpack.config');
 
 // Tools like Cloud9 rely on this.
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4444;
 var compiler;
 var handleCompile;
 
@@ -57,14 +57,14 @@ function setupCompiler(port, protocol) {
   // recompiling a bundle. WebpackDevServer takes care to pause serving the
   // bundle, so if you refresh, it'll wait instead of serving the old one.
   // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
-  compiler.plugin('invalid', function() {
+  compiler.plugin('invalid', function () {
     clearConsole();
     console.log('Compiling...');
   });
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
-  compiler.plugin('done', function(stats) {
+  compiler.plugin('done', function (stats) {
     clearConsole();
     var hasErrors = stats.hasErrors();
     var hasWarnings = stats.hasWarnings();
@@ -127,14 +127,14 @@ function setupCompiler(port, protocol) {
 // We need to provide a custom onError function for httpProxyMiddleware.
 // It allows us to log custom error messages on the console.
 function onProxyError(proxy) {
-  return function(err, req, res){
+  return function (err, req, res) {
     var host = req.headers && req.headers.host;
     console.log(
       chalk.red('Proxy error:') + ' Could not proxy request ' + chalk.cyan(req.url) +
       ' from ' + chalk.cyan(host) + ' to ' + chalk.cyan(proxy) + '.'
     );
     console.log(
-      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' + 
+      'See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (' +
       chalk.cyan(err.code) + ').'
     );
     console.log();
@@ -196,7 +196,7 @@ function runDevServer(port, protocol) {
     // to use Webpack for importing assets in the code, so we don't need to
     // additionally serve files by their filenames. Otherwise, even if it
     // works in development, those files will be missing in production, unless
-    // we explicitly copy them. But even if we copy the all the files into
+    // we explicitly copy them.  even if we copy the all the files into
     // the build output (which doesn't seem to be wise because it may contain
     // private information such as files with API keys, for example), we would
     // still have a problem. Since the filenames would be the same every time,
@@ -215,6 +215,7 @@ function runDevServer(port, protocol) {
     // to CSS are currently hot reloaded. JS changes will refresh the browser.
     hot: true,
     historyApiFallback: true,
+    disableHostCheck: true,
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
     publicPath: config.output.publicPath,
