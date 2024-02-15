@@ -7,4 +7,3 @@ target/*
 /target
 npm-debug.log
 /bin/
-client/*
