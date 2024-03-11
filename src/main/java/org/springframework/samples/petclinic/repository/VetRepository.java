@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 the original author or authors.
+ * Copyright 2002-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package org.springframework.samples.petclinic.repository;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.Vet;
 
 /**
@@ -29,8 +28,9 @@ import org.springframework.samples.petclinic.model.Vet;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
+ * @author Vitaliy Fedoriv
  */
-public interface VetRepository extends Repository<Vet, Integer> {
+public interface VetRepository {
 
     /**
      * Retrieve all <code>Vet</code>s from the data store.
@@ -38,6 +38,12 @@ public interface VetRepository extends Repository<Vet, Integer> {
      * @return a <code>Collection</code> of <code>Vet</code>s
      */
     Collection<Vet> findAll() throws DataAccessException;
+    
+	Vet findById(int id) throws DataAccessException;
+
+	void save(Vet vet) throws DataAccessException;
+	
+	void delete(Vet vet) throws DataAccessException;
 
 
 }
