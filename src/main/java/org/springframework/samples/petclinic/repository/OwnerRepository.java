@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 the original author or authors.
+ * Copyright 2002-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,6 @@ package org.springframework.samples.petclinic.repository;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Owner;
 
@@ -32,32 +29,53 @@ import org.springframework.samples.petclinic.model.Owner;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
+ * @author Vitaliy Fedoriv
  */
-public interface OwnerRepository extends Repository<Owner, Integer> {
+public interface OwnerRepository {
 
     /**
-     * Retrieve {@link Owner}s from the data store by last name, returning all owners
-     * whose last name <i>starts</i> with the given name.
+     * Retrieve <code>Owner</code>s from the data store by last name, returning all owners whose last name <i>starts</i>
+     * with the given name.
+     *
      * @param lastName Value to search for
-     * @return a Collection of matching {@link Owner}s (or an empty Collection if none
+     * @return a <code>Collection</code> of matching <code>Owner</code>s (or an empty <code>Collection</code> if none
      * found)
      */
-    @Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName%")
-    Collection<Owner> findByLastName(@Param("lastName") String lastName);
+    Collection<Owner> findByLastName(String lastName) throws DataAccessException;
 
     /**
-     * Retrieve an {@link Owner} from the data store by id.
+     * Retrieve an <code>Owner</code> from the data store by id.
+     *
      * @param id the id to search for
-     * @return the {@link Owner} if found
+     * @return the <code>Owner</code> if found
+     * @throws org.springframework.dao.DataRetrievalFailureException if not found
      */
-    @Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
-    Owner findById(@Param("id") int id);
+    Owner findById(int id) throws DataAccessException;
+
 
     /**
-     * Save an {@link Owner} to the data store, either inserting or updating it.
-     * @param owner the {@link Owner} to save
+     * Save an <code>Owner</code> to the data store, either inserting or updating it.
+     *
+     * @param owner the <code>Owner</code> to save
+     * @see BaseEntity#isNew
      */
-    void save(Owner owner);
+    void save(Owner owner) throws DataAccessException;
+    
+    /**
+     * Retrieve <code>Owner</code>s from the data store, returning all owners 
+     *
+     * @return a <code>Collection</code> of <code>Owner</code>s (or an empty <code>Collection</code> if none
+     * found)
+     */
+	Collection<Owner> findAll() throws DataAccessException;
+	
+    /**
+     * Delete an <code>Owner</code> to the data store by <code>Owner</code>.
+     *
+     * @param owner the <code>Owner</code> to delete
+     * 
+     */
+	void delete(Owner owner) throws DataAccessException;
 
 
 }

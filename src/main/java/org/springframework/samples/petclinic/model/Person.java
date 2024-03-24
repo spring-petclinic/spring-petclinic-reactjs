@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.model;   
+package org.springframework.samples.petclinic.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Pattern;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 /**
  * Simple JavaBean domain object representing an person.
@@ -31,12 +30,10 @@ public class Person extends BaseEntity {
 
     @Column(name = "first_name")
     @NotEmpty
-    @Pattern(regexp = "[a-z-A-Z]*", message = "First name has invalid characters")
     protected String firstName;
 
     @Column(name = "last_name")
     @NotEmpty
-    @Pattern(regexp = "[a-z-A-Z]*", message = "Last name has invalid characters")
     protected String lastName;
 
     public String getFirstName() {

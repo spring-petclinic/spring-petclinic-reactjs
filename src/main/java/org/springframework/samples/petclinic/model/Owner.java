@@ -15,23 +15,15 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotEmpty;
+import java.util.*;
+
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -57,7 +49,7 @@ public class Owner extends Person {
     @Digits(fraction = 0, integer = 10)
     private String telephone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
     private Set<Pet> pets;
 
 
@@ -102,10 +94,12 @@ public class Owner extends Person {
         return Collections.unmodifiableList(sortedPets);
     }
 
+    public void setPets(List<Pet> pets) {
+        this.pets = new HashSet<>(pets);
+    }
+
     public void addPet(Pet pet) {
-        if (pet.isNew()) {
-            getPetsInternal().add(pet);
-        }
+        getPetsInternal().add(pet);
         pet.setOwner(this);
     }
 
