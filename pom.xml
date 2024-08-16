@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.springframework-samples</groupId>
+  <artifactId>spring-petclinic-reactjs</artifactId>
+  <version>1.0.0</version>
+  <name>Spring Petclinic Sample - Reactjs version</name>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>spring-petclinic-rest</module>
+    <module>spring-petclinic-reactjs-client</module>
+  </modules>
+
+</project>

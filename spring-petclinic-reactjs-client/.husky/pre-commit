@@ -1,0 +1,13 @@
+#!/bin/sh
+# .husky/pre-commit
+
+cd spring-petclinic-reactjs-client
+yarn precommit
+
+if ! git diff --cached --quiet; then
+    echo "Prettier has made changes, adding them to the commit..."
+    git add .
+fi
+
+# If everything is okay, allow the commit to proceed
+exit 0

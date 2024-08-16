@@ -1,0 +1,76 @@
+{
+  "name": "spring-petclinic-reactjs-client",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx ./src",
+    "format": "prettier --write ./src",
+    "precommit": "lint-staged",
+    "postinstall": "cd .. && husky spring-petclinic-reactjs-client/.husky"
+  },
+  "dependencies": {
+    "ra-data-json-server": "^5.1.0",
+    "react": "^18.3.0",
+    "react-admin": "^5.1.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "@vitejs/plugin-react": "^4.0.1",
+    "eslint": "^8.43.0",
+    "eslint-config-universe": "^13.0.0",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.3.9"
+  },
+  "eslintConfig": {
+    "extends": [
+      "universe/web",
+      "universe/shared/typescript-analysis"
+    ],
+    "ignorePatterns": [
+      "node_modules/",
+      "public/",
+      "!/src",
+      "vite.config.ts"
+    ],
+    "rules": {
+      "import/order": 0
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.ts",
+          "*.tsx",
+          "*.d.ts"
+        ],
+        "parserOptions": {
+          "project": "./tsconfig.json"
+        }
+      }
+    ]
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": false,
+    "endOfLine": "lf",
+    "trailingComma": "none",
+    "printWidth": 120
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "yarn lint",
+      "yarn format",
+      "bash -c 'yarn type-check'"
+    ]
+  }
+}
