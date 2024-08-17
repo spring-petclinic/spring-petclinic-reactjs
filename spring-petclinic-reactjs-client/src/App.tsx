@@ -1,16 +1,23 @@
-import { Admin, Resource, ListGuesser, EditGuesser, ShowGuesser } from "react-admin";
+import { Admin as ReactAdminRoot, CustomRoutes } from "react-admin";
+import { Route } from "react-router-dom";
 import { Layout } from "./Layout";
-import { dataProvider } from "./dataProvider";
-import { authProvider } from "./authProvider";
+import { dataProvider } from "./providers/dataProvider";
+import Dashboard from "./pages/Dashboard";
+import Error from "./pages/Error";
+import OwnersPage from "./pages/owners";
+import VetsPage from "./pages/Vets";
+import OwnersListPage from "./pages/owners/OwnersList";
+import OwnerForm from "./pages/owners/OwnerForm";
 
 export const App = () => (
-  <Admin layout={Layout} dataProvider={dataProvider} authProvider={authProvider}>
-    <Resource name="users" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-    <Resource name="pets" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-    <Resource name="owners" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-    <Resource name="vets" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-    <Resource name="visits" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-    <Resource name="roles" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-    <Resource name="specialties" list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-  </Admin>
+  <ReactAdminRoot dashboard={Dashboard} layout={Layout} error={Error} dataProvider={dataProvider}>
+    <CustomRoutes>
+      <Route path="/owners" element={<OwnersPage />} />
+      <Route path="/owners/find" element={<OwnersListPage />} />
+      <Route path="/owners/:id" element={<OwnerForm />} />
+
+      <Route path="/vets" element={<VetsPage />} />
+      <Route path="*" element={<Error />} />
+    </CustomRoutes>
+  </ReactAdminRoot>
 );

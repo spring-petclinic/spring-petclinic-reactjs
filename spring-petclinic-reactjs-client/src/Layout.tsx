@@ -1,9 +1,10 @@
-import type { ReactNode } from "react";
-import { Layout as RALayout, CheckForApplicationUpdate } from "react-admin";
+import { CheckForApplicationUpdate, LayoutProps } from "react-admin";
+import NavigationBar from "./NavigationBar";
 
-export const Layout = ({ children }: { children: ReactNode }) => (
-  <RALayout>
+export const Layout = ({ children }: LayoutProps) => (
+  <>
+    <NavigationBar />
     {children}
     <CheckForApplicationUpdate />
-  </RALayout>
+  </>
 );
