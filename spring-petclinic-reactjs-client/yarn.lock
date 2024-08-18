@@ -2076,6 +2076,11 @@ hotscript@^1.0.12:
   resolved "https://registry.yarnpkg.com/hotscript/-/hotscript-1.0.13.tgz#6eb5de757e9b33444ffc22555e98dbc17fa31fb4"
   integrity sha512-C++tTF1GqkGYecL+2S1wJTfoH6APGAsbb7PAWQ3iVIwgG/EFseAfEVOKFgAFq4yK3+6j1EjUD4UQ9dRJHX/sSQ==
 
+http-method-enum@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/http-method-enum/-/http-method-enum-1.0.0.tgz#fb55ba68320d3c5f6b76991087e16b25c1415a92"
+  integrity sha512-WJEWwPxQKdKg0OzNJd4oStz+2CCsLcQVrAjbc6rp2MxRRJKZebfEkIKeM63d8bi5RWE4fgnp3hOE5fJfxZRmXA==
+
 human-signals@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-5.0.0.tgz#42665a284f9ae0dade3ba41ebc37eb4b852f3a28"

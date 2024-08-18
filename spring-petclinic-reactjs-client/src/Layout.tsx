@@ -4,7 +4,7 @@ import NavigationBar from "./NavigationBar";
 export const Layout = ({ children }: LayoutProps) => (
   <>
     <NavigationBar />
-    {children}
+    <div className="container-fluid">{children}</div>
     <CheckForApplicationUpdate />
   </>
 );
