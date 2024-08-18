@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { OWNERS } from "../../constants/Routes";
+import { OWNERS } from "@constants/Routes";
 
 export default function OwnerDetails() {
   return (

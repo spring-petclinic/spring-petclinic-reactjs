@@ -1,4 +1,4 @@
-export default function Error() {
+export default function ErrorPage() {
   return (
     <div className="container xd-container">
       <img src="/resources/images/pets.png" alt="A cat and a dog" />

@@ -1,7 +1,7 @@
 import { useGetList } from "react-admin";
 import { Link } from "react-router-dom";
-import { IApiOwner } from "../../models/api/IApiOwner";
-import { OWNERS } from "../../constants/Resources";
+import { IApiOwner } from "@models/api/IApiOwner";
+import { OWNERS } from "@constants/Resources";
 
 export default function OwnersList() {
   const { data } = useGetList<IApiOwner>(OWNERS);

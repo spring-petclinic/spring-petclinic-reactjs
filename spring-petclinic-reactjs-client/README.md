@@ -1,4 +1,4 @@
-# spring petclinic reactjs client
+# Spring PetClinic Reactjs Client App
 
 ## Installation
 
