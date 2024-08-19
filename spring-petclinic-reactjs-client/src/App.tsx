@@ -10,7 +10,7 @@ import {
   EDIT_OWNER,
   PET_EDIT_FORM,
   PET_VISITS
-} from "@constants/Routes";
+} from "@constants/routes";
 import Dashboard from "@pages/Dashboard";
 import OwnersPage from "@pages/owners";
 import OwnersList from "@pages/owners/OwnersList";

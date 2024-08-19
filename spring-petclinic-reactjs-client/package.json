@@ -12,12 +12,15 @@
     "postinstall": "cd .. && husky spring-petclinic-reactjs-client/.husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "http-method-enum": "^1.0.0",
     "ra-data-json-server": "^5.1.0",
     "react": "^18.3.0",
     "react-admin": "^5.1.0",
     "react-dom": "^18.3.0",
-    "react-router-dom": "^6.26.1"
+    "react-hook-form": "^7.52.2",
+    "react-router-dom": "^6.26.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.7",

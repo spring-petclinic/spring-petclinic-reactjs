@@ -1,10 +1,13 @@
 import { useGetList } from "react-admin";
-import { Link } from "react-router-dom";
 import { IApiOwner } from "@models/api/IApiOwner";
-import { OWNERS } from "@constants/Resources";
+import { OWNERS } from "@constants/resources";
+import { Link, useSearchParams } from "react-router-dom";
+import { LAST_NAME } from "@constants/searchParams";
 
 export default function OwnersList() {
-  const { data } = useGetList<IApiOwner>(OWNERS);
+  const [searchParams] = useSearchParams();
+
+  const { data } = useGetList<IApiOwner>(OWNERS, { filter: { [LAST_NAME]: searchParams.get(LAST_NAME) } });
 
   return (
     <div className="container xd-container">
@@ -30,7 +33,7 @@ export default function OwnersList() {
           {data?.map((owner) => (
             <tr>
               <td>
-                <Link to="/owners/1">
+                <Link to={`/owners/${owner.id}`}>
                   {owner.firstName} {owner.lastName}
                 </Link>
               </td>

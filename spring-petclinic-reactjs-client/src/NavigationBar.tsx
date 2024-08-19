@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { DASHBOARD, OWNERS, VETERINARIANS } from "./constants/Routes";
+import { DASHBOARD, OWNERS, VETERINARIANS } from "@constants/routes";
 
 export enum ENavBar {
   HOME,

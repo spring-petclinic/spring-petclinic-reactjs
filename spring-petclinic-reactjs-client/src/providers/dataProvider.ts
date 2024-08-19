@@ -1,17 +1,25 @@
 import { combineDataProviders, DataProvider, fetchUtils } from "react-admin";
-import { stringify } from "query-string";
 import HTTPMethod from "http-method-enum";
-import { OWNERS } from "../constants/Resources";
+import { stringify } from "query-string";
+import { OWNERS } from "@constants/resources";
+import { LAST_NAME } from "@constants/searchParams";
+import { GetListParams } from "@models/api/GetListParams";
 
 const apiUrl = import.meta.env.VITE_SPRING_PETCLINIC_REST_API_URL;
 
 const httpClient = fetchUtils.fetchJson;
 
 const ownersDataProvider: DataProvider = {
-  getList: async (resource, params) => {
-    const url = `${apiUrl}/${resource}`;
+  getList: async (resource, { filter, signal }: GetListParams) => {
+    const url = new URL(`${apiUrl}/${resource}`);
 
-    const { json } = await httpClient(url, { signal: params.signal });
+    const searchParams = new URLSearchParams();
+    if (filter?.lastName) {
+      searchParams.append(LAST_NAME, filter?.lastName);
+      url.search = searchParams.toString();
+    }
+
+    const { json } = await httpClient(url, { signal });
     return {
       data: json,
       total: json ? json.length : 0

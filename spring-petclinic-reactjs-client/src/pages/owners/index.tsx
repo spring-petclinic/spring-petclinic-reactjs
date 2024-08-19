@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { OWNERS_ADD_NEW } from "@constants/Routes";
+import { OWNERS_ADD_NEW } from "@constants/routes";
+import { LAST_NAME } from "@constants/searchParams";
 
 /**
  * This is not the owners list page, it's an overview page.
@@ -16,7 +17,7 @@ export default function OwnersPage() {
     navigate(`/owners/find?${searchParams.toString()}`);
   };
 
-  const lastNameSearchParam = searchParams.get("lastName") ?? "";
+  const lastNameSearchParam = searchParams.get(LAST_NAME) ?? "";
 
   return (
     <div className="container xd-container">
@@ -33,7 +34,7 @@ export default function OwnersPage() {
                 className="form-control"
                 type="text"
                 value={lastNameSearchParam}
-                onChange={(event) => setSearchParams({ lastName: event.target.value })}
+                onChange={(event) => setSearchParams({ [LAST_NAME]: event.target.value })}
               />
               <span className="help-inline" />
             </div>

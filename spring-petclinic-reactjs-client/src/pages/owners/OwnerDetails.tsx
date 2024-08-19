@@ -1,7 +1,19 @@
-import { Link } from "react-router-dom";
-import { OWNERS } from "@constants/Routes";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { OWNERS_FIND } from "@constants/routes";
+import { useGetOne } from "react-admin";
+import { OWNERS } from "@constants/resources";
+import { IApiOwner } from "@models/api/IApiOwner";
+import { getOwnerFullName } from "../../businessUtils";
 
 export default function OwnerDetails() {
+  const { id: ownerId } = useParams();
+
+  const idAsNumber = ownerId ? Number(ownerId) : undefined;
+  const { data: owner } = useGetOne<IApiOwner>(OWNERS, { id: idAsNumber });
+
+  if (!ownerId || !owner) {
+    return <Navigate to={OWNERS_FIND} />;
+  }
   return (
     <div className="container xd-container">
       <h2 id="ownerInformation">Owner Information</h2>
@@ -11,32 +23,31 @@ export default function OwnerDetails() {
           <tr>
             <th id="name">Name</th>
             <td headers="name">
-              <strong>George Franklin</strong>
+              <strong>{getOwnerFullName(owner)}</strong>
             </td>
           </tr>
           <tr>
             <th id="address">Address</th>
-            <td headers="address">110 W. Liberty St.</td>
+            <td headers="address">{owner.address}</td>
           </tr>
           <tr>
             <th id="city">City</th>
-            <td headers="city">Madison</td>
+            <td headers="city">{owner.city}</td>
           </tr>
           <tr>
             <th id="telephone">Telephone</th>
-            <td headers="telephone">6085551023</td>
+            <td headers="telephone">{owner.telephone}</td>
           </tr>
         </tbody>
       </table>
 
-      <Link to={`${OWNERS}/1/edit`} className="btn btn-primary">
+      <Link to={`/owners/${ownerId}/edit`} className="btn btn-primary">
         Edit Owner
       </Link>
 
-      <Link to={`${OWNERS}/1/pets/new`} className="btn btn-primary">
+      <Link to={`/owners/${ownerId}/pets/new`} className="btn btn-primary">
         Add New Pet
       </Link>
-
       <br />
       <br />
       <br />
@@ -44,38 +55,40 @@ export default function OwnerDetails() {
 
       <table className="table table-striped" aria-describedby="petsAndVisits">
         <tbody>
-          <tr>
-            <th scope="col">
-              <dl className="dl-horizontal">
-                <dt>Name</dt>
-                <dd>Leo</dd>
-                <dt>Birth Date</dt>
-                <dd>2010-09-07</dd>
-                <dt>Type</dt>
-                <dd>cat</dd>
-              </dl>
-            </th>
-            <td>
-              <table className="table-condensed" aria-describedby="petsAndVisits">
-                <thead>
-                  <tr>
-                    <th id="visitDate">Visit Date</th>
-                    <th id="visitDescription">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Link to="/owners/1/pets/1/edit">Edit Pet</Link>
-                    </td>
-                    <td>
-                      <Link to="/owners/1/pets/1/visits/new">Add Visit</Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
+          {owner.pets.map(({ id: petId, name, birthDate, type }) => (
+            <tr>
+              <th scope="col">
+                <dl className="dl-horizontal">
+                  <dt>Name</dt>
+                  <dd>{name}</dd>
+                  <dt>Birth Date</dt>
+                  <dd>{birthDate}</dd>
+                  <dt>Type</dt>
+                  <dd>{type.name}</dd>
+                </dl>
+              </th>
+              <td>
+                <table className="table-condensed" aria-describedby="petsAndVisits">
+                  <thead>
+                    <tr>
+                      <th id="visitDate">Visit Date</th>
+                      <th id="visitDescription">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Link to={`/owners/${ownerId}/pets/${petId}/edit`}>Edit Pet</Link>
+                      </td>
+                      <td>
+                        <Link to={`/owners/${ownerId}/pets/${petId}/visits/new`}>Add Visit</Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
