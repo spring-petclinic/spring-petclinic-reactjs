@@ -9,6 +9,11 @@ const apiUrl = import.meta.env.VITE_SPRING_PETCLINIC_REST_API_URL;
 
 const httpClient = fetchUtils.fetchJson;
 
+/**
+ * The following data was made to manage api calls dedicated to owners path ("/api/owner").
+ * For other endpoints, it would be ideal to manage them in separate data providers.
+ * @author Firas Regaieg
+ */
 const ownersDataProvider: DataProvider = {
   getList: async (resource, { filter, signal }: GetListParams) => {
     const url = new URL(`${apiUrl}/${resource}`);

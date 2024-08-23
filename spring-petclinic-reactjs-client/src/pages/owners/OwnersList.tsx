@@ -31,7 +31,7 @@ export default function OwnersList() {
         </thead>
         <tbody>
           {data?.map((owner) => (
-            <tr>
+            <tr key={owner.id}>
               <td>
                 <Link to={`/owners/${owner.id}`}>
                   {owner.firstName} {owner.lastName}

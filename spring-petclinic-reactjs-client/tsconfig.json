@@ -24,7 +24,8 @@
       "@/*": ["./src/*"],
       "@pages/*": ["./pages/*"],
       "@constants/*": ["./constants/*"],
-      "@models/*": ["./models/*"]
+      "@models/*": ["./models/*"],
+      "@components/*": ["./components/*"]
     }
   },
   "include": [
