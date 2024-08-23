@@ -1,4 +1,4 @@
-import { combineDataProviders, DataProvider, fetchUtils } from "react-admin";
+import { combineDataProviders, DataProvider, fetchUtils, RaRecord, UpdateResult } from "react-admin";
 import HTTPMethod from "http-method-enum";
 import { stringify } from "query-string";
 import { OWNERS } from "@constants/resources";
@@ -75,12 +75,12 @@ const ownersDataProvider: DataProvider = {
 
   update: async (resource, params) => {
     const url = `${apiUrl}/${resource}/${params.id}`;
-    const { json } = await httpClient(url, {
+    await httpClient(url, {
       method: HTTPMethod.PUT,
       body: JSON.stringify(params.data)
     });
 
-    return { data: json };
+    return Promise.resolve<UpdateResult>({ data: { id: params.id } });
   },
 
   updateMany: async (resource, params) => {

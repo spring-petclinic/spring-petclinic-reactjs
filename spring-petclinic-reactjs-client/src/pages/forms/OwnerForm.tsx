@@ -1,11 +1,17 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import * as yup from "yup";
+import { Navigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { OwnerFormSchema } from "@models/form/OwnerFormSchema";
 import { EOwnerForm } from "@models/form/EOwnerForm";
 import { PHONE_NUMBER } from "@constants/regexp";
 import { REQUIRED_INPUT } from "@constants/messages";
 import { FormError } from "@components/FormError";
+import { useCreate, useGetOne, useUpdate } from "react-admin";
+import { OWNERS } from "@constants/resources";
+import * as Routes from "@constants/routes";
+import { IApiOwner } from "@models/api/IApiOwner";
+import { useEffect } from "react";
 
 const yupResolverSchema = yup
   .object()
@@ -19,22 +25,58 @@ const yupResolverSchema = yup
   .required();
 
 export default function OwnerForm() {
+  const { id } = useParams();
+  const ownerId = id ? Number(id) : undefined;
+
   const {
     handleSubmit,
     formState: { errors },
-    register
+    register,
+    reset
   } = useForm<OwnerFormSchema>({
     resolver: yupResolver(yupResolverSchema),
     mode: "onSubmit"
   });
 
-  const onSubmit: SubmitHandler<OwnerFormSchema> = (data: OwnerFormSchema, e) => {
+  const { data: ownerData } = useGetOne<IApiOwner>(OWNERS, { id: ownerId });
+
+  useEffect(() => {
+    if (ownerData) {
+      const { firstName, lastName, city, telephone, address } = ownerData;
+      reset({
+        [EOwnerForm.FIRST_NAME]: firstName,
+        [EOwnerForm.LAST_NAME]: lastName,
+        [EOwnerForm.ADDRESS]: address,
+        [EOwnerForm.CITY]: city,
+        [EOwnerForm.TELEPHONE]: telephone
+      });
+    }
+  }, [ownerData]);
+
+  const [create, { isSuccess: addSuccess }] = useCreate<IApiOwner>(OWNERS);
+  const [edit, { isSuccess: editSuccess }] = useUpdate(OWNERS);
+
+  const isEdit = !!ownerId;
+
+  const onSubmit: SubmitHandler<OwnerFormSchema> = async (data: OwnerFormSchema, e) => {
     e?.preventDefault();
+    if (!isEdit) {
+      await create(OWNERS, { data });
+      return;
+    }
+
+    await edit(OWNERS, { id: ownerId, data });
   };
+
+  if (addSuccess) {
+    return <Navigate to={Routes.OWNERS_FIND} />;
+  } else if (editSuccess) {
+    return <Navigate to={`${Routes.OWNERS}/${ownerId}`} />;
+  }
 
   return (
     <div className="container xd-container">
-      <h2>New Owner</h2>
+      <h2>{isEdit ? "Edit" : "New"} Owner</h2>
       <form id="add-owner-form" className="form-horizontal" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group has-feedback">
           <div className="form-group ">
@@ -84,7 +126,7 @@ export default function OwnerForm() {
         <div className="form-group">
           <div className="col-sm-offset-2 col-sm-10">
             <button className="btn btn-primary" type="submit">
-              Add Owner
+              {isEdit ? "Update" : "Add"} Owner
             </button>
           </div>
         </div>
