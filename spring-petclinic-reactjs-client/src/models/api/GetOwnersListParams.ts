@@ -1,4 +1,4 @@
-export interface GetListParams {
+export interface GetOwnersListParams {
   filter?: {
     lastName: string;
   };

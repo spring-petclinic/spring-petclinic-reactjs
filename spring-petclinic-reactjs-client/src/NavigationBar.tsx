@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { DASHBOARD, OWNERS, VETERINARIANS } from "@constants/routes";
 
 export enum ENavBar {

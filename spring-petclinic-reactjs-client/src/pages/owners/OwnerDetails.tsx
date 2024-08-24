@@ -3,15 +3,15 @@ import { OWNERS_FIND } from "@constants/routes";
 import { useGetOne } from "react-admin";
 import { OWNERS } from "@constants/resources";
 import { IApiOwner } from "@models/api/IApiOwner";
-import { getOwnerFullName } from "../../businessUtils";
+import { formatOwnerFullName } from "../../utils/businessUtils";
 
 export default function OwnerDetails() {
-  const { id: ownerId } = useParams();
+  const { id } = useParams();
 
-  const idAsNumber = ownerId ? Number(ownerId) : undefined;
-  const { data: owner } = useGetOne<IApiOwner>(OWNERS, { id: idAsNumber });
+  const ownerId = id ? Number(id) : undefined;
+  const { data: owner } = useGetOne<IApiOwner>(OWNERS, { id: ownerId });
 
-  if (!ownerId || !owner) {
+  if (!owner) {
     return <Navigate to={OWNERS_FIND} />;
   }
   return (
@@ -23,7 +23,7 @@ export default function OwnerDetails() {
             <tr>
               <th id="name">Name</th>
               <td headers="name">
-                <strong>{getOwnerFullName(owner)}</strong>
+                <strong>{formatOwnerFullName(owner)}</strong>
               </td>
             </tr>
             <tr>

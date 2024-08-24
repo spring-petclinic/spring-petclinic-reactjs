@@ -1,3 +1,5 @@
+import { IApiPet } from "@models/api/IApiPet";
+
 export interface IApiOwner {
   id: number;
   firstName: string;
@@ -5,17 +7,5 @@ export interface IApiOwner {
   address: string;
   city: string;
   telephone: string;
-  pets: [
-    {
-      id: number;
-      ownerId: number;
-      name: string;
-      birthDate: string;
-      visits: [];
-      type: {
-        id: number;
-        name: string;
-      };
-    }
-  ];
+  pets: IApiPet[];
 }

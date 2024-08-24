@@ -20,7 +20,7 @@ import PetForm from "@pages/forms/PetForm";
 import VisitsPage from "@pages/owners/Visits";
 import VeterinariansPage from "@pages/Veterinarians";
 import ErrorPage from "@pages/Error";
-import dataProvider from "./providers/dataProvider";
+import dataProvider from "./data-providers";
 import { Layout } from "./Layout";
 
 export const App = () => (

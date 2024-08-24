@@ -3,17 +3,17 @@ import { Navigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { OwnerFormSchema } from "@models/form/OwnerFormSchema";
-import { EOwnerForm } from "@models/form/EOwnerForm";
+import { EOwnerForm } from "@models/enums/EOwnerForm";
 import { PHONE_NUMBER } from "@constants/regexp";
 import { REQUIRED_INPUT } from "@constants/messages";
 import { FormError } from "@components/FormError";
-import { useCreate, useGetOne, useUpdate } from "react-admin";
+import { Loading, useCreate, useGetOne, useUpdate } from "react-admin";
 import { OWNERS } from "@constants/resources";
 import * as Routes from "@constants/routes";
 import { IApiOwner } from "@models/api/IApiOwner";
 import { useEffect } from "react";
 
-const yupResolverSchema = yup
+const yupSchema = yup
   .object()
   .shape({
     [EOwnerForm.FIRST_NAME]: yup.string().required(REQUIRED_INPUT),
@@ -24,19 +24,23 @@ const yupResolverSchema = yup
   })
   .required();
 
+/**
+ * This component represents 2 scenarios: "Add new owner" and "Edit existing owner".
+ * @constructor
+ */
 export default function OwnerForm() {
-  const { id } = useParams();
-  const ownerId = id ? Number(id) : undefined;
-
   const {
     handleSubmit,
     formState: { errors },
     register,
     reset
   } = useForm<OwnerFormSchema>({
-    resolver: yupResolver(yupResolverSchema),
+    resolver: yupResolver(yupSchema),
     mode: "onSubmit"
   });
+
+  const { id } = useParams();
+  const ownerId = id ? Number(id) : undefined;
 
   const { data: ownerData } = useGetOne<IApiOwner>(OWNERS, { id: ownerId });
 
@@ -53,12 +57,12 @@ export default function OwnerForm() {
     }
   }, [ownerData]);
 
-  const [create, { isSuccess: addSuccess }] = useCreate<IApiOwner>(OWNERS);
-  const [edit, { isSuccess: editSuccess }] = useUpdate(OWNERS);
+  const [create, { isSuccess: addSuccess, isPending: addPending }] = useCreate<IApiOwner>();
+  const [edit, { isSuccess: editSuccess, isPending: editPending }] = useUpdate();
 
   const isEdit = !!ownerId;
 
-  const onSubmit: SubmitHandler<OwnerFormSchema> = async (data: OwnerFormSchema, e) => {
+  const onSubmit: SubmitHandler<OwnerFormSchema> = async (data, e) => {
     e?.preventDefault();
     if (!isEdit) {
       await create(OWNERS, { data });
@@ -67,6 +71,10 @@ export default function OwnerForm() {
 
     await edit(OWNERS, { id: ownerId, data });
   };
+
+  if (addPending || editPending) {
+    return <Loading />;
+  }
 
   if (addSuccess) {
     return <Navigate to={Routes.OWNERS_FIND} />;

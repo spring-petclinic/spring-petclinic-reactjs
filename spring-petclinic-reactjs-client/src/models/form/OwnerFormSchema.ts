@@ -1,4 +1,4 @@
-import { EOwnerForm } from "@models/form/EOwnerForm";
+import { EOwnerForm } from "@models/enums/EOwnerForm";
 
 export type OwnerFormSchema = {
   [EOwnerForm.FIRST_NAME]: string;
