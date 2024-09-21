@@ -4,7 +4,7 @@
 
 > As a long-time enthusiast of both [Java](https://dev.java/) and [React](https://react.dev/) technologies, I saw an exciting opportunity to rework the **Spring PetClinic Reactjs Version** project and combine creativity and technical skills into something robust and modern. Having used Java and React since my student days, I wanted to restructure the project into a multimodule [Maven](https://maven.apache.org/) project, taking full advantage of React for the frontend and [Spring Boot](https://github.com/spring-projects/spring-boot?tab=readme-ov-file#spring-boot---) for the backend. - Firas Regaieg
 
-This project consists is composed of 2 subprojects:
+The project is composed of 2 subprojects:
 1. **Spring PetClinic Reactjs Client** – React-based web UI client application.
 2. **Spring PetClinic Rest** – [REST API](https://restfulapi.net/) backend, integrated as a [Git submodule](https://git-scm.com/docs/gitsubmodules).
 
