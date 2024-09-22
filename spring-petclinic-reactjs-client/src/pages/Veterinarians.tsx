@@ -1,4 +1,10 @@
+import { useGetList } from "react-admin";
+import { VETERINARIANS } from "@constants/resources.ts";
+import { IApiVeterinarian } from "@models/api/IApiVeterinarian.ts";
+import { formatPersonFullName } from "../utils";
+
 export default function VeterinariansPage() {
+  const { data: veterinariansList } = useGetList<IApiVeterinarian>(VETERINARIANS);
   return (
     <div className="container xd-container">
       <h2 id="veterinarians">Veterinarians</h2>
@@ -12,30 +18,12 @@ export default function VeterinariansPage() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>James Carter</td>
-              <td>none</td>
-            </tr>
-            <tr>
-              <td>Linda Douglas</td>
-              <td>dentistry surgery</td>
-            </tr>
-            <tr>
-              <td>Sharon Jenkins</td>
-              <td>none</td>
-            </tr>
-            <tr>
-              <td>Helen Leary</td>
-              <td>radiology</td>
-            </tr>
-            <tr>
-              <td>Rafael Ortega</td>
-              <td>surgery</td>
-            </tr>
-            <tr>
-              <td>Henry Stevens</td>
-              <td>radiology</td>
-            </tr>
+            {veterinariansList?.map(({ id, firstName, lastName, specialties }) => (
+              <tr key={id}>
+                <td>{formatPersonFullName(firstName, lastName)}</td>
+                <td>{specialties.map(({ name }) => name).join(" ")}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

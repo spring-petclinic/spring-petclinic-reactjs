@@ -1,4 +1,4 @@
-import { IApiPetType } from "@models/api/IApiPetType";
+import { IApiEnumItem } from "@models/api/IApiEnumItem.ts";
 
 export interface IApiPet {
   id: number;
@@ -6,5 +6,5 @@ export interface IApiPet {
   name: string;
   birthDate: string;
   visits: [];
-  type: IApiPetType;
+  type: IApiEnumItem;
 }

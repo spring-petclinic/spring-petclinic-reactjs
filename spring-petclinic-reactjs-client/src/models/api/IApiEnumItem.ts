@@ -1,4 +1,4 @@
-export interface IApiPetType {
+export interface IApiEnumItem {
   id: number;
   name: string;
 }

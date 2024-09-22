@@ -1,14 +1,15 @@
 import { combineDataProviders } from "react-admin";
-import { OWNERS, PET_TYPES } from "@constants/resources";
+import { OWNERS, PET_TYPES, VETERINARIANS } from "@constants/resources";
 import ownersDataProvider from "./ownersDataProvider";
-import petTypesDataProvider from "./petTypesDataProvider";
+import generalDataProvider from "./generalDataProvider.ts";
 
 const dataProviders = combineDataProviders((resource) => {
   switch (resource) {
     case OWNERS:
       return ownersDataProvider;
+    case VETERINARIANS:
     case PET_TYPES:
-      return petTypesDataProvider;
+      return generalDataProvider;
     default:
       throw new Error(`Unknown resource: ${resource}`);
   }

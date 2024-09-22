@@ -3,7 +3,7 @@ import { OWNERS_FIND } from "@constants/routes";
 import { useGetOne } from "react-admin";
 import { OWNERS } from "@constants/resources";
 import { IApiOwner } from "@models/api/IApiOwner";
-import { formatOwnerFullName } from "../../utils/businessUtils";
+import { formatPersonFullName } from "../../utils";
 
 export default function OwnerDetails() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ export default function OwnerDetails() {
             <tr>
               <th id="name">Name</th>
               <td headers="name">
-                <strong>{formatOwnerFullName(owner)}</strong>
+                <strong>{formatPersonFullName(owner.firstName, owner.lastName)}</strong>
               </td>
             </tr>
             <tr>

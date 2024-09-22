@@ -30,7 +30,8 @@
       "@pages/*": ["./pages/*"],
       "@constants/*": ["./constants/*"],
       "@models/*": ["./models/*"],
-      "@components/*": ["./components/*"]
+      "@components/*": ["./components/*"],
+      "@utils/*": ["./utils/*"]
     }
   },
   "include": [

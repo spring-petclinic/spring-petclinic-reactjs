@@ -11,12 +11,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PetFormSchema } from "@models/form/PetFormSchema";
 import { IApiOwner } from "@models/api/IApiOwner";
-import { formatOwnerFullName } from "../../utils/businessUtils";
 import * as Routes from "@constants/routes";
-import { OWNERS as ROUTE_OWNERS } from "@constants/routes";
+import { GET_OWNER, OWNERS as ROUTE_OWNERS } from "@constants/routes";
 import { FormError } from "@components/FormError";
-import { IApiPetType } from "@models/api/IApiPetType";
+import { IApiEnumItem } from "@models/api/IApiEnumItem.ts";
 import { OwnersDataProvider } from "@models/api/OwnersDataProvider";
+import { formatPersonFullName } from "../../utils";
 
 const yupSchema = yup
   .object()
@@ -52,25 +52,29 @@ export default function PetForm() {
   const isEdit = !!petId;
 
   const { data: owner, isPending: ownerPending } = useGetOne<IApiOwner>(OWNERS, { id: ownerId });
-  const { data: petTypes, isPending: petTypesPending } = useGetList<IApiPetType>(PET_TYPES);
+  const { data: petTypes, isPending: petTypesPending } = useGetList<IApiEnumItem>(PET_TYPES);
 
   const dataProvider = useDataProvider<OwnersDataProvider>();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getPetAsync = async () => {
-      const {
-        data: { name, birthDate, type }
-      } = await dataProvider.getPet(OWNERS, { id: ownerId, meta: { petId } });
-      const petTypeId = type.id;
-      reset({ [EPetForm.NAME]: name, [EPetForm.BIRTH_DATE]: new Date(birthDate), [EPetForm.PET_TYPE]: petTypeId });
+      try {
+        const {
+          data: { name, birthDate, type }
+        } = await dataProvider.getPet(OWNERS, { id: ownerId, meta: { petId } });
+        const petTypeId = type.id;
+        reset({ [EPetForm.NAME]: name, [EPetForm.BIRTH_DATE]: new Date(birthDate), [EPetForm.PET_TYPE]: petTypeId });
+      } catch (error) {
+        navigate(`${GET_OWNER}/${ownerId}`);
+      }
     };
 
     if (isEdit) {
       getPetAsync();
     }
   }, [isEdit]);
-
-  const navigate = useNavigate();
 
   if (ownerPending || petTypesPending) {
     return <Loading />;
@@ -106,7 +110,7 @@ export default function PetForm() {
         <div className="form-group has-feedback">
           <div className="form-group">
             <label className="col-sm-2 control-label">Owner</label>
-            <div className="col-sm-10">{formatOwnerFullName(owner)}</div>
+            <div className="col-sm-10">{formatPersonFullName(owner.firstName, owner.lastName)}</div>
           </div>
 
           <div className="form-group ">
